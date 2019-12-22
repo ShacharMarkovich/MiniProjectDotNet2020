@@ -6,23 +6,23 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    class GuestRequest
+    public class GuestRequest
     {
         public readonly double _guestRequestKey;
 
         private string _privateName { get; }
         private string _familyName { get; }
         private string _email { get; }
-        private Status _stat { get; }
+        private Enums.Status _stat { get; }
 
         // all the dates are in this form: dd.mm.yyyy
         private string _registrationDate { get; }
         private string _entyDate { get; }
         private string _releaseDate { get; }
 
-        private Area _area { get; }
-        private SubArea _subArea { get; } // optional
-        private UnitType _type { get; }
+        private Enums.Area _area { get; }
+        private Enums.SubArea _subArea { get; } // optional
+        private Enums.UnitType _type { get; }
 
         private int _adults { get; }
         private int _children { get; }

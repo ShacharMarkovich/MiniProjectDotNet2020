@@ -14,7 +14,8 @@ namespace BE
         private string _familyName { get; }
         private string _phoneNumber { get; }
         private string _email { get; }
-        private BankAccount _bankAccount { get; }
+        private BankBranch _bankBranchDetails { get; }
+        private double _bankAccountNumber { get; }
         private bool _collectionClearance { get; }
 
 

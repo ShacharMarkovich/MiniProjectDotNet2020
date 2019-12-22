@@ -6,19 +6,17 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    class order
+    public class Order
     {
-        public double _HostingUnitKey { get; }//number Hosting Unit
-        public double _GuestRequestKey { get; }//number Guest Request
-        public double _OrderKey { get; }//number order
+        public readonly double _hostingUnitKey;
+        public readonly double _guestRequestKey;
+        public readonly double _orderKey;
 
-        private Status _status_inve { get; }//status order
-        private string _CreateDate { get; }//day:_ _.moth:_ _.year:_ _ _ _
-        private string _OrderDate { get; } //day:_ _.moth:_ _.year:_ _ _ _
-        public override string ToString()
-        {
-            return base.ToString();
-        }
+        private Enums.Status _status { get; }//status order
+        private string _createDate { get; }// dd.mm.yyyy
+        private string _orderDate { get; } // dd.mm.yyyy
+
+        public override string ToString() => base.ToString();
 
     }
 }

@@ -1,6 +1,0 @@
-D:\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BE\bin\Debug\BE.dll
-D:\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BE\bin\Debug\BE.pdb
-D:\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BE\obj\Debug\BE.csprojAssemblyReference.cache
-D:\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BE\obj\Debug\BE.csproj.CoreCompileInputs.cache
-D:\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BE\obj\Debug\BE.dll
-D:\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BE\obj\Debug\BE.pdb

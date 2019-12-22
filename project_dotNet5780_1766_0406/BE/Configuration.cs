@@ -6,24 +6,14 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    enum Status
+    public static class Configuration
     {
-
-    }
-
-    enum Area
-    {
-
-    }
-
-    // optional
-    enum SubArea
-    {
-
-    }
-
-    enum UnitType
-    {
+        private const double _firstKey = 10000000;
+        public static double GuestRequestKey = _firstKey;
+        public static double BankNumber = _firstKey;
+        public static double HostKey = _firstKey;
+        public static double HostingUnitKey = _firstKey;
+        public static double OrderKey = _firstKey;
 
     }
 }

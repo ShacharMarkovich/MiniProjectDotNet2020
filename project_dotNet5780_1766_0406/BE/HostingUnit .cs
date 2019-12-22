@@ -6,15 +6,21 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    class HostingUnit
+    public class HostingUnit
     {
-        public double _HostingUnitKey { get; }//number Hosting Unit 
-        private Host _Owner { get; }// host
-        private string HostingUnitName { get; }//name Hosting Unit 
+        public readonly double _hostingUnitKey;
+        private Host _owner { get; }
+        private string _hostingUnitName { get; }
         private Diary _diary { get; }
+
+        // exmple of ToString implementation:
         public override string ToString()
         {
-            return base.ToString();
+            string str = "Key: " + _hostingUnitKey;
+            str += "\nOwner: " + _owner.ToString();
+            str += "\nHosting unit name: " + _hostingUnitName;
+            str += "\nDiary busy ranges:\n" + _diary.ToString();
+            return str;
         }
     }
 }
