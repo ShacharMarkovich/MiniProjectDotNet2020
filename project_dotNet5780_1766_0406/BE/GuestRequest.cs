@@ -10,28 +10,141 @@ namespace BE
     {
         public readonly double _guestRequestKey;
 
-        private string _privateName { get; }
-        private string _familyName { get; }
-        private string _email { get; }
-        private Enums.Status _stat { get; }
+        private string _privateName { get; set; }
+        public string PrivateName
+        {
+            set
+            {
+                _privateName = value;
+            }
+        }
+        private string _familyName { get; set; }
+        public string FamilyName
+        {
+            set
+            {
+                _familyName = value;
+            }
+        }
+
+        private string _email { get; set; }
+        public string Email
+        {
+            set
+            {
+                _email = value;
+            }
+        }
+
+        private Enums.Status _stat { get; set; }
+        public Enums.Status Stat
+        {
+            set
+            {
+                _stat = value;
+            }
+        }
 
         // all the dates are in this form: dd.mm.yyyy
-        private string _registrationDate { get; }
-        private string _entyDate { get; }
-        private string _releaseDate { get; }
+        private string _registrationDate { get; set; }
+        public string RegistrationDate
+        {
+            set
+            {
+                _registrationDate = value;
+            }
+        }
+        private string _entyDate { get; set; }
+        public string EntyDate
+        {
+            set
+            {
+                _entyDate = value;
+            }
+        }
+        private string _releaseDate { get; set; }
+        public string ReleaseDate
+        {
+            set
+            {
+                _releaseDate = value;
+            }
+        }
 
-        private Enums.Area _area { get; }
-        private Enums.SubArea _subArea { get; } // optional
-        private Enums.UnitType _type { get; }
+        private Enums.Area _area { get; set; }
+        public Enums.Area Area
+        {
+            set
+            {
+                _area = value;
+            }
+        }
+        private Enums.SubArea _subArea { get; set; } // optional
+        public Enums.SubArea SubArea
+        {
+            set
+            {
+                _subArea = value;
+            }
+        }
+        private Enums.UnitType _type { get; set; }
+        public Enums.UnitType type
+        {
+            set
+            {
+               _type = value;
+            }
+        }
 
-        private int _adults { get; }
-        private int _children { get; }
+        private int _adults { get; set; }
+        public int Adults
+        {
+            set
+            {
+                _adults = value;
+            }
+        }
+        private int _children { get; set; }
+        public int Children
+        {
+            set
+            {
+                _children = value;
+            }
+        }
 
-        private bool _pool { get; }
-        private bool _jecuzzi { get; }
-        private bool _garden { get; }
-        private bool _childrenAttractions { get; }
-
+        private bool _pool { get; set; }
+        public bool Pool
+        {
+            set
+            {
+                _pool = value;
+            }
+        }
+        private bool _jecuzzi { get; set; }
+        public bool Jecuzzi
+        {
+            set
+            {
+                _jecuzzi = value;
+            }
+        }
+        private bool _garden { get; set; }
+        public bool Garden
+        {
+            set
+            {
+                _garden = value;
+            }
+        }
+        private bool _childrenAttractions { get; set; }
+        public bool ChildrenAttractions
+        {
+            set
+            {
+                _childrenAttractions = value;
+            }
+        }
 
         public override string ToString() => base.ToString();
 

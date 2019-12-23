@@ -10,14 +10,18 @@ namespace BE
     {
         public readonly double _hostKey;
 
-        private string _privateName { get; }
-        private string _familyName { get; }
-        private string _phoneNumber { get; }
-        private string _email { get; }
-        private BankBranch _bankBranchDetails { get; }
-        private double _bankAccountNumber { get; }
-        private bool _collectionClearance { get; }
+        private string _privateName { get; set; }
+        private string _familyName { get; set; }
+        private string _phoneNumber { get; set; }
+        private string _email { get; set; }
+        private BankBranch _bankBranchDetails { get; set; }
+        private double _bankAccountNumber { get; set; }
+        private bool _collectionClearance { get; set; }
 
+        Host()
+        {
+            _hostKey = ++Configuration.HostKey;
+        }
 
         public override string ToString() => base.ToString();
     }
