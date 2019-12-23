@@ -60,6 +60,7 @@ namespace BE
             _branchAddress = branchAddress;
             _branchCity = branchCity;
         }
+        
         public override string ToString()
         {
             return "Bank Number:\t" + _bankName +

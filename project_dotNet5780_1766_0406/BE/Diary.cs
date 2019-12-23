@@ -101,7 +101,6 @@ namespace BE
             return toString;
         }
 
-
         public void PrintCountOfTaken()// amount of days busy 
         {
             double count = 0;//count the day

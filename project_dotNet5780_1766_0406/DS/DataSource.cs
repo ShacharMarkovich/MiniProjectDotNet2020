@@ -16,14 +16,7 @@ namespace DS
         public DataSource()
         {
             // TODO: Manual initialization
-            _guestRequestsList = new List<BE.GuestRequest>()
-            {
-                new BE.GuestRequest()
-                {
-                    PrivateName = "D",
-                    Pool = false
-                }
-            };
+            _guestRequestsList = new List<BE.GuestRequest>();
             _hostingUnitsList = new List<BE.HostingUnit>();
             _ordersList = new List<BE.Order>();
             _bankBranchList = new List<BE.BankBranch>();

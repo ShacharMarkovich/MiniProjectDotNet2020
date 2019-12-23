@@ -12,11 +12,30 @@ namespace BE
         public readonly double _guestRequestKey;
         public readonly double _orderKey;
 
-        private Enums.Status _status { get; }//status order
-        private string _createDate { get; }// dd.mm.yyyy
-        private string _orderDate { get; } // dd.mm.yyyy
+        private Enums.Status _status { get; set; }//status order
+        public Enums.Status Status
+        {
+            set { _status = value; }
+        }
+        private string _createDate { get; set; }// dd.mm.yyyy
+        public string CreateDate
+        {
+            set { _createDate = value; }
+        }
+        private string _orderDate { get; set; } // dd.mm.yyyy
+        public string OrderDate
+        {
+            set { _orderDate = value; }
+        }
 
-        public override string ToString() => base.ToString();
-
+        public override string ToString()
+        {
+            return "Hosting Unit Key:\t" + _hostingUnitKey +
+                "\nGuest Request Key:\t" + _guestRequestKey +
+                "\nOrder Key:\t" + _orderKey +
+                "\nStatus:\t" + _status +
+                "\nCreate Date:\t" + _createDate +
+                "\nOrder Date:\t" + _orderDate;
+        }
     }
 }

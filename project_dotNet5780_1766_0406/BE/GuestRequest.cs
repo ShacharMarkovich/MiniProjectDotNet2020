@@ -92,7 +92,7 @@ namespace BE
         {
             set
             {
-               _type = value;
+                _type = value;
             }
         }
 
@@ -146,7 +146,21 @@ namespace BE
             }
         }
 
-        public override string ToString() => base.ToString();
+        public override string ToString()
+        {
+            return "\nRegistration Date:\t" + _registrationDate +
+                "\nEnty Date:\t" + _entyDate +
+                "\nRelease Date:\t" + _releaseDate +
+                "\nAarea:\t" + _area +
+                "\nSubArea:\t" + _subArea +
+                "\nType:\t" + _type +
+                "\nAdults:\t" + _adults +
+                "\nChildren:\t" + _children +
+                "\nPool:\t" + _pool +
+                "\nJecuzzi:\t" + _jecuzzi +
+                "\nGarden:\t" + _garden +
+                "\nChildren Attractions:\t" + _childrenAttractions;
+        }
 
     }
 }
