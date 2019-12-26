@@ -10,9 +10,18 @@ namespace BE
     {
         public readonly double _hostingUnitKey;
         private Host _owner { get; set; }
+        public Host Owner
+        {
+            set { _owner = value; }
+        }
+
         private string _hostingUnitName { get; set; }
+        public string HostingUnitName
+        {
+            set { _hostingUnitName = value; }
+        }
         private Diary _diary { get; set; }
-        // exmple of ToString implementation:
+
         public override string ToString()
         {
             string str = "Key: " + _hostingUnitKey;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    class Diary
+    public class Diary
     {
         private bool[,] _dates; // one dimension array that present 2 dimension matrix;
         const int _month = 12, _days = 31;

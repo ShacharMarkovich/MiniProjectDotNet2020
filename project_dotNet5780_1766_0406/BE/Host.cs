@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    class Host
+    public class Host
     {
         public readonly double _hostKey;
 
@@ -57,6 +57,7 @@ namespace BE
                 "\nBank Account Number:\t" + _bankAccountNumber +
                 "\nCollection Clearance:\t" + _collectionClearance;
         }
+
         Host()
         {
             _hostKey = ++Configuration.HostKey;
