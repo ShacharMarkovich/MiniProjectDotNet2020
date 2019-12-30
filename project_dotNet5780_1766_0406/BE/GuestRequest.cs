@@ -8,6 +8,26 @@ namespace BE
 {
     public class GuestRequest
     {
+        public GuestRequest(string privateName, string familyName, string email, Enums.Status stat, string registrationDate, string entyDate, string releaseDate, Enums.Area area, Enums.SubArea subArea, Enums.UnitType type_, int adults, int children, bool pool, bool jecuzzi, bool garden, bool childrenAttractions)
+        {
+            _guestRequestKey = ++Configuration.GuestRequestKey;
+            PrivateName = privateName;
+            FamilyName = familyName;
+            Email = email;
+            Stat = stat;
+            RegistrationDate = registrationDate;
+            EntyDate = entyDate;
+            ReleaseDate = releaseDate;
+            Area = area;
+            SubArea = subArea;
+            type = type_;
+            Adults = adults;
+            Children = children;
+            Pool = pool;
+            Jecuzzi = jecuzzi;
+            Garden = garden;
+            ChildrenAttractions = childrenAttractions;
+        }
         public readonly double _guestRequestKey;
 
         private string _privateName { get; set; }
@@ -18,6 +38,7 @@ namespace BE
                 _privateName = value;
             }
         }
+
         private string _familyName { get; set; }
         public string FamilyName
         {
@@ -54,6 +75,7 @@ namespace BE
                 _registrationDate = value;
             }
         }
+
         private string _entyDate { get; set; }
         public string EntyDate
         {
@@ -62,6 +84,7 @@ namespace BE
                 _entyDate = value;
             }
         }
+
         private string _releaseDate { get; set; }
         public string ReleaseDate
         {
@@ -71,7 +94,8 @@ namespace BE
             }
         }
 
-        private Enums.Area _area { get; set; }
+      
+       private Enums.Area _area { get; set; }
         public Enums.Area Area
         {
             set
@@ -79,6 +103,7 @@ namespace BE
                 _area = value;
             }
         }
+
         private Enums.SubArea _subArea { get; set; } // optional
         public Enums.SubArea SubArea
         {
@@ -87,6 +112,7 @@ namespace BE
                 _subArea = value;
             }
         }
+
         private Enums.UnitType _type { get; set; }
         public Enums.UnitType type
         {
@@ -104,6 +130,7 @@ namespace BE
                 _adults = value;
             }
         }
+
         private int _children { get; set; }
         public int Children
         {
@@ -121,6 +148,7 @@ namespace BE
                 _pool = value;
             }
         }
+
         private bool _jecuzzi { get; set; }
         public bool Jecuzzi
         {
@@ -129,6 +157,7 @@ namespace BE
                 _jecuzzi = value;
             }
         }
+
         private bool _garden { get; set; }
         public bool Garden
         {
@@ -137,6 +166,7 @@ namespace BE
                 _garden = value;
             }
         }
+
         private bool _childrenAttractions { get; set; }
         public bool ChildrenAttractions
         {
