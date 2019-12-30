@@ -10,12 +10,12 @@ namespace BE
     {
         public enum Status
         {
-
+            NotYetApproved, MailSent, CloseByClient, CloseByApp, Approved
         }
 
         public enum Area
         {
-
+            Jerusalem, North, South, Center
         }
 
         // optional
@@ -26,7 +26,7 @@ namespace BE
 
         public enum UnitType
         {
-
+            Zimmer, Hotel, Camping, RentingRoom
         }
     }
 }

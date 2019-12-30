@@ -23,10 +23,11 @@ namespace DAL
         /// <param name="newStat">new BE.Enums.Status</param>
         public void UpdateGuestRequest(BE.GuestRequest gRequest, BE.Enums.Status newStat)
         {
-            DS.DataSource._guestRequestsList.ForEach(delegate (BE.GuestRequest gReq) {
-                if (gReq._guestRequestKey.Equals(gRequest._guestRequestKey))
+            DS.DataSource._guestRequestsList.ForEach(delegate (BE.GuestRequest gReq)
+            {
+                if (gReq._guestRequestKey == gRequest._guestRequestKey)
                     gReq.Stat = newStat;
-                    });
+            });
         }
 
 

@@ -57,11 +57,5 @@ namespace BE
                 "\nBank Account Number:\t" + _bankAccountNumber +
                 "\nCollection Clearance:\t" + _collectionClearance;
         }
-
-        Host()
-        {
-            _hostKey = ++Configuration.HostKey;
-        }
-
     }
 }

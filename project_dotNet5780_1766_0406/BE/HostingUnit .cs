@@ -9,6 +9,7 @@ namespace BE
     public class HostingUnit
     {
         public readonly double _hostingUnitKey;
+
         private Host _owner { get; set; }
         public Host Owner
         {
@@ -20,8 +21,13 @@ namespace BE
         {
             set { _hostingUnitName = value; }
         }
-        private Diary _diary { get; set; }
 
+        private bool[,] _diary { get; set; }
+        public bool[,] Diary
+        {
+            set { _diary = value; }
+        }
+        int[] aaa = { 1, 2, 3, 4 };
         public override string ToString()
         {
             string str = "Key: " + _hostingUnitKey;

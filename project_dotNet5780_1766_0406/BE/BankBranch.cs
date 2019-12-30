@@ -47,20 +47,9 @@ namespace BE
             }
         }
 
-        BankBranch()
-        {
-            _bankNumber = ++Configuration.BankNumber;
-        }
+        //// for now the c'tor is public, in order to make 5 instances to this class.
+        //// in the next 
 
-        BankBranch(string bankName,int branchNumber,string branchAddress, string branchCity)
-        {
-            _bankNumber = ++Configuration.BankNumber;
-            _bankName = bankName;
-            _branchNumber = branchNumber;
-            _branchAddress = branchAddress;
-            _branchCity = branchCity;
-        }
-        
         public override string ToString()
         {
             return "Bank Number:\t" + _bankName +
