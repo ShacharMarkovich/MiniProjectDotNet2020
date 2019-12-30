@@ -11,7 +11,7 @@ namespace BL
         public static IBL Bl()
         {
             return BL_imp.Instance();
-            //case "XML": return DAL_XML.Instance();
+            //case "XML": return BL_imp.Instance();
         }
     }
 }

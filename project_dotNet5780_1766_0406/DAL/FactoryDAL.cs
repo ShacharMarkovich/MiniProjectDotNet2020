@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    class FactoryDAL
+    public class FactoryDAL
     {
         public static IDal Dal()
         {

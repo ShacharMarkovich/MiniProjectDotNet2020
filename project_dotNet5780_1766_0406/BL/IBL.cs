@@ -40,10 +40,10 @@ namespace BL
         bool IsDateArmor(BE.HostingUnit hostingUnit, DateTime entryDate, DateTime releaseDate);
         bool IsOrderClose(BE.Order order);
         void TakeFee(BE.Order order);
-        void UpdateCalendar(BE.Host host, DateTime entryDate, DateTime releaseDate);
+        void UpdateCalendar(BE.HostingUnit hostingUnit, DateTime entryDate, DateTime releaseDate);
         void SelectInvitation(BE.GuestRequest gReq);
         bool IsPossibleToDelete(BE.HostingUnit hostingUnit);
-        bool IsCanCancalCollectionClearance(BE.Order order, BE.HostingUnit hostingUnit/*maybe this field unnecessary*/);
+        bool IsCanCancalCollectionClearance(BE.Host host);
         void SendEmail(string HostEmail/*FROM*/, string gReqEmail/*TO*/);
 
         //////////////////////////////////////////////////////////
