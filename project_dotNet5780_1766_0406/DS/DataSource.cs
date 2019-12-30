@@ -8,21 +8,13 @@ namespace DS
 {
     public class DataSource
     {
-
-        public static List<BE.GuestRequest> _guestRequestsList;
-        public static List<BE.HostingUnit> _hostingUnitsList;
-        public static List<BE.Order> _ordersList;
-        public static List<BE.BankBranch> _bankBranchList;
-
-        public DataSource()
-        {
-            _guestRequestsList = new List<BE.GuestRequest>()
+        public static List<BE.GuestRequest> _guestRequestsList   = new List<BE.GuestRequest>()
             {
-                new BE.GuestRequest("name1", "lest_name1", "1@gmail.com", 0, "00.00.0000", "11.11.1111", "22.22.2222", 0, 0, 1, 1, false, true, false, true),
-                new BE.GuestRequest("name2", "lest_name2", "2@gmail.com", 0, "00.00.0000", "11.11.1111", "22.22.2222", 0, 0, 1, 1, false, true, false, true),
-                new BE.GuestRequest("name3", "lest_name3", "3@gmail.com", 0, "00.00.0000", "11.11.1111", "22.22.2222", 0, 0, 1, 1, false, true, false, true)
+                new BE.GuestRequest("name1", "last_name1", "1@gmail.com", 0, new DateTime(), new DateTime(), new DateTime(), 0, 0, 1, 1, false, true, false, true),
+                new BE.GuestRequest("name2", "last_name2", "2@gmail.com", 0, new DateTime(), new DateTime(), new DateTime(), 0, 0, 1, 1, false, true, false, true),
+                new BE.GuestRequest("name3", "last_name3", "3@gmail.com", 0, new DateTime(), new DateTime(), new DateTime(), 0, 0, 1, 1, false, true, false, true)
             };
-            _hostingUnitsList = new List<BE.HostingUnit>()
+        public static List<BE.HostingUnit>  _hostingUnitsList    = new List<BE.HostingUnit>()
             {
                 new BE.HostingUnit()
                 {
@@ -88,26 +80,26 @@ namespace DS
                     }
                 },
             };
-            _ordersList = new List<BE.Order>()
+        public static List<BE.Order>        _ordersList          = new List<BE.Order>()
             {
                 new BE.Order(){
                     Status = (BE.Enums.Status) 0,
-                    CreateDate = "1.1.2000",
-                    OrderDate = "3.1.200"
+                    CreateDate = new DateTime(),
+                    OrderDate = new DateTime()
                 },
                 new BE.Order(){
                     Status = (BE.Enums.Status) 1,
-                    CreateDate = "2.2.2001",
-                    OrderDate = "3.2.2001"
+                    CreateDate = new DateTime(),
+                    OrderDate = new DateTime()
                 },
                 new BE.Order(){
                     Status = (BE.Enums.Status) 2,
-                    CreateDate = "3.3.2002",
-                    OrderDate = "4.2.2002"
+                    CreateDate = new DateTime(),
+                    OrderDate = new DateTime()
                 },
 
             };
-            _bankBranchList = new List<BE.BankBranch>()
+        public static List<BE.BankBranch>   _bankBranchList      = new List<BE.BankBranch>()
             {
                 new BE.BankBranch(){
                     BankName = "bank1",
@@ -141,6 +133,5 @@ namespace DS
                 },
 
             };
-        }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL
@@ -11,7 +10,7 @@ namespace DAL
     {
         private static IDal _instance = null;
         private Dal_imp() { }
-        public static IDal CreateDAL()
+        public static IDal Instance()
         {
             if (_instance == null)
                 _instance = new Dal_imp();
@@ -86,16 +85,56 @@ namespace DAL
         /// <param name="newStat">new BE.Enums.Status</param>
         public void UpdateOrder(BE.Order order, BE.Enums.Status newStat)
         {
+            //var a = from order_ in DS.DataSource._ordersList
+            //        where order_._orderKey == order._orderKey
+            //        select order_;
+            //foreach(BE.Order b in a)
+            //    b.Status = newStat;
             DS.DataSource._ordersList.ForEach(delegate (BE.Order innerOrder) {
-                if (innerOrder._orderKey.Equals(order._guestRequestKey))
+                if (innerOrder._orderKey == order._guestRequestKey)
                     innerOrder.Status = newStat;
             });
         }
 
+        /// <summary>
+        /// return all BE.GuestRequest. using Linq
+        /// </summary>
+        public List<BE.GuestRequest> GetAllRequests()
+        {
+            IEnumerable<BE.GuestRequest> newList = from gReq in DS.DataSource._guestRequestsList
+                                                   orderby gReq.PrivateName
+                                                   select gReq;
+            return newList.ToList();
+        }
 
-        public List<BE.GuestRequest> GetAllRequests() => DS.DataSource._guestRequestsList;
-        public List<BE.HostingUnit> GetAllHostingUnits() => DS.DataSource._hostingUnitsList;
-        public List<BE.Order> GetAllOrders() => DS.DataSource._ordersList;
-        public List<BE.BankBranch> GetAllBranches() => DS.DataSource._bankBranchList;
+        /// <summary>
+        /// return all BE.HostingUnit. using Linq
+        /// </summary>
+        public List<BE.HostingUnit> GetAllHostingUnits()
+        {
+            var newList = from hostingUnit in DS.DataSource._hostingUnitsList
+                          select hostingUnit;
+            return newList.ToList();
+        }
+
+        /// <summary>
+        /// return all BE.Order. using Linq
+        /// </summary>
+        public List<BE.Order> GetAllOrders()
+        {
+            var newList = from order in DS.DataSource._ordersList
+                          select order;
+            return newList.ToList();
+        }
+
+        /// <summary>
+        /// return all BE.BankBranch. using Linq
+        /// </summary>
+        public List<BE.BankBranch> GetAllBranches()
+        {
+            var newList = from bankBranch in DS.DataSource._bankBranchList
+                          select bankBranch;
+            return newList.ToList();
+        }
     }
 }

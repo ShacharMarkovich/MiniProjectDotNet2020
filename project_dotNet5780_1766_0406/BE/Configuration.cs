@@ -8,12 +8,13 @@ namespace BE
 {
     public static class Configuration
     {
+        public const double Fee = 10;
+
         private const double _firstKey = 9999999;
         public static double GuestRequestKey = _firstKey;
         public static double BankNumber = _firstKey;
         public static double HostKey = _firstKey;
         public static double HostingUnitKey = _firstKey;
         public static double OrderKey = _firstKey;
-
     }
 }

@@ -15,7 +15,7 @@ namespace DAL
         void AddHostingUnit(BE.HostingUnit newHostingUnit);
         void DeleteHostingUnit(BE.HostingUnit hostingUnit);
         void UpdateHostingUnit(BE.HostingUnit hostingUnit, object update);
-
+       
         void AddOrder(BE.Order newOrder);
         void UpdateOrder(BE.Order order, BE.Enums.Status newStat);
 

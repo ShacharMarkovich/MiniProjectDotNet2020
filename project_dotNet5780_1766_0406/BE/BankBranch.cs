@@ -12,40 +12,44 @@ namespace BE
         public readonly double _bankNumber;
 
         //defualt getter
-        private string _bankName { get; set; }
+        private string _bankName;
         public string BankName
         {
             set
             {
                 _bankName = value;
             }
+            get
+            {
+                return _bankName;
+            }
         }
 
-        private int _branchNumber { get; set; }
+        private int _branchNumber;
         public int BranchNumber
         {
             set
             {
                 _branchNumber = value;
             }
+            get
+            {
+                return _branchNumber;
+            }
         }
 
-        private string _branchAddress { get; set; }
+        private string _branchAddress;
         public string BranchAddress
         {
-            set
-            {
-                _branchAddress = value;
-            }
+            set { _branchAddress = value; }
+            get { return _branchAddress; }
         }
 
-        private string _branchCity { get; set; }
+        private string _branchCity;
         public string BranchCity
         {
-            set
-            {
-                _branchCity = value;
-            }
+            set { _branchCity = value; }
+            get { return _branchCity; }
         }
 
         

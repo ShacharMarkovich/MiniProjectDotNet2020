@@ -13,20 +13,23 @@ namespace BE
         public readonly double _guestRequestKey;
         public readonly double _orderKey;
 
-        private Enums.Status _status { get; set; }//status order
+        private Enums.Status _status; //status order
         public Enums.Status Status
         {
-            set { _status = value; }
+            set =>_status = value;
+            get => _status;
         }
-        private string _createDate { get; set; }// dd.mm.yyyy
-        public string CreateDate
+        private DateTime _createDate; // dd.mm.yyyy
+        public  DateTime CreateDate
         {
-            set { _createDate = value; }
+            set => _createDate = value;
+            get => _createDate; 
         }
-        private string _orderDate { get; set; } // dd.mm.yyyy
-        public string OrderDate
+        private DateTime _orderDate; // dd.mm.yyyy
+        public  DateTime OrderDate
         {
-            set { _orderDate = value; }
+            set => _orderDate = value; 
+            get => _orderDate;
         }
 
         public override string ToString()

@@ -11,78 +11,92 @@ namespace BE
         
         public readonly double _guestRequestKey;
 
-        private string _privateName { get; set; }
+        private string _privateName;
         public string PrivateName
         {
             set
             {
                 _privateName = value;
             }
+            get
+            {
+                return _privateName;
+            }
         }
 
-        private string _familyName { get; set; }
+        private string _familyName;
         public string FamilyName
         {
             set
             {
                 _familyName = value;
             }
+            get
+            {
+                return _familyName;
+            }
         }
 
-        private string _email { get; set; }
+        private string _email;
         public string Email
         {
             set
             {
                 _email = value;
+            } 
+            get
+            {
+                return _email;
             }
         }
 
-        private Enums.Status _stat { get; set; }
+        private Enums.Status _stat;
         public Enums.Status Stat
         {
             set
             {
                 _stat = value;
             }
+            get
+            {
+                return _stat;
+            }
         }
 
         // all the dates are in this form: dd.mm.yyyy
-        private string _registrationDate { get; set; }
-        public string RegistrationDate
+        private DateTime _registrationDate;
+        public DateTime RegistrationDate
         {
-            set
-            {
-                _registrationDate = value;
-            }
+            set =>_registrationDate = value;
+            get => _registrationDate;
         }
 
-        private string _entyDate { get; set; }
-        public string EntyDate
+        private DateTime _entryDate;
+        public DateTime EntryDate
         {
-            set
-            {
-                _entyDate = value;
-            }
+            set=>_entryDate = value;
+            get => _entryDate;
         }
 
-        private string _releaseDate { get; set; }
-        public string ReleaseDate
+        private DateTime _releaseDate;
+        public DateTime ReleaseDate
         {
             set
             {
                 _releaseDate = value;
             }
+            get => _releaseDate;
         }
 
       
-       private Enums.Area _area { get; set; }
+        private Enums.Area _area { get; set; }
         public Enums.Area Area
         {
             set
             {
                 _area = value;
             }
+            get => _area;
         }
 
         private Enums.UnitType _type { get; set; }
@@ -92,6 +106,7 @@ namespace BE
             {
                 _type = value;
             }
+            get => _type;
         }
 
         private int _adults { get; set; }
@@ -101,6 +116,7 @@ namespace BE
             {
                 _adults = value;
             }
+            get => _adults;
         }
 
         private int _children { get; set; }
@@ -110,6 +126,7 @@ namespace BE
             {
                 _children = value;
             }
+            get => _children;
         }
 
         private bool _pool { get; set; }
@@ -119,6 +136,7 @@ namespace BE
             {
                 _pool = value;
             }
+            get => _pool;
         }
 
         private bool _jecuzzi { get; set; }
@@ -128,30 +146,33 @@ namespace BE
             {
                 _jecuzzi = value;
             }
+            get => _jecuzzi;
         }
 
-        private bool _garden { get; set; }
+        private bool _garden;
         public bool Garden
         {
             set
             {
                 _garden = value;
             }
+            get => _garden;
         }
 
-        private bool _childrenAttractions { get; set; }
+        private bool _childrenAttractions;
         public bool ChildrenAttractions
         {
             set
             {
                 _childrenAttractions = value;
             }
+            get => _childrenAttractions;
         }
 
         //// for now the c'tor is public, in order to make 3 instances that needed in DS.DataSource
         //// in the next part of the project we will make this class singleton
         public GuestRequest(string privateName, string familyName, string email, Enums.Status stat,
-                            string registrationDate, string entyDate, string releaseDate,
+                            DateTime registrationDate, DateTime entryDate, DateTime releaseDate,
                             Enums.Area area, Enums.UnitType type_, int adults, int children,
                             bool pool, bool jecuzzi, bool garden, bool childrenAttractions)
         {
@@ -161,7 +182,7 @@ namespace BE
             Email = email;
             Stat = stat;
             RegistrationDate = registrationDate;
-            EntyDate = entyDate;
+            EntryDate = entryDate;
             ReleaseDate = releaseDate;
             Area = area;
             type = type_;
@@ -176,7 +197,7 @@ namespace BE
         public override string ToString()
         {
             return "\nRegistration Date:\t" + _registrationDate +
-                "\nEnty Date:\t" + _entyDate +
+                "\nEnty Date:\t" + _entryDate +
                 "\nRelease Date:\t" + _releaseDate +
                 "\nAarea:\t" + _area +
                 "\nType:\t" + _type +

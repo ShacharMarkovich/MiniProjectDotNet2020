@@ -11,24 +11,27 @@ namespace BE
     {
         public readonly double _hostingUnitKey;
 
-        private Host _owner { get; set; }
+        private Host _owner;
         public Host Owner
         {
-            set { _owner = value; }
+            set => _owner = value;
+            get => _owner;
         }
 
-        private string _hostingUnitName { get; set; }
+        private string _hostingUnitName;
         public string HostingUnitName
         {
-            set { _hostingUnitName = value; }
+            set => _hostingUnitName = value;
+            get => _hostingUnitName;
         }
 
-        private bool[,] _diary { get; set; }
+        private bool[,] _diary;
         public bool[,] Diary
         {
-            set { _diary = value; }
+            set => _diary = value;
+            get => _diary;
         }
-        int[] aaa = { 1, 2, 3, 4 };
+
         public override string ToString()
         {
             string str = "Key: " + _hostingUnitKey;
