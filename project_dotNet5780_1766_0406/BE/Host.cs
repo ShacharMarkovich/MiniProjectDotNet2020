@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BE
 {
+    /// in the next part of the project we will make this class singleton
     public class Host
     {
         public readonly double _hostKey;

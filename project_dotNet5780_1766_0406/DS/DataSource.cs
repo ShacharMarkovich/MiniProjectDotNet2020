@@ -8,6 +8,7 @@ namespace DS
 {
     public class DataSource
     {
+
         public static List<BE.GuestRequest> _guestRequestsList;
         public static List<BE.HostingUnit> _hostingUnitsList;
         public static List<BE.Order> _ordersList;
@@ -15,8 +16,12 @@ namespace DS
 
         public DataSource()
         {
-            // Manual initialization ONLY for this part of the project
-            _guestRequestsList = new List<BE.GuestRequest>();
+            _guestRequestsList = new List<BE.GuestRequest>()
+            {
+                new BE.GuestRequest("name1", "lest_name1", "1@gmail.com", 0, "00.00.0000", "11.11.1111", "22.22.2222", 0, 0, 1, 1, false, true, false, true),
+                new BE.GuestRequest("name2", "lest_name2", "2@gmail.com", 0, "00.00.0000", "11.11.1111", "22.22.2222", 0, 0, 1, 1, false, true, false, true),
+                new BE.GuestRequest("name3", "lest_name3", "3@gmail.com", 0, "00.00.0000", "11.11.1111", "22.22.2222", 0, 0, 1, 1, false, true, false, true)
+            };
             _hostingUnitsList = new List<BE.HostingUnit>()
             {
                 new BE.HostingUnit()

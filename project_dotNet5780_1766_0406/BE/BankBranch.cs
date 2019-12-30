@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BE
 {
+    /// in the next part of the project we will make this class singleton
     public class BankBranch
     {
         public readonly double _bankNumber;
@@ -47,9 +48,7 @@ namespace BE
             }
         }
 
-        //// for now the c'tor is public, in order to make 5 instances to this class.
-        //// in the next 
-
+        
         public override string ToString()
         {
             return "Bank Number:\t" + _bankName +

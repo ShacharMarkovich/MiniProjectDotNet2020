@@ -18,12 +18,6 @@ namespace BE
             Jerusalem, North, South, Center
         }
 
-        // optional
-        public enum SubArea
-        {
-
-        }
-
         public enum UnitType
         {
             Zimmer, Hotel, Camping, RentingRoom

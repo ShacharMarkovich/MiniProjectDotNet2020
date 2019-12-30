@@ -6,8 +6,18 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
+    // singleton class
     public class Dal_imp : IDal
     {
+        private static IDal _instance = null;
+        private Dal_imp() { }
+        public static IDal CreateDAL()
+        {
+            if (_instance == null)
+                _instance = new Dal_imp();
+            return _instance;
+        }
+
         /// <summary>
         /// this function add the new BE.GuestRequest to data source
         /// </summary>
