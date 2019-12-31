@@ -18,6 +18,16 @@ namespace BE
             get => _owner;
         }
 
+        private Enums.Area _area;
+        public Enums.Area Area
+        {
+            set
+            {
+                _area = value;
+            }
+            get => _area;
+        }
+
         private string _hostingUnitName;
         public string HostingUnitName
         {

@@ -88,8 +88,8 @@ namespace BE
             get => _releaseDate;
         }
 
-      
-        private Enums.Area _area { get; set; }
+
+        private Enums.Area _area;
         public Enums.Area Area
         {
             set

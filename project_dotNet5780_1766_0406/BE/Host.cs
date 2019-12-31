@@ -10,7 +10,12 @@ namespace BE
     public class Host
     {
         public readonly double _hostKey;
-
+        private double _balanse;
+        public double Balanse
+        {
+            set => _balanse = value;
+            get => _balanse;
+        }
         private string _privateName;
         public string PrivateName
         {
