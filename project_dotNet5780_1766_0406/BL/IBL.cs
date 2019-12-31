@@ -41,7 +41,7 @@ namespace BL
         bool IsOrderClose(BE.Order order);
         void TakeFee(BE.Order order);
         void UpdateCalendar(BE.HostingUnit hostingUnit, DateTime entryDate, DateTime releaseDate);
-        void SelectInvitation(BE.GuestRequest gReq);
+        void SelectInvitation(BE.Order gReq);
         bool IsPossibleToDelete(BE.HostingUnit hostingUnit);
         bool IsCanCancalCollectionClearance(BE.Host host);
         void SendEmail(BE.Host host/*FROM*/, string gReqEmail/*TO*/);
@@ -57,7 +57,7 @@ namespace BL
         List<IGrouping<BE.Enums.Area, BE.GuestRequest>> GuestRequest_GroupbyArea();
         List<IGrouping<int, BE.GuestRequest>> GuestRequest_GroupbyAmountOfPeople();
         List<IGrouping<int, BE.Host>> Host_GroupbyAmountOfHostingUnit();
-        IGrouping<BE.Enums.Area, BE.HostingUnit> HostingUnit_GroupbyArea();
+        List<IGrouping<BE.Enums.Area, BE.HostingUnit>> HostingUnit_GroupbyArea();
 
 
         //////////////////////////////////////////////////////////

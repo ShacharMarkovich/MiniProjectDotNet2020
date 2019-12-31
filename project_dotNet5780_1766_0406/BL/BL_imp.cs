@@ -11,7 +11,7 @@ namespace BL
         private DAL.IDal _dal;
 
         private static IBL _instance = null;
-        private int count;
+        //private int count;
 
         public static IBL Instance()
         {
@@ -69,11 +69,9 @@ namespace BL
                         diary[month, day] = true;
                 }
 
-                //hostingUnit.Diary = diary; // update the data structer
                 return true;
             }
 
-            return false;
             return false;
         }
 
@@ -88,7 +86,34 @@ namespace BL
 
         public void TakeFee(BE.Order order)
         {
-            throw new NotImplementedException("what to do with the fee???");
+            var a = _dal.GetAllRequests();
+            var req = from gReq in a
+                    where gReq._guestRequestKey == order._guestRequestKey
+                    select gReq;
+            int days = 0;
+            try
+            {
+                BE.GuestRequest c = req.Single();
+                days = (c.ReleaseDate - c.EntryDate).Days;
+
+            }
+            catch (ArgumentNullException exc)
+            {
+                Console.WriteLine("EROR IN Guest Request too much or less argument" );
+            }
+            var d = _dal.GetAllHostingUnits();
+            var Hos = from gHos in d
+                      where gHos._hostingUnitKey == order._hostingUnitKey
+                      select gHos;
+            try
+            {
+                BE.HostingUnit e = Hos.Single();
+                e.Owner.Balanse = (e.Owner.Balanse - days * BE.Configuration.Fee);
+            }
+            catch (ArgumentNullException exc1)
+            {
+                Console.WriteLine("EROR IN SELECT HostingUnit" );
+            }
         }
 
         /// <summary>
@@ -124,9 +149,30 @@ namespace BL
                 throw new Exception("Dates already taken in this hosting unit");
         }
 
-        public void SelectInvitation(BE.GuestRequest gReq)
+        public void SelectInvitation(BE.Order order)
         {
-            //lior
+            _dal.UpdateOrder(order, BE.Enums.Status.CloseByClient);
+            var a = _dal.GetAllRequests();
+            var Req = from gReq in a
+                      where gReq._guestRequestKey == order._guestRequestKey
+                      select gReq;
+            BE.GuestRequest c=null;
+            try
+            {
+                 c = Req.Single();
+                _dal.UpdateGuestRequest(c, BE.Enums.Status.CloseByApp);
+
+            }
+            catch (ArgumentNullException exc)
+            {
+                Console.WriteLine("EROR IN Guest Request too much or less argument");
+            }
+            var cc = from matchOrder in _dal.GetAllOrders()
+                     where matchOrder._guestRequestKey == c._guestRequestKey
+                     select matchOrder;
+
+            foreach (var matchOrder in cc)
+                _dal.UpdateOrder(matchOrder, BE.Enums.Status.CloseByApp);
         }
 
         /// <summary>
@@ -238,6 +284,7 @@ namespace BL
                                                                             group gReq by gReq.Area;
             return group.ToList();
         }
+
         public List<IGrouping<int, BE.GuestRequest>> GuestRequest_GroupbyAmountOfPeople()
         {
             IEnumerable<IGrouping<int, BE.GuestRequest>> group = from gReq in _dal.GetAllRequests()
@@ -257,9 +304,11 @@ namespace BL
             return lst.ToList();
         }
 
-        public IGrouping<BE.Enums.Area, BE.HostingUnit> HostingUnit_GroupbyArea()
+        public List<IGrouping<BE.Enums.Area, BE.HostingUnit>> HostingUnit_GroupbyArea()
         {
-            return null;
+            var Hosting_unit = from Hunit in _dal.GetAllHostingUnits()
+                               group Hunit by Hunit.Area;
+            return Hosting_unit.ToList();
         }
 
         //////////////////////////////////////////////////////////
@@ -298,7 +347,6 @@ namespace BL
                         diary[month, day] = true;
                 }
 
-                //hostingUnit.Diary = diary; // update the data structer
                 return true;
             }
 
