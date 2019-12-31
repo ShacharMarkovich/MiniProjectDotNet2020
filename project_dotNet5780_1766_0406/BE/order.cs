@@ -9,23 +9,26 @@ namespace BE
     /// in the next part of the project we will make this class singleton
     public class Order
     {
-        public readonly double _hostingUnitKey;
-        public readonly double _guestRequestKey;
-        public readonly double _orderKey;
+        // TODO: do matching between order to hosting unit and guest request
+        public readonly double _hostingUnitKey = ++BE.Configuration.HostingUnitKey;
+        public readonly double _guestRequestKey = ++BE.Configuration.GuestRequestKey;
+        public readonly double _orderKey = ++BE.Configuration.OrderKey;
 
-        private Enums.Status _status; //status order
+        private Enums.Status _status;
         public Enums.Status Status
         {
             set =>_status = value;
             get => _status;
         }
-        private DateTime _createDate; // dd.mm.yyyy
+
+        private DateTime _createDate;
         public  DateTime CreateDate
         {
             set => _createDate = value;
             get => _createDate; 
         }
-        private DateTime _orderDate; // dd.mm.yyyy
+
+        private DateTime _orderDate;
         public  DateTime OrderDate
         {
             set => _orderDate = value; 
@@ -34,12 +37,13 @@ namespace BE
 
         public override string ToString()
         {
-            return "Hosting Unit Key:\t" + _hostingUnitKey +
+
+            return "Order Key:\t\t" + _orderKey +
+                "\nHosting Unit Key:\t" + _hostingUnitKey +
                 "\nGuest Request Key:\t" + _guestRequestKey +
-                "\nOrder Key:\t" + _orderKey +
-                "\nStatus:\t" + _status +
-                "\nCreate Date:\t" + _createDate +
-                "\nOrder Date:\t" + _orderDate;
+                "\nOrder Status:\t" + _status +
+                "\nOrder Creation Date:\t" + _createDate.toString() +
+                "\nMail sent Date:\t" + _orderDate.toString();
         }
     }
 }

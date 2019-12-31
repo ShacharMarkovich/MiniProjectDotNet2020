@@ -10,11 +10,14 @@ namespace DAL
     {
         private static IDal _instance = null;
         private Dal_imp() { }
-        public static IDal Instance()
+        internal static IDal Instance
         {
-            if (_instance == null)
-                _instance = new Dal_imp();
-            return _instance;
+            get
+            {
+                if (_instance == null)
+                    _instance = new Dal_imp();
+                return _instance;
+            }
         }
 
         /// <summary>
@@ -85,19 +88,15 @@ namespace DAL
         /// <param name="newStat">new BE.Enums.Status</param>
         public void UpdateOrder(BE.Order order, BE.Enums.Status newStat)
         {
-            //var a = from order_ in DS.DataSource._ordersList
-            //        where order_._orderKey == order._orderKey
-            //        select order_;
-            //foreach(BE.Order b in a)
-            //    b.Status = newStat;
-            DS.DataSource._ordersList.ForEach(delegate (BE.Order innerOrder) {
+            DS.DataSource._ordersList.ForEach(delegate (BE.Order innerOrder)
+            {
                 if (innerOrder._orderKey == order._guestRequestKey)
                     innerOrder.Status = newStat;
             });
         }
 
         /// <summary>
-        /// return all BE.GuestRequest. using Linq
+        /// return all BE.GuestRequest
         /// </summary>
         public List<BE.GuestRequest> GetAllRequests()
         {
@@ -108,32 +107,32 @@ namespace DAL
         }
 
         /// <summary>
-        /// return all BE.HostingUnit. using Linq
+        /// return all BE.HostingUnit
         /// </summary>
         public List<BE.HostingUnit> GetAllHostingUnits()
         {
-            var newList = from hostingUnit in DS.DataSource._hostingUnitsList
-                          select hostingUnit;
+            IEnumerable<BE.HostingUnit> newList = from hostingUnit in DS.DataSource._hostingUnitsList
+                                                  select hostingUnit;
             return newList.ToList();
         }
 
         /// <summary>
-        /// return all BE.Order. using Linq
+        /// return all BE.Order
         /// </summary>
         public List<BE.Order> GetAllOrders()
         {
-            var newList = from order in DS.DataSource._ordersList
-                          select order;
+            IEnumerable<BE.Order> newList = from order in DS.DataSource._ordersList
+                                            select order;
             return newList.ToList();
         }
 
         /// <summary>
-        /// return all BE.BankBranch. using Linq
+        /// return all BE.BankBranch
         /// </summary>
         public List<BE.BankBranch> GetAllBranches()
         {
-            var newList = from bankBranch in DS.DataSource._bankBranchList
-                          select bankBranch;
+            IEnumerable<BE.BankBranch> newList = from bankBranch in DS.DataSource._bankBranchList
+                                                 select bankBranch;
             return newList.ToList();
         }
     }

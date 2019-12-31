@@ -9,7 +9,7 @@ namespace BE
     /// in the next part of the project we will make this class singleton
     public class HostingUnit
     {
-        public readonly double _hostingUnitKey;
+        public readonly double _hostingUnitKey = ++BE.Configuration.HostingUnitKey;
 
         private Host _owner;
         public Host Owner
@@ -44,10 +44,11 @@ namespace BE
 
         public override string ToString()
         {
-            string str = "Key: " + _hostingUnitKey;
-            str += "\nOwner: " + _owner.ToString();
-            str += "\nHosting unit name: " + _hostingUnitName;
-            str += "\nDiary busy ranges:\n" + _diary.ToString();
+            string str = "Hosting Unit Key:\t" + _hostingUnitKey;
+            str += "\nUnit name:\t" + _hostingUnitName;
+            str += "\nOwner:\n" + _owner.ToString();
+            str += "\nUnit Area:\t" + _area;
+            str += "\nDiary busy ranges:\n" + _diary.toString();
             return str;
         }
     }

@@ -9,13 +9,8 @@ namespace BE
     /// in the next part of the project we will make this class singleton
     public class Host
     {
-        public readonly double _hostKey;
-        private double _balanse;
-        public double Balanse
-        {
-            set => _balanse = value;
-            get => _balanse;
-        }
+        public readonly double _hostKey = ++BE.Configuration.HostKey;
+
         private string _privateName;
         public string PrivateName
         {
@@ -58,23 +53,31 @@ namespace BE
             get => _bankAccountNumber;
         }
 
+        private double _balanse;
+        public double Balanse
+        {
+            set => _balanse = value;
+            get => _balanse;
+        }
+
         private bool _collectionClearance;
         public bool CollectionClearance
         {
             set => _collectionClearance = value;
             get => _collectionClearance;
         }
-        
+
 
         public override string ToString()
         {
-            return "Private Name:\t" + _privateName +
+            return "\nHost Key:\t" + _hostKey +
+                "\nPrivate Name:\t" + _privateName +
                 "\nFamily Name:\t" + _familyName +
                 "\nPhone Number:\t" + _phoneNumber +
                 "\nEmail:\t" + _email +
-                "\nBank Branch Details:\t" + _bankBranchDetails.ToString() +
+                "\nBank Branch Details:\n" + _bankBranchDetails.ToString() +
                 "\nBank Account Number:\t" + _bankAccountNumber +
-                "\nCollection Clearance:\t" + _collectionClearance;
+                "\nHas Collection Clearance: " + _collectionClearance;
         }
     }
 }

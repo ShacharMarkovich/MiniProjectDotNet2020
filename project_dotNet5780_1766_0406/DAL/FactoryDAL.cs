@@ -8,10 +8,7 @@ namespace DAL
 {
     public class FactoryDAL
     {
-        public static IDal Dal()
-        {
-                return Dal_imp.Instance();
-                //case "XML": return DAL_XML.Instance();
-        }
+        public static IDal Instance
+        { get => Dal_imp.Instance; }
     }
 }

@@ -8,8 +8,8 @@ namespace BE
 {
     public class GuestRequest
     {
-        
-        public readonly double _guestRequestKey;
+
+        public readonly double _guestRequestKey;// = ++BE.Configuration.GuestRequestKey;
 
         private string _privateName;
         public string PrivateName
@@ -196,16 +196,22 @@ namespace BE
 
         public override string ToString()
         {
-            return "\nRegistration Date:\t" + _registrationDate +
-                "\nEnty Date:\t" + _entryDate +
-                "\nRelease Date:\t" + _releaseDate +
-                "\nAarea:\t" + _area +
-                "\nType:\t" + _type +
-                "\nAdults:\t" + _adults +
+
+            return "Guest Request Key:\t" + _guestRequestKey +
+                "\nPrivate Name:\t" + _privateName +
+                "\nFamily Name:\t" + _familyName +
+                "\nEmail:\t\t" + _email +
+                "\nRegistration Date:\t" + _registrationDate.toString() +
+                "\nEnty Date:\t\t" + _entryDate.toString() +
+                "\nRelease Date:\t\t" + _releaseDate.toString() +
+                "\nRequest Status:\t" + _stat +
+                "\nRequest Area:\t" + _area +
+                "\nType:\t\t" + _type +
+                "\nAdults:\t\t" + _adults +
                 "\nChildren:\t" + _children +
-                "\nPool:\t" + _pool +
-                "\nJecuzzi:\t" + _jecuzzi +
-                "\nGarden:\t" + _garden +
+                "\nPool:\t\t\t" + _pool +
+                "\nJecuzzi:\t\t" + _jecuzzi +
+                "\nGarden:\t\t\t" + _garden +
                 "\nChildren Attractions:\t" + _childrenAttractions;
         }
 

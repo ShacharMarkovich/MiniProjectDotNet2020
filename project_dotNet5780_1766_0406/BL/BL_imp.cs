@@ -11,16 +11,18 @@ namespace BL
         private DAL.IDal _dal;
 
         private static IBL _instance = null;
-        //private int count;
 
-        public static IBL Instance()
+        public static IBL Instance
         {
-            if (_instance == null)
-                _instance = new BL_imp();
-            return _instance;
+            get
+            {
+                if (_instance == null)
+                    _instance = new BL_imp();
+                return _instance;
+            }
         }
 
-        private BL_imp() { _dal = DAL.FactoryDAL.Dal(); }
+        private BL_imp() { _dal = DAL.FactoryDAL.Instance; }
 
 
         /// <summary>
@@ -86,10 +88,10 @@ namespace BL
 
         public void TakeFee(BE.Order order)
         {
-            var a = _dal.GetAllRequests();
-            var req = from gReq in a
-                    where gReq._guestRequestKey == order._guestRequestKey
-                    select gReq;
+            List<BE.GuestRequest> a = _dal.GetAllRequests();
+            IEnumerable<BE.GuestRequest> req = from gReq in a
+                                               where gReq._guestRequestKey == order._guestRequestKey
+                                               select gReq;
             int days = 0;
             try
             {
@@ -99,12 +101,12 @@ namespace BL
             }
             catch (ArgumentNullException exc)
             {
-                Console.WriteLine("EROR IN Guest Request too much or less argument" );
+                Console.WriteLine("EROR IN Guest Request too much or less argument");
             }
-            var d = _dal.GetAllHostingUnits();
-            var Hos = from gHos in d
-                      where gHos._hostingUnitKey == order._hostingUnitKey
-                      select gHos;
+            List<BE.HostingUnit> d = _dal.GetAllHostingUnits();
+            IEnumerable<BE.HostingUnit> Hos = from gHos in d
+                                              where gHos._hostingUnitKey == order._hostingUnitKey
+                                              select gHos;
             try
             {
                 BE.HostingUnit e = Hos.Single();
@@ -112,7 +114,7 @@ namespace BL
             }
             catch (ArgumentNullException exc1)
             {
-                Console.WriteLine("EROR IN SELECT HostingUnit" );
+                Console.WriteLine("EROR IN SELECT HostingUnit");
             }
         }
 
@@ -152,14 +154,14 @@ namespace BL
         public void SelectInvitation(BE.Order order)
         {
             _dal.UpdateOrder(order, BE.Enums.Status.CloseByClient);
-            var a = _dal.GetAllRequests();
-            var Req = from gReq in a
-                      where gReq._guestRequestKey == order._guestRequestKey
-                      select gReq;
-            BE.GuestRequest c=null;
+            List<BE.GuestRequest> a = _dal.GetAllRequests();
+            IEnumerable<BE.GuestRequest> Req = from gReq in a
+                                               where gReq._guestRequestKey == order._guestRequestKey
+                                               select gReq;
+            BE.GuestRequest c = null;
             try
             {
-                 c = Req.Single();
+                c = Req.Single();
                 _dal.UpdateGuestRequest(c, BE.Enums.Status.CloseByApp);
 
             }
@@ -167,11 +169,11 @@ namespace BL
             {
                 Console.WriteLine("EROR IN Guest Request too much or less argument");
             }
-            var cc = from matchOrder in _dal.GetAllOrders()
-                     where matchOrder._guestRequestKey == c._guestRequestKey
-                     select matchOrder;
+            IEnumerable<BE.Order> cc = from matchOrder in _dal.GetAllOrders()
+                                       where matchOrder._guestRequestKey == c._guestRequestKey
+                                       select matchOrder;
 
-            foreach (var matchOrder in cc)
+            foreach (BE.Order matchOrder in cc)
                 _dal.UpdateOrder(matchOrder, BE.Enums.Status.CloseByApp);
         }
 
@@ -183,9 +185,9 @@ namespace BL
         {
             List<BE.Order> orders = _dal.GetAllOrders();
 
-            var belongsTo = from order in orders
-                            where (order._hostingUnitKey == hostingUnit._hostingUnitKey && !IsOrderClose(order))
-                            select order;
+            IEnumerable<BE.Order> belongsTo = from order in orders
+                                              where (order._hostingUnitKey == hostingUnit._hostingUnitKey && !IsOrderClose(order))
+                                              select order;
 
             return belongsTo.Count() == 0;
         }
@@ -242,38 +244,38 @@ namespace BL
                 throw new ArgumentException("ArrDate.Length > 2 || ArrDate.Length < 1");
         }
 
-        public List<BE.Order> IsOrderBigFromNumber(int daysNumber)
+        public List<BE.Order> AtLeastnDays(int n)
         {
-            var lst = from order in _dal.GetAllOrders()
-                      where (DateTime.Now - order.CreateDate).Days >= daysNumber || (DateTime.Now - order.OrderDate).Days >= daysNumber
-                      select order;
-            return lst.ToList();
+            IEnumerable<BE.Order> enumerator = from order in _dal.GetAllOrders()
+                                               where ((DateTime.Now - order.CreateDate).Days >= n || (DateTime.Now - order.OrderDate).Days >= n)
+                                               select order;
+            return enumerator.ToList();
         }
 
         public List<BE.GuestRequest> AccordingTo(Term term)
         {
-            var gReqs = from gReq in _dal.GetAllRequests()
-                        where term(gReq)
-                        select gReq;
+            IEnumerable<BE.GuestRequest> gReqs = from gReq in _dal.GetAllRequests()
+                                                 where term(gReq)
+                                                 select gReq;
 
             return gReqs.ToList();
         }
 
         public int OrderCount(BE.GuestRequest gReq)
         {
-            var orders = from order in _dal.GetAllOrders()
-                         where order._guestRequestKey == gReq._guestRequestKey
-                         select order;
+            IEnumerable<BE.Order> orders = from order in _dal.GetAllOrders()
+                                           where order._guestRequestKey == gReq._guestRequestKey
+                                           select order;
 
             return orders.Count();
         }
 
         public int ApprovedCount(BE.HostingUnit hostingUnit)
         {
-            var orders = from order in _dal.GetAllOrders()
-                         where order._guestRequestKey == hostingUnit._hostingUnitKey &&
-                         (order.Status == BE.Enums.Status.Approved || order.Status == BE.Enums.Status.MailSent)
-                         select order;
+            IEnumerable<BE.Order> orders = from order in _dal.GetAllOrders()
+                                           where order._guestRequestKey == hostingUnit._hostingUnitKey &&
+                                           (order.Status == BE.Enums.Status.Approved || order.Status == BE.Enums.Status.MailSent)
+                                           select order;
 
             return orders.Count();
         }
@@ -281,7 +283,7 @@ namespace BL
         public List<IGrouping<BE.Enums.Area, BE.GuestRequest>> GuestRequest_GroupbyArea()
         {
             IEnumerable<IGrouping<BE.Enums.Area, BE.GuestRequest>> group = from gReq in _dal.GetAllRequests()
-                                                                            group gReq by gReq.Area;
+                                                                           group gReq by gReq.Area;
             return group.ToList();
         }
 
@@ -295,7 +297,7 @@ namespace BL
         public List<IGrouping<int, BE.Host>> Host_GroupbyAmountOfHostingUnit()
         {
             IEnumerable<IGrouping<BE.Host, BE.HostingUnit>> host2unit = from hostingUnit in _dal.GetAllHostingUnits()
-                                                                group hostingUnit by hostingUnit.Owner;
+                                                                        group hostingUnit by hostingUnit.Owner;
 
             IEnumerable<IGrouping<int, BE.Host>> lst = from IGrouping<BE.Host, BE.HostingUnit> g in host2unit
                                                        let count = g.Count()
@@ -306,8 +308,8 @@ namespace BL
 
         public List<IGrouping<BE.Enums.Area, BE.HostingUnit>> HostingUnit_GroupbyArea()
         {
-            var Hosting_unit = from Hunit in _dal.GetAllHostingUnits()
-                               group Hunit by Hunit.Area;
+            IEnumerable<IGrouping<BE.Enums.Area, BE.HostingUnit>> Hosting_unit = from Hunit in _dal.GetAllHostingUnits()
+                                                                                 group Hunit by Hunit.Area;
             return Hosting_unit.ToList();
         }
 

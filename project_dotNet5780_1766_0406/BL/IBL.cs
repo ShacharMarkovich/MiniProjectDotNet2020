@@ -17,24 +17,6 @@ namespace BL
 
     interface IBL
     {
-        //void AddGuestRequest(BE.GuestRequest gRequest);
-        //void UpdateGuestRequest(BE.GuestRequest gRequest, BE.Enums.Status newStat);
-        //
-        //void AddHostingUnit(BE.HostingUnit newHostingUnit);
-        //void DeleteHostingUnit(BE.HostingUnit hostingUnit);
-        //void UpdateHostingUnit(BE.HostingUnit hostingUnit, object update);
-        //
-        //void AddOrder(BE.Order newOrder);
-        //void UpdateOrder(BE.Order order, BE.Enums.Status newStat);
-        //
-        //
-        //List<BE.GuestRequest> GetAllRequests();
-        //List<BE.HostingUnit> GetAllHostingUnits();
-        //List<BE.Order> GetAllOrders();
-        //List<BE.BankBranch> GetAllBranches();
-
-        ///////////////////////////////////////////////////////////////////////////
-        // in the same order as the functions are in pdf
         bool Ischronological(DateTime entryDate, DateTime releaseDate);
         bool IsCollectionClearance( BE.Host host);
         bool IsDateArmor(BE.HostingUnit hostingUnit, DateTime entryDate, DateTime releaseDate);
@@ -49,7 +31,7 @@ namespace BL
         //////////////////////////////////////////////////////////
         List<BE.HostingUnit> ListOptionsFree(DateTime entryDate, int daysNumber);
         int DaysNumber(params DateTime[] ArrDate);
-        List<BE.Order> IsOrderBigFromNumber(int daysNumber);
+        List<BE.Order> AtLeastnDays(int daysNumber);
         List<BE.GuestRequest> AccordingTo(Term foo);
         int OrderCount(BE.GuestRequest gReq);
         int ApprovedCount(BE.HostingUnit hostingUnit);

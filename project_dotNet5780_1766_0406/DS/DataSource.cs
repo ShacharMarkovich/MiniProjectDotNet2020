@@ -14,12 +14,13 @@ namespace DS
                 new BE.GuestRequest("name2", "last_name2", "2@gmail.com", 0, new DateTime(), new DateTime(), new DateTime(), 0, 0, 1, 1, false, true, false, true),
                 new BE.GuestRequest("name3", "last_name3", "3@gmail.com", 0, new DateTime(), new DateTime(), new DateTime(), 0, 0, 1, 1, false, true, false, true)
             };
-        public static List<BE.HostingUnit>  _hostingUnitsList    = new List<BE.HostingUnit>()
+        public static List<BE.HostingUnit> _hostingUnitsList = new List<BE.HostingUnit>()
             {
                 new BE.HostingUnit()
                 {
                     HostingUnitName = "HostingUnitName1",
                     Diary = new bool[12, 31],
+                    Area = 0,
                     Owner = new BE.Host()
                     {
                         PrivateName = "name1",
@@ -41,6 +42,7 @@ namespace DS
                 {
                     HostingUnitName = "HostingUnitName2",
                     Diary = new bool[12, 31],
+                    Area = 0,
                     Owner = new BE.Host()
                     {
                         PrivateName = "name2",
@@ -62,6 +64,7 @@ namespace DS
                 {
                     HostingUnitName = "HostingUnitName3",
                     Diary = new bool[12, 31],
+                    Area = 0,
                     Owner = new BE.Host()
                     {
                         PrivateName = "name3",

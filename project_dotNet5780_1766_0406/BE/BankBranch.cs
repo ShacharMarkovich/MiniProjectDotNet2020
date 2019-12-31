@@ -9,9 +9,8 @@ namespace BE
     /// in the next part of the project we will make this class singleton
     public class BankBranch
     {
-        public readonly double _bankNumber;
+        public readonly double _bankNumber = ++BE.Configuration.BankNumber;
 
-        //defualt getter
         private string _bankName;
         public string BankName
         {
@@ -52,15 +51,14 @@ namespace BE
             get { return _branchCity; }
         }
 
-        
+
         public override string ToString()
         {
-            return "Bank Number:\t" + _bankName +
+            return "Bank Number:\t" + _bankNumber +
                 "\nBank Name:\t" + _bankName +
                 "\nBranch Number:\t" + _branchNumber +
                 "\nBranch Address:\t" + _branchAddress +
                 "\nBranch City:\t" + _branchCity;
         }
-
     }
 }

@@ -8,10 +8,7 @@ namespace BL
 {
     class FactoryBL
     {
-        public static IBL Bl()
-        {
-            return BL_imp.Instance();
-            //case "XML": return BL_imp.Instance();
-        }
+        public static IBL Instance
+        { get => BL_imp.Instance; }
     }
 }
