@@ -65,7 +65,9 @@ namespace BE
             get => _collectionClearance;
         }
         
-
+        /// <summary>
+        /// swap to string
+        /// </summary>
         public override string ToString()
         {
             return "Private Name:\t" + _privateName +

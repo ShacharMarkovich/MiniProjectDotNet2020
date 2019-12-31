@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    /// in the next part of the project we will make this class singleton
     public class BankBranch
     {
         public readonly double _bankNumber;
 
-        //defualt getter
+        /// <summary>
+        /// defualt getter
+        /// </summary>
         private string _bankName;
         public string BankName
         {
@@ -52,7 +53,10 @@ namespace BE
             get { return _branchCity; }
         }
 
-        
+        /// <summary>
+        /// swap to string
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return "Bank Number:\t" + _bankName +

@@ -8,7 +8,6 @@ namespace BE
 {
     public class GuestRequest
     {
-        
         public readonly double _guestRequestKey;
 
         private string _privateName;
@@ -63,7 +62,6 @@ namespace BE
             }
         }
 
-        // all the dates are in this form: dd.mm.yyyy
         private DateTime _registrationDate;
         public DateTime RegistrationDate
         {
@@ -169,8 +167,10 @@ namespace BE
             get => _childrenAttractions;
         }
 
-        //// for now the c'tor is public, in order to make 3 instances that needed in DS.DataSource
-        //// in the next part of the project we will make this class singleton
+
+        /// <summary>
+        /// for now the c'tor is public, in order to make 3 instances that needed in DS.DataSource in the next part of the project we will make this class singleton
+        /// </summary>
         public GuestRequest(string privateName, string familyName, string email, Enums.Status stat,
                             DateTime registrationDate, DateTime entryDate, DateTime releaseDate,
                             Enums.Area area, Enums.UnitType type_, int adults, int children,
@@ -193,7 +193,9 @@ namespace BE
             Garden = garden;
             ChildrenAttractions = childrenAttractions;
         }
-
+        /// <summary>
+        /// swap to string
+        /// </summary>
         public override string ToString()
         {
             return "\nRegistration Date:\t" + _registrationDate +
