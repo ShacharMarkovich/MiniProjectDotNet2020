@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    /// in the next part of the project we will make this class singleton
     public class HostingUnit
     {
         public readonly double _hostingUnitKey = ++BE.Configuration.HostingUnitKey;
@@ -41,7 +40,9 @@ namespace BE
             set => _diary = value;
             get => _diary;
         }
-
+        /// <summary>
+        /// swap to string
+        /// </summary>
         public override string ToString()
         {
             string str = "Hosting Unit Key:\t" + _hostingUnitKey;

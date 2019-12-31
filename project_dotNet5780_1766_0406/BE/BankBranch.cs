@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    /// in the next part of the project we will make this class singleton
     public class BankBranch
     {
         public readonly double _bankNumber = ++BE.Configuration.BankNumber;
@@ -51,7 +50,9 @@ namespace BE
             get { return _branchCity; }
         }
 
-
+        /// <summary>
+        /// swap to string
+        /// </summary>
         public override string ToString()
         {
             return "Bank Number:\t" + _bankNumber +

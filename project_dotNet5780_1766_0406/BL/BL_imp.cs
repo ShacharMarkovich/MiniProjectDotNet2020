@@ -12,6 +12,9 @@ namespace BL
 
         private static IBL _instance = null;
 
+        /// <summary>
+        /// singleton
+        /// </summary>
         public static IBL Instance
         {
             get
@@ -24,20 +27,14 @@ namespace BL
 
         private BL_imp() { _dal = DAL.FactoryDAL.Instance; }
 
-
-        /// <summary>
-        /// return true if entryDate is at least 1 day earlyer than releaseDate
-        /// </summary>
         public bool Ischronological(DateTime entryDate, DateTime releaseDate)
         {
             return (releaseDate - entryDate).Days >= 1;
         }
-
         public bool IsCollectionClearance(BE.Host host)
         {
             return host.CollectionClearance;
         }
-
         public bool IsDateArmor(BE.HostingUnit hostingUnit, DateTime entryDate, DateTime releaseDate)
         {
             if (!Ischronological(entryDate, releaseDate))
@@ -46,46 +43,11 @@ namespace BL
             int count = (releaseDate - entryDate).Days;
             return IsDateArmor(hostingUnit, entryDate, count);
         }
-
-        private bool IsDateArmor(BE.HostingUnit hostingUnit, DateTime entryDate, int count)
-        {
-            int month = entryDate.Month, day = entryDate.Day;
-            bool[,] diary = hostingUnit.Diary;
-
-            if (diary[month, day] == false || (diary[month, day] == true && diary[month, day + 1] == false))
-            {
-                for (int i = 0; i < count; i++, day++)
-                {
-                    if (day == BE.Configuration._days) // check if we in end of month
-                    {
-                        // past to next month
-                        day = 0;
-                        month++;
-                        if (month == BE.Configuration._month) // check if we in end of year
-                            month = 0;
-                    }
-                    // check for exists busy day 
-                    if (diary[month, day] == true && (i != 0 || i == count - 1))
-                        return false;
-                    else
-                        diary[month, day] = true;
-                }
-
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// return true if order stauts is CloseByClient or CloseByApp or Approved
-        /// else - return false
-        /// </summary>
+        
         public bool IsOrderClose(BE.Order order)
         {
             return order.Status >= BE.Enums.Status.CloseByClient;
         }
-
         public void TakeFee(BE.Order order)
         {
             List<BE.GuestRequest> a = _dal.GetAllRequests();
@@ -116,14 +78,7 @@ namespace BL
             {
                 Console.WriteLine("EROR IN SELECT HostingUnit");
             }
-        }
-
-        /// <summary>
-        /// make hostingUnit's diary beasy in entryDate until releaseDate
-        /// </summary>
-        /// <param name="hostingUnit">the unit</param>
-        /// <param name="entryDate">enter date</param>
-        /// <param name="releaseDate">releas date</param>
+        }  
         public void UpdateCalendar(BE.HostingUnit hostingUnit, DateTime entryDate, DateTime releaseDate)
         {
             if (IsDateArmor(hostingUnit, entryDate, releaseDate))
@@ -150,7 +105,6 @@ namespace BL
             else
                 throw new Exception("Dates already taken in this hosting unit");
         }
-
         public void SelectInvitation(BE.Order order)
         {
             _dal.UpdateOrder(order, BE.Enums.Status.CloseByClient);
@@ -176,11 +130,6 @@ namespace BL
             foreach (BE.Order matchOrder in cc)
                 _dal.UpdateOrder(matchOrder, BE.Enums.Status.CloseByApp);
         }
-
-        /// <summary>
-        /// check if hostingUnit has any open order.
-        /// return true if thers isn't.
-        /// </summary>
         public bool IsPossibleToDelete(BE.HostingUnit hostingUnit)
         {
             List<BE.Order> orders = _dal.GetAllOrders();
@@ -191,11 +140,6 @@ namespace BL
 
             return belongsTo.Count() == 0;
         }
-
-        /// <summary>
-        /// check if host has any open order.
-        /// return true if thers isn't.
-        /// </summary>
         public bool IsCanCancalCollectionClearance(BE.Host host)
         {
             List<BE.HostingUnit> units = _dal.GetAllHostingUnits();
@@ -211,10 +155,6 @@ namespace BL
 
             return true;
         }
-
-        /// <summary>
-        /// TODO: realy send the mail
-        /// </summary>
         public void SendEmail(BE.Host host/*FROM*/, string gReqEmail/*TO*/)
         {
             // TODO: realy send the mail
@@ -225,7 +165,6 @@ namespace BL
         }
 
         //////////////////////////////////////////////////////////
-
         public List<BE.HostingUnit> ListOptionsFree(DateTime entryDate, int daysNumber)
         {
             List<BE.HostingUnit> free = (from unit in _dal.GetAllHostingUnits()
@@ -233,7 +172,6 @@ namespace BL
                                          select unit).ToList();
             return free;
         }
-
         public int DaysNumber(params DateTime[] ArrDate)
         {
             if (ArrDate.Length == 1)
@@ -323,6 +261,39 @@ namespace BL
         {
             DateTime now = DateTime.Now;
             return (time - now).Days > ((BE.Configuration._month - 1) * BE.Configuration._days);
+        }
+
+        /// <summary>
+        /// Are dates available to order
+        /// </summary>
+        private bool IsDateArmor(BE.HostingUnit hostingUnit, DateTime entryDate, int count)
+        {
+            int month = entryDate.Month, day = entryDate.Day;
+            bool[,] diary = hostingUnit.Diary;
+
+            if (diary[month, day] == false || (diary[month, day] == true && diary[month, day + 1] == false))
+            {
+                for (int i = 0; i < count; i++, day++)
+                {
+                    if (day == BE.Configuration._days) // check if we in end of month
+                    {
+                        // past to next month
+                        day = 0;
+                        month++;
+                        if (month == BE.Configuration._month) // check if we in end of year
+                            month = 0;
+                    }
+                    // check for exists busy day 
+                    if (diary[month, day] == true && (i != 0 || i == count - 1))
+                        return false;
+                    else
+                        diary[month, day] = true;
+                }
+
+                return true;
+            }
+
+            return false;
         }
 
         private bool DateArmor(BE.HostingUnit hostingUnit, DateTime entryDate, int count)

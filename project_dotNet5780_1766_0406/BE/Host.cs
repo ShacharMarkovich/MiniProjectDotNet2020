@@ -66,8 +66,9 @@ namespace BE
             set => _collectionClearance = value;
             get => _collectionClearance;
         }
-
-
+        /// <summary>
+        /// swap to string
+        /// </summary>
         public override string ToString()
         {
             return "\nHost Key:\t" + _hostKey +
