@@ -9,7 +9,22 @@ namespace BE
     /// in the next part of the project we will make this class singleton
     public class Host
     {
-        public readonly double _hostKey = ++BE.Configuration.HostKey;
+        private bool _hostKey_setAlready = false;
+        private double _hostKey;
+        public double HostKey
+        {
+            get => _hostKey;
+            set
+            {
+                if (!_hostKey_setAlready)
+                {
+                    _hostKey = value;
+                    _hostKey_setAlready = true;
+                }
+                else
+                    throw new AccessViolationException("BE.Host._hostKey property can only once change!");
+            }
+        }
 
         private string _privateName;
         public string PrivateName
@@ -53,11 +68,11 @@ namespace BE
             get => _bankAccountNumber;
         }
 
-        private double _balanse;
-        public double Balanse
+        private double _balance;
+        public double Balance
         {
-            set => _balanse = value;
-            get => _balanse;
+            set => _balance = value;
+            get => _balance;
         }
 
         private bool _collectionClearance;
@@ -66,9 +81,7 @@ namespace BE
             set => _collectionClearance = value;
             get => _collectionClearance;
         }
-        /// <summary>
-        /// swap to string
-        /// </summary>
+
         public override string ToString()
         {
             return "\nHost Key:\t" + _hostKey +

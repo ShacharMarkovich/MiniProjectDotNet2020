@@ -10,9 +10,58 @@ namespace BE
     public class Order
     {
         // TODO: do matching between order to hosting unit and guest request
-        public readonly double _hostingUnitKey = ++BE.Configuration.HostingUnitKey;
-        public readonly double _guestRequestKey = ++BE.Configuration.GuestRequestKey;
-        public readonly double _orderKey = ++BE.Configuration.OrderKey;
+
+        private bool _hostingUnitKey_setAlready = false;
+        private bool _guestRequestKey_setAlready = false;
+        private bool _orderKey_setAlready = false;
+
+        private double _hostingUnitKey;
+        public double HostingUnitKey
+        {
+            get => _hostingUnitKey;
+            set
+            {
+                if (!_hostingUnitKey_setAlready)
+                {
+                    _hostingUnitKey = value;
+                    _hostingUnitKey_setAlready = true;
+                }
+                else
+                    throw new AccessViolationException("BE.Order._hostingUnitKey property can only once change!");
+            }
+        }
+
+        private double _guestRequestKey;
+        public double GuestRequestKey
+        {
+            get => _guestRequestKey;
+            set
+            {
+                if (!_guestRequestKey_setAlready)
+                {
+                    _guestRequestKey = value;
+                    _guestRequestKey_setAlready = true;
+                }
+                else
+                    throw new AccessViolationException("BE.Order._guestRequestKey property can only once change!");
+            }
+        }
+
+        private double _orderKey;
+        public double OrderKey
+        {
+            get => _orderKey;
+            set
+            {
+                if (!_orderKey_setAlready)
+                {
+                    _orderKey = value;
+                    _orderKey_setAlready = true;
+                }
+                else
+                    throw new AccessViolationException("BE.Order._orderKey property can only once change!");
+            }
+        }
 
         private Enums.Status _status;
         public Enums.Status Status

@@ -8,7 +8,23 @@ namespace BE
 {
     public class HostingUnit
     {
-        public readonly double _hostingUnitKey = ++BE.Configuration.HostingUnitKey;
+        private bool _hostingUnitKey_setAlready = false;
+
+        private double _hostingUnitKey;
+        public double HostingUnitKey
+        {
+            get => _hostingUnitKey;
+            set
+            {
+                if (!_hostingUnitKey_setAlready)
+                {
+                    _hostingUnitKey = value;
+                    _hostingUnitKey_setAlready = true;
+                }
+                else
+                    throw new AccessViolationException("BE.HostingUnit._hostingUnitKey property can only once change!");
+            }
+        }
 
         private Host _owner;
         public Host Owner
@@ -20,11 +36,15 @@ namespace BE
         private Enums.Area _area;
         public Enums.Area Area
         {
-            set
-            {
-                _area = value;
-            }
+            set => _area = value;
             get => _area;
+        }
+
+        private Enums.UnitType _type { get; set; }
+        public Enums.UnitType type
+        {
+            set => _type = value;
+            get => _type;
         }
 
         private string _hostingUnitName;
@@ -40,9 +60,7 @@ namespace BE
             set => _diary = value;
             get => _diary;
         }
-        /// <summary>
-        /// swap to string
-        /// </summary>
+
         public override string ToString()
         {
             string str = "Hosting Unit Key:\t" + _hostingUnitKey;

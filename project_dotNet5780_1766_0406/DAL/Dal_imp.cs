@@ -20,52 +20,33 @@ namespace DAL
             }
         }
 
-        /// <summary>
-        /// this function add the new BE.GuestRequest to data source
-        /// </summary>
+        
         public void AddGuestRequest(BE.GuestRequest gRequest)
         {
             DS.DataSource._guestRequestsList.Add(gRequest);
         }
 
-        /// <summary>
-        /// update the given BE.GuestRequest to the new BE.Enums.Status
-        /// </summary>
-        /// <param name="gRequest">exists BE.GuestRequest to update </param>
-        /// <param name="newStat">new BE.Enums.Status</param>
         public void UpdateGuestRequest(BE.GuestRequest gRequest, BE.Enums.Status newStat)
         {
             DS.DataSource._guestRequestsList.ForEach(delegate (BE.GuestRequest gReq)
             {
-                if (gReq._guestRequestKey == gRequest._guestRequestKey)
+                if (gReq.GuestRequestKey == gRequest.GuestRequestKey)
                     gReq.Stat = newStat;
             });
         }
 
 
-        /// <summary>
-        /// this function add the new BE.HostingUnit to data source
-        /// </summary>
         public void AddHostingUnit(BE.HostingUnit newHostingUnit)
         {
             DS.DataSource._hostingUnitsList.Add(newHostingUnit);
         }
 
-        /// <summary>
-        /// delete the given BE.HostingUnit from the data source
-        /// </summary>
-        /// <param name="hostingUnit">BE.HostingUnit to remove</param>
         public void DeleteHostingUnit(BE.HostingUnit hostingUnit)
         {
             if (DS.DataSource._hostingUnitsList.Remove(hostingUnit) == false)
                 throw new ArgumentException("delete from DS.DataSource._hostingUnitsList not succeed!", "hostingUnit");
         }
 
-        /// <summary>
-        /// TODO: what we need to update??
-        /// </summary>
-        // <param name="hostingUnit"></param>
-        // <param name="update"></param>
         public void UpdateHostingUnit(BE.HostingUnit hostingUnit, object update)
         {
             // temp implementation
@@ -73,31 +54,20 @@ namespace DAL
         }
 
 
-        /// <summary>
-        /// this function add the new BE.Order to data source
-        /// </summary>
         public void AddOrder(BE.Order newOrder)
         {
             DS.DataSource._ordersList.Add(newOrder);
         }
 
-        /// <summary>
-        /// update the given BE.Order to the new BE.Enums.Status
-        /// </summary>
-        /// <param name="order">exists BE.Order to update </param>
-        /// <param name="newStat">new BE.Enums.Status</param>
         public void UpdateOrder(BE.Order order, BE.Enums.Status newStat)
         {
             DS.DataSource._ordersList.ForEach(delegate (BE.Order innerOrder)
             {
-                if (innerOrder._orderKey == order._guestRequestKey)
+                if (innerOrder.OrderKey == order.OrderKey)
                     innerOrder.Status = newStat;
             });
         }
 
-        /// <summary>
-        /// return all BE.GuestRequest
-        /// </summary>
         public List<BE.GuestRequest> GetAllRequests()
         {
             IEnumerable<BE.GuestRequest> newList = from gReq in DS.DataSource._guestRequestsList
@@ -106,9 +76,6 @@ namespace DAL
             return newList.ToList();
         }
 
-        /// <summary>
-        /// return all BE.HostingUnit
-        /// </summary>
         public List<BE.HostingUnit> GetAllHostingUnits()
         {
             IEnumerable<BE.HostingUnit> newList = from hostingUnit in DS.DataSource._hostingUnitsList
@@ -116,9 +83,6 @@ namespace DAL
             return newList.ToList();
         }
 
-        /// <summary>
-        /// return all BE.Order
-        /// </summary>
         public List<BE.Order> GetAllOrders()
         {
             IEnumerable<BE.Order> newList = from order in DS.DataSource._ordersList
@@ -126,9 +90,6 @@ namespace DAL
             return newList.ToList();
         }
 
-        /// <summary>
-        /// return all BE.BankBranch
-        /// </summary>
         public List<BE.BankBranch> GetAllBranches()
         {
             IEnumerable<BE.BankBranch> newList = from bankBranch in DS.DataSource._bankBranchList

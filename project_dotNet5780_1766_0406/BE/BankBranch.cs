@@ -8,51 +8,51 @@ namespace BE
 {
     public class BankBranch
     {
-        public readonly double _bankNumber = ++BE.Configuration.BankNumber;
+        private bool _bankNumber_setAlready = false;
+        private double _bankNumber;
+        public double BankNumber
+        {
+            get => _bankNumber;
+            set
+            {
+                if (!_bankNumber_setAlready)
+                {
+                    _bankNumber = value;
+                    _bankNumber_setAlready = true;
+                }
+                else
+                    throw new AccessViolationException("BE.BankBranch._bankNumber property can only once change!");
+            }
+        }
 
         private string _bankName;
         public string BankName
         {
-            set
-            {
-                _bankName = value;
-            }
-            get
-            {
-                return _bankName;
-            }
+            set => _bankName = value;
+            get => _bankName;
         }
 
         private int _branchNumber;
         public int BranchNumber
         {
-            set
-            {
-                _branchNumber = value;
-            }
-            get
-            {
-                return _branchNumber;
-            }
+            set => _branchNumber = value;
+            get => _branchNumber;
         }
 
         private string _branchAddress;
         public string BranchAddress
         {
-            set { _branchAddress = value; }
-            get { return _branchAddress; }
+            set => _branchAddress = value;
+            get => _branchAddress;
         }
 
         private string _branchCity;
         public string BranchCity
         {
-            set { _branchCity = value; }
-            get { return _branchCity; }
+            set => _branchCity = value;
+            get => _branchCity;
         }
 
-        /// <summary>
-        /// swap to string
-        /// </summary>
         public override string ToString()
         {
             return "Bank Number:\t" + _bankNumber +

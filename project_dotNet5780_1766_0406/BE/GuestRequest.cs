@@ -8,58 +8,49 @@ namespace BE
 {
     public class GuestRequest
     {
-        public readonly double _guestRequestKey;// = ++BE.Configuration.GuestRequestKey;
+        private bool _guestRequestKey_setAlready = false;
+        private double _guestRequestKey;
+        public double GuestRequestKey
+        {
+            get => _guestRequestKey;
+            set
+            {
+                if (!_guestRequestKey_setAlready)
+                {
+                    _guestRequestKey = value;
+                    _guestRequestKey_setAlready = true;
+                }
+                else
+                    throw new AccessViolationException("BE.GuestRequest._guestRequestKey property can only once change!");
+            }
+        }
 
         private string _privateName;
         public string PrivateName
         {
-            set
-            {
-                _privateName = value;
-            }
-            get
-            {
-                return _privateName;
-            }
+            set => _privateName = value;
+            get => _privateName;
         }
 
         private string _familyName;
         public string FamilyName
         {
-            set
-            {
-                _familyName = value;
-            }
-            get
-            {
-                return _familyName;
-            }
+            set => _familyName = value;
+            get => _familyName;
         }
 
         private string _email;
         public string Email
         {
-            set
-            {
-                _email = value;
-            } 
-            get
-            {
-                return _email;
-            }
+            set => _email = value;
+            get => _email;
         }
 
         private Enums.Status _stat;
         public Enums.Status Stat
         {
-            set
-            {
-                _stat = value;
-            }
-            get
-            {
-                return _stat;
-            }
+            set => _stat = value;
+            get => _stat;
         }
 
         private DateTime _registrationDate;
@@ -79,91 +70,63 @@ namespace BE
         private DateTime _releaseDate;
         public DateTime ReleaseDate
         {
-            set
-            {
-                _releaseDate = value;
-            }
+            set => _releaseDate = value;
             get => _releaseDate;
         }
-
 
         private Enums.Area _area;
         public Enums.Area Area
         {
-            set
-            {
-                _area = value;
-            }
+            set => _area = value;
             get => _area;
         }
 
         private Enums.UnitType _type { get; set; }
         public Enums.UnitType type
         {
-            set
-            {
-                _type = value;
-            }
+            set => _type = value;
             get => _type;
         }
 
         private int _adults { get; set; }
         public int Adults
         {
-            set
-            {
-                _adults = value;
-            }
+            set => _adults = value;
             get => _adults;
         }
 
         private int _children { get; set; }
         public int Children
         {
-            set
-            {
-                _children = value;
-            }
+            set => _children = value;
             get => _children;
         }
 
         private bool _pool { get; set; }
         public bool Pool
         {
-            set
-            {
-                _pool = value;
-            }
+            set => _pool = value;
             get => _pool;
         }
 
         private bool _jecuzzi { get; set; }
         public bool Jecuzzi
         {
-            set
-            {
-                _jecuzzi = value;
-            }
+            set => _jecuzzi = value;
             get => _jecuzzi;
         }
 
         private bool _garden;
         public bool Garden
         {
-            set
-            {
-                _garden = value;
-            }
+            set => _garden = value;
             get => _garden;
         }
 
         private bool _childrenAttractions;
         public bool ChildrenAttractions
         {
-            set
-            {
-                _childrenAttractions = value;
-            }
+            set => _childrenAttractions = value;
             get => _childrenAttractions;
         }
 
@@ -176,7 +139,7 @@ namespace BE
                             Enums.Area area, Enums.UnitType type_, int adults, int children,
                             bool pool, bool jecuzzi, bool garden, bool childrenAttractions)
         {
-            _guestRequestKey = ++Configuration.GuestRequestKey;
+            GuestRequestKey = ++Configuration.GuestRequestKey;
             PrivateName = privateName;
             FamilyName = familyName;
             Email = email;
@@ -193,9 +156,7 @@ namespace BE
             Garden = garden;
             ChildrenAttractions = childrenAttractions;
         }
-        /// <summary>
-        /// swap to string
-        /// </summary>
+
         public override string ToString()
         {
 

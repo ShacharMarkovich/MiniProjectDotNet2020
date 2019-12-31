@@ -46,6 +46,16 @@ namespace BE
             return (toString == "" ? "None" : toString);
         }
 
+        /// <summary>
+        /// delegate to a term that work on BE.GuestRequest and return true
+        /// if gReq meets the condition
+        /// </summary>
+        /// <param name="gReq">BE.GuestRequest to check</param>
+        /// <returns>if gReq meets the condition</returns>
+        public delegate bool Term(BE.GuestRequest gReq);
+
+
+
         public const int _days = 31;
         public const int _month = 12;
             

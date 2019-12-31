@@ -12,9 +12,6 @@ namespace BL
 
         private static IBL _instance = null;
 
-        /// <summary>
-        /// singleton
-        /// </summary>
         public static IBL Instance
         {
             get
@@ -52,13 +49,13 @@ namespace BL
         {
             List<BE.GuestRequest> a = _dal.GetAllRequests();
             IEnumerable<BE.GuestRequest> req = from gReq in a
-                                               where gReq._guestRequestKey == order._guestRequestKey
+                                               where gReq.GuestRequestKey == order.GuestRequestKey
                                                select gReq;
             int days = 0;
             try
             {
-                BE.GuestRequest c = req.Single();
-                days = (c.ReleaseDate - c.EntryDate).Days;
+                BE.GuestRequest gReq = req.Single();
+                days = (gReq.ReleaseDate - gReq.EntryDate).Days;
 
             }
             catch (ArgumentNullException exc)
@@ -67,12 +64,12 @@ namespace BL
             }
             List<BE.HostingUnit> d = _dal.GetAllHostingUnits();
             IEnumerable<BE.HostingUnit> Hos = from gHos in d
-                                              where gHos._hostingUnitKey == order._hostingUnitKey
+                                              where gHos.HostingUnitKey == order.HostingUnitKey
                                               select gHos;
             try
             {
-                BE.HostingUnit e = Hos.Single();
-                e.Owner.Balanse = (e.Owner.Balanse - days * BE.Configuration.Fee);
+                BE.HostingUnit unit = Hos.Single();
+                unit.Owner.Balance = (unit.Owner.Balance - days * BE.Configuration.Fee);
             }
             catch (ArgumentNullException exc1)
             {
@@ -110,7 +107,7 @@ namespace BL
             _dal.UpdateOrder(order, BE.Enums.Status.CloseByClient);
             List<BE.GuestRequest> a = _dal.GetAllRequests();
             IEnumerable<BE.GuestRequest> Req = from gReq in a
-                                               where gReq._guestRequestKey == order._guestRequestKey
+                                               where gReq.GuestRequestKey == order.GuestRequestKey
                                                select gReq;
             BE.GuestRequest c = null;
             try
@@ -124,7 +121,7 @@ namespace BL
                 Console.WriteLine("EROR IN Guest Request too much or less argument");
             }
             IEnumerable<BE.Order> cc = from matchOrder in _dal.GetAllOrders()
-                                       where matchOrder._guestRequestKey == c._guestRequestKey
+                                       where matchOrder.GuestRequestKey == c.GuestRequestKey
                                        select matchOrder;
 
             foreach (BE.Order matchOrder in cc)
@@ -135,7 +132,7 @@ namespace BL
             List<BE.Order> orders = _dal.GetAllOrders();
 
             IEnumerable<BE.Order> belongsTo = from order in orders
-                                              where (order._hostingUnitKey == hostingUnit._hostingUnitKey && !IsOrderClose(order))
+                                              where (order.HostingUnitKey == hostingUnit.HostingUnitKey && !IsOrderClose(order))
                                               select order;
 
             return belongsTo.Count() == 0;
@@ -145,7 +142,7 @@ namespace BL
             List<BE.HostingUnit> units = _dal.GetAllHostingUnits();
             // get all HostingUnit that host is there owner
             List<BE.HostingUnit> hostingUnit = (from unit in units
-                                                where unit.Owner._hostKey == host._hostKey
+                                                where unit.Owner.HostKey == host.HostKey
                                                 select unit).ToList();
 
             // check if for all units there is no open order
@@ -190,7 +187,7 @@ namespace BL
             return enumerator.ToList();
         }
 
-        public List<BE.GuestRequest> AccordingTo(Term term)
+        public List<BE.GuestRequest> AccordingTo(BE.Configuration.Term term)
         {
             IEnumerable<BE.GuestRequest> gReqs = from gReq in _dal.GetAllRequests()
                                                  where term(gReq)
@@ -202,7 +199,7 @@ namespace BL
         public int OrderCount(BE.GuestRequest gReq)
         {
             IEnumerable<BE.Order> orders = from order in _dal.GetAllOrders()
-                                           where order._guestRequestKey == gReq._guestRequestKey
+                                           where order.GuestRequestKey == gReq.GuestRequestKey
                                            select order;
 
             return orders.Count();
@@ -211,28 +208,29 @@ namespace BL
         public int ApprovedCount(BE.HostingUnit hostingUnit)
         {
             IEnumerable<BE.Order> orders = from order in _dal.GetAllOrders()
-                                           where order._guestRequestKey == hostingUnit._hostingUnitKey &&
+                                           where order.GuestRequestKey == hostingUnit.HostingUnitKey &&
                                            (order.Status == BE.Enums.Status.Approved || order.Status == BE.Enums.Status.MailSent)
                                            select order;
 
             return orders.Count();
         }
 
-        public List<IGrouping<BE.Enums.Area, BE.GuestRequest>> GuestRequest_GroupbyArea()
+
+        public List<IGrouping<BE.Enums.Area, BE.GuestRequest>> GroupGuestRequestByArea()
         {
             IEnumerable<IGrouping<BE.Enums.Area, BE.GuestRequest>> group = from gReq in _dal.GetAllRequests()
                                                                            group gReq by gReq.Area;
             return group.ToList();
         }
 
-        public List<IGrouping<int, BE.GuestRequest>> GuestRequest_GroupbyAmountOfPeople()
+        public List<IGrouping<int, BE.GuestRequest>> GroupGuestRequestByPeopleCount()
         {
             IEnumerable<IGrouping<int, BE.GuestRequest>> group = from gReq in _dal.GetAllRequests()
                                                                  group gReq by (gReq.Children + gReq.Adults);
             return group.ToList();
         }
 
-        public List<IGrouping<int, BE.Host>> Host_GroupbyAmountOfHostingUnit()
+        public List<IGrouping<int, BE.Host>> GroupHostByfHostingUnitCount()
         {
             IEnumerable<IGrouping<BE.Host, BE.HostingUnit>> host2unit = from hostingUnit in _dal.GetAllHostingUnits()
                                                                         group hostingUnit by hostingUnit.Owner;
@@ -244,7 +242,7 @@ namespace BL
             return lst.ToList();
         }
 
-        public List<IGrouping<BE.Enums.Area, BE.HostingUnit>> HostingUnit_GroupbyArea()
+        public List<IGrouping<BE.Enums.Area, BE.HostingUnit>> GroupHostingUnitByArea()
         {
             IEnumerable<IGrouping<BE.Enums.Area, BE.HostingUnit>> Hosting_unit = from Hunit in _dal.GetAllHostingUnits()
                                                                                  group Hunit by Hunit.Area;

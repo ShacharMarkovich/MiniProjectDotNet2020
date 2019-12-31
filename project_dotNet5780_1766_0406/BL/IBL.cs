@@ -6,13 +6,6 @@ using System.Threading.Tasks;
 
 namespace BL
 {
-    /// <summary>
-    /// delegate to a term that work on BE.GuestRequest and return true
-    /// if gReq meets the condition
-    /// </summary>
-    /// <param name="gReq">BE.GuestRequest to check</param>
-    /// <returns>if gReq meets the condition</returns>
-    public delegate bool Term(BE.GuestRequest gReq);
 
 
     interface IBL
@@ -24,7 +17,7 @@ namespace BL
         /// <summary>
         /// return true if the host gives approval for debiting bank account
         /// </summary>
-        bool IsCollectionClearance( BE.Host host);
+        bool IsCollectionClearance(BE.Host host);
         /// <summary>
         /// return true if the number of order days ,Are dates available to order
         /// </summary>
@@ -72,14 +65,14 @@ namespace BL
         /// </summary>
         int DaysNumber(params DateTime[] ArrDate);
         List<BE.Order> AtLeastnDays(int daysNumber);
-        List<BE.GuestRequest> AccordingTo(Term foo);
+        List<BE.GuestRequest> AccordingTo(BE.Configuration.Term foo);
         int OrderCount(BE.GuestRequest gReq);
         int ApprovedCount(BE.HostingUnit hostingUnit);
 
-        List<IGrouping<BE.Enums.Area, BE.GuestRequest>> GuestRequest_GroupbyArea();
-        List<IGrouping<int, BE.GuestRequest>> GuestRequest_GroupbyAmountOfPeople();
-        List<IGrouping<int, BE.Host>> Host_GroupbyAmountOfHostingUnit();
-        List<IGrouping<BE.Enums.Area, BE.HostingUnit>> HostingUnit_GroupbyArea();
+        List<IGrouping<BE.Enums.Area, BE.GuestRequest>> GroupGuestRequestByArea();
+        List<IGrouping<int, BE.GuestRequest>> GroupGuestRequestByPeopleCount();
+        List<IGrouping<int, BE.Host>> GroupHostByfHostingUnitCount();
+        List<IGrouping<BE.Enums.Area, BE.HostingUnit>> GroupHostingUnitByArea();
 
 
         //////////////////////////////////////////////////////////
