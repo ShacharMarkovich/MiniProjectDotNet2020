@@ -44,19 +44,24 @@ namespace BL
         void SelectInvitation(BE.GuestRequest gReq);
         bool IsPossibleToDelete(BE.HostingUnit hostingUnit);
         bool IsCanCancalCollectionClearance(BE.Host host);
-        void SendEmail(string HostEmail/*FROM*/, string gReqEmail/*TO*/);
+        void SendEmail(BE.Host host/*FROM*/, string gReqEmail/*TO*/);
 
         //////////////////////////////////////////////////////////
-        List<BE.HostingUnit> ListOptionsFree(DateTime entryDate, int NumberDay);
-        int NumberDay(params DateTime[] ArrDate);
-        List<BE.Order> IsOrderBigFromNumber(int NumberDay);
+        List<BE.HostingUnit> ListOptionsFree(DateTime entryDate, int daysNumber);
+        int DaysNumber(params DateTime[] ArrDate);
+        List<BE.Order> IsOrderBigFromNumber(int daysNumber);
         List<BE.GuestRequest> AccordingTo(Term foo);
         int OrderCount(BE.GuestRequest gReq);
         int ApprovedCount(BE.HostingUnit hostingUnit);
 
-        IGrouping<BE.Enums.Area, BE.GuestRequest> GuestRequest_GroupbyArea();
-        IGrouping<int, BE.GuestRequest> GuestRequest_GroupbyAmountOfPeople();
-        IGrouping<int, BE.Host> Host_GroupbyAmountOfHostingUnit();
+        List<IGrouping<BE.Enums.Area, BE.GuestRequest>> GuestRequest_GroupbyArea();
+        List<IGrouping<int, BE.GuestRequest>> GuestRequest_GroupbyAmountOfPeople();
+        List<IGrouping<int, BE.Host>> Host_GroupbyAmountOfHostingUnit();
         IGrouping<BE.Enums.Area, BE.HostingUnit> HostingUnit_GroupbyArea();
+
+
+        //////////////////////////////////////////////////////////
+        // our additional functions:
+        bool InCalendar(DateTime time);
     }
 }

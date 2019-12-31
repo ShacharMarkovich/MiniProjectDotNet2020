@@ -11,6 +11,8 @@ namespace BL
         private DAL.IDal _dal;
 
         private static IBL _instance = null;
+        private int count;
+
         public static IBL Instance()
         {
             if (_instance == null)
@@ -26,26 +28,52 @@ namespace BL
         /// </summary>
         public bool Ischronological(DateTime entryDate, DateTime releaseDate)
         {
-            if (entryDate.Year > releaseDate.Year)
-                return false;
-            else if (entryDate.Month > releaseDate.Month)
-                return false;
-            else if (entryDate.Day + 1 > releaseDate.Day)
-                return false;
-            else
-                return true;
+            return (releaseDate - entryDate).Days >= 1;
         }
-        
+
         public bool IsCollectionClearance(BE.Host host)
         {
             return host.CollectionClearance;
         }
-        
+
         public bool IsDateArmor(BE.HostingUnit hostingUnit, DateTime entryDate, DateTime releaseDate)
         {
-            throw new NotImplementedException("TODO: the check");
-            throw new NotImplementedException("maybe targil1 will help");
-            
+            if (!Ischronological(entryDate, releaseDate))
+                return false;
+
+            int count = (releaseDate - entryDate).Days;
+            return IsDateArmor(hostingUnit, entryDate, count);
+        }
+
+        private bool IsDateArmor(BE.HostingUnit hostingUnit, DateTime entryDate, int count)
+        {
+            int month = entryDate.Month, day = entryDate.Day;
+            bool[,] diary = hostingUnit.Diary;
+
+            if (diary[month, day] == false || (diary[month, day] == true && diary[month, day + 1] == false))
+            {
+                for (int i = 0; i < count; i++, day++)
+                {
+                    if (day == BE.Configuration._days) // check if we in end of month
+                    {
+                        // past to next month
+                        day = 0;
+                        month++;
+                        if (month == BE.Configuration._month) // check if we in end of year
+                            month = 0;
+                    }
+                    // check for exists busy day 
+                    if (diary[month, day] == true && (i != 0 || i == count - 1))
+                        return false;
+                    else
+                        diary[month, day] = true;
+                }
+
+                //hostingUnit.Diary = diary; // update the data structer
+                return true;
+            }
+
+            return false;
             return false;
         }
 
@@ -63,12 +91,34 @@ namespace BL
             throw new NotImplementedException("what to do with the fee???");
         }
 
+        /// <summary>
+        /// make hostingUnit's diary beasy in entryDate until releaseDate
+        /// </summary>
+        /// <param name="hostingUnit">the unit</param>
+        /// <param name="entryDate">enter date</param>
+        /// <param name="releaseDate">releas date</param>
         public void UpdateCalendar(BE.HostingUnit hostingUnit, DateTime entryDate, DateTime releaseDate)
         {
             if (IsDateArmor(hostingUnit, entryDate, releaseDate))
             {
-                throw new NotImplementedException("TODO: add");
-                throw new NotImplementedException("maybe targil1 will help");
+                int count = (releaseDate - entryDate).Days,
+                    month = entryDate.Month,
+                    day = entryDate.Day;
+                bool[,] diary = hostingUnit.Diary;
+
+                for (int i = 0; i < count; i++, day++)
+                {
+                    if (day == BE.Configuration._days) // check if we in end of month
+                    {
+                        // past to next month
+                        day = 0;
+                        month++;
+                        if (month == BE.Configuration._month) // check if we in end of year
+                            month = 0;
+                    }
+                    diary[month, day] = true;
+                }
+                hostingUnit.Diary = diary; // update the data structer
             }
             else
                 throw new Exception("Dates already taken in this hosting unit");
@@ -76,7 +126,7 @@ namespace BL
 
         public void SelectInvitation(BE.GuestRequest gReq)
         {
-
+            //lior
         }
 
         /// <summary>
@@ -86,7 +136,7 @@ namespace BL
         public bool IsPossibleToDelete(BE.HostingUnit hostingUnit)
         {
             List<BE.Order> orders = _dal.GetAllOrders();
-            
+
             var belongsTo = from order in orders
                             where (order._hostingUnitKey == hostingUnit._hostingUnitKey && !IsOrderClose(order))
                             select order;
@@ -117,48 +167,144 @@ namespace BL
         /// <summary>
         /// TODO: realy send the mail
         /// </summary>
-        public void SendEmail(string HostEmail/*FROM*/, string gReqEmail/*TO*/)
+        public void SendEmail(BE.Host host/*FROM*/, string gReqEmail/*TO*/)
         {
             // TODO: realy send the mail
-            Console.WriteLine("{0} is sending email to {1}....", HostEmail, gReqEmail);
+            if (IsCollectionClearance(host))
+                Console.WriteLine("{0} is sending email to {1}....", host.Email, gReqEmail);
+            else
+                throw new Exception("host not has a CollectionClearance!");
         }
 
         //////////////////////////////////////////////////////////
-        public List<BE.HostingUnit> ListOptionsFree(DateTime entryDate, int NumberDay)
-        {
-            return null;
-        }
-        public int NumberDay(params DateTime[] ArrDate)
-        {
-            return -1;
-        }
-        public List<BE.Order> IsOrderBigFromNumber(int NumberDay)
-        {
-            return null;
-        }
-        public List<BE.GuestRequest> AccordingTo(Term foo)
-        {
-            return null;
-        }
-        public int OrderCount(BE.GuestRequest gReq) { return 0; }
-        public int ApprovedCount(BE.HostingUnit hostingUnit) { return 0; }
 
-        public IGrouping<BE.Enums.Area, BE.GuestRequest> GuestRequest_GroupbyArea()
+        public List<BE.HostingUnit> ListOptionsFree(DateTime entryDate, int daysNumber)
         {
-            return null;
+            List<BE.HostingUnit> free = (from unit in _dal.GetAllHostingUnits()
+                                         where IsDateArmor(unit, entryDate, daysNumber)
+                                         select unit).ToList();
+            return free;
         }
-        public IGrouping<int, BE.GuestRequest> GuestRequest_GroupbyAmountOfPeople()
+
+        public int DaysNumber(params DateTime[] ArrDate)
         {
-            return null;
+            if (ArrDate.Length == 1)
+                return (ArrDate[0] - DateTime.Now).Days;
+            else if (ArrDate.Length == 2)
+                return (ArrDate[1] - ArrDate[0]).Days;
+            else
+                throw new ArgumentException("ArrDate.Length > 2 || ArrDate.Length < 1");
         }
-        public IGrouping<int, BE.Host> Host_GroupbyAmountOfHostingUnit()
+
+        public List<BE.Order> IsOrderBigFromNumber(int daysNumber)
         {
-            return null;
+            var lst = from order in _dal.GetAllOrders()
+                      where (DateTime.Now - order.CreateDate).Days >= daysNumber || (DateTime.Now - order.OrderDate).Days >= daysNumber
+                      select order;
+            return lst.ToList();
         }
+
+        public List<BE.GuestRequest> AccordingTo(Term term)
+        {
+            var gReqs = from gReq in _dal.GetAllRequests()
+                        where term(gReq)
+                        select gReq;
+
+            return gReqs.ToList();
+        }
+
+        public int OrderCount(BE.GuestRequest gReq)
+        {
+            var orders = from order in _dal.GetAllOrders()
+                         where order._guestRequestKey == gReq._guestRequestKey
+                         select order;
+
+            return orders.Count();
+        }
+
+        public int ApprovedCount(BE.HostingUnit hostingUnit)
+        {
+            var orders = from order in _dal.GetAllOrders()
+                         where order._guestRequestKey == hostingUnit._hostingUnitKey &&
+                         (order.Status == BE.Enums.Status.Approved || order.Status == BE.Enums.Status.MailSent)
+                         select order;
+
+            return orders.Count();
+        }
+
+        public List<IGrouping<BE.Enums.Area, BE.GuestRequest>> GuestRequest_GroupbyArea()
+        {
+            IEnumerable<IGrouping<BE.Enums.Area, BE.GuestRequest>> group = from gReq in _dal.GetAllRequests()
+                                                                            group gReq by gReq.Area;
+            return group.ToList();
+        }
+        public List<IGrouping<int, BE.GuestRequest>> GuestRequest_GroupbyAmountOfPeople()
+        {
+            IEnumerable<IGrouping<int, BE.GuestRequest>> group = from gReq in _dal.GetAllRequests()
+                                                                 group gReq by (gReq.Children + gReq.Adults);
+            return group.ToList();
+        }
+
+        public List<IGrouping<int, BE.Host>> Host_GroupbyAmountOfHostingUnit()
+        {
+            IEnumerable<IGrouping<BE.Host, BE.HostingUnit>> host2unit = from hostingUnit in _dal.GetAllHostingUnits()
+                                                                group hostingUnit by hostingUnit.Owner;
+
+            IEnumerable<IGrouping<int, BE.Host>> lst = from IGrouping<BE.Host, BE.HostingUnit> g in host2unit
+                                                       let count = g.Count()
+                                                       group g.Key by count;
+
+            return lst.ToList();
+        }
+
         public IGrouping<BE.Enums.Area, BE.HostingUnit> HostingUnit_GroupbyArea()
         {
             return null;
         }
+
+        //////////////////////////////////////////////////////////
+        // our additional functions:
+
+        /// <summary>
+        /// return true if time is max 11 months ahead from now
+        /// </summary>
+        public bool InCalendar(DateTime time)
+        {
+            DateTime now = DateTime.Now;
+            return (time - now).Days > ((BE.Configuration._month - 1) * BE.Configuration._days);
+        }
+
+        private bool DateArmor(BE.HostingUnit hostingUnit, DateTime entryDate, int count)
+        {
+            int month = entryDate.Month, day = entryDate.Day;
+            bool[,] diary = hostingUnit.Diary;
+
+            if (diary[month, day] == false || (diary[month, day] == true && diary[month, day + 1] == false))
+            {
+                for (int i = 0; i < count; i++, day++)
+                {
+                    if (day == BE.Configuration._days) // check if we in end of month
+                    {
+                        // past to next month
+                        day = 0;
+                        month++;
+                        if (month == BE.Configuration._month) // check if we in end of year
+                            month = 0;
+                    }
+                    // check for exists busy day 
+                    if (diary[month, day] == true && (i != 0 || i == count - 1))
+                        return false;
+                    else
+                        diary[month, day] = true;
+                }
+
+                //hostingUnit.Diary = diary; // update the data structer
+                return true;
+            }
+
+            return false;
+        }
+
 
     }
 }

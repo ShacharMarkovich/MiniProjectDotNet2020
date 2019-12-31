@@ -8,6 +8,10 @@ namespace BE
 {
     public static class Configuration
     {
+        public const int _days = 31;
+        public const int _month = 12;
+        
+
         public const double Fee = 10;
 
         private const double _firstKey = 9999999;
