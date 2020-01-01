@@ -33,11 +33,10 @@ namespace DAL
         /// <param name="hostingUnit">HostingUnit to remove</param>
         void DeleteHostingUnit(BE.HostingUnit hostingUnit);
         /// <summary>
-        /// TODO: what we need to update??
+        /// update the matching unit in DS to his new filed
         /// </summary>
         /// <param name="hostingUnit">hostingUnit to update</param>
-        /// <param name="update">TODO</param>
-        void UpdateHostingUnit(BE.HostingUnit hostingUnit, object update);
+        void UpdateHostingUnit(BE.HostingUnit hostingUnit);
         #endregion
 
         #region Order functions signature

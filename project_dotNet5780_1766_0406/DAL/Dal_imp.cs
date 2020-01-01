@@ -20,7 +20,6 @@ namespace DAL
             }
         }
 
-        
         public void AddGuestRequest(BE.GuestRequest gRequest)
         {
             DS.DataSource._guestRequestsList.Add(gRequest);
@@ -47,10 +46,10 @@ namespace DAL
                 throw new ArgumentException("delete from DS.DataSource._hostingUnitsList not succeed!", "hostingUnit");
         }
 
-        public void UpdateHostingUnit(BE.HostingUnit hostingUnit, object update)
+        public void UpdateHostingUnit(BE.HostingUnit hostingUnit)
         {
-            // temp implementation
-            throw new NotImplementedException("Dal_imp.UpdateHostingUnit has not yet implemented");
+            DS.DataSource._hostingUnitsList[DS.DataSource._hostingUnitsList.FindIndex(
+                key => key.HostingUnitKey == hostingUnit.HostingUnitKey)] = hostingUnit;
         }
 
 
