@@ -11,15 +11,63 @@ namespace DS
         //manual entry of values to lists
         public static List<BE.GuestRequest> _guestRequestsList = new List<BE.GuestRequest>()
             {
-                new BE.GuestRequest("name2", "last_name2", "2@gmail.com", BE.Enums.Status.Approved, 
-                    new DateTime(2020,1,10), new DateTime(2020,5,4), new DateTime(2020,5,5), BE.Enums.Area.Center, BE.Enums.UnitType.Camping,
-                    1, 2, false, true, false, true),
-                new BE.GuestRequest("name1", "last_name1", "1@gmail.com", BE.Enums.Status.NotYetApproved, 
-                    new DateTime(2020,1,10), new DateTime(2020,4,5), new DateTime(2020,4,15), BE.Enums.Area.Jerusalem, BE.Enums.UnitType.Hotel,
-                    10, 0, false, false, false, false),
-                new BE.GuestRequest("name3", "last_name3", "3@gmail.com", BE.Enums.Status.MailSent, 
-                    new DateTime(2020,1,10), new DateTime(2020,4,15), new DateTime(2020,4,17), BE.Enums.Area.North, BE.Enums.UnitType.RentingRoom,
-                    3, 4, true, true, true, true)
+                new BE.GuestRequest()
+                {
+                    GuestRequestKey = ++BE.Configuration.GuestRequestKey,
+                    PrivateName = "name1",
+                    FamilyName = "last_name1",
+                    Email = "1@gmail.com",
+                    Stat = BE.Enums.Status.NotYetApproved,
+                    RegistrationDate = new DateTime(2020,1,10),
+                    EntryDate =  new DateTime(2020,4,5),
+                    ReleaseDate = new DateTime(2020,4,15),
+                    Area = BE.Enums.Area.Jerusalem,
+                    type = BE.Enums.UnitType.Hotel,
+                    Adults = 10,
+                    Children = 0,
+                    Pool = false,
+                    Jecuzzi = false,
+                    Garden = true,
+                    ChildrenAttractions = false,
+                },
+                new BE.GuestRequest()
+                {
+                    GuestRequestKey = ++BE.Configuration.GuestRequestKey,
+                    PrivateName = "name2",
+                    FamilyName = "last_name2",
+                    Email = "2@gmail.com",
+                    Stat = BE.Enums.Status.Approved,
+                    RegistrationDate = new DateTime(2020,1,10),
+                    EntryDate =  new DateTime(2020,5,4),
+                    ReleaseDate = new DateTime(2020,5,5),
+                    Area = BE.Enums.Area.Center,
+                    type = BE.Enums.UnitType.Camping,
+                    Adults = 1,
+                    Children = 2,
+                    Pool = false,
+                    Jecuzzi = true,
+                    Garden = true,
+                    ChildrenAttractions = false,
+                },
+                new BE.GuestRequest()
+                {
+                    GuestRequestKey = ++BE.Configuration.GuestRequestKey,
+                    PrivateName = "name3",
+                    FamilyName = "last_name3",
+                    Email = "3@gmail.com",
+                    Stat = BE.Enums.Status.MailSent,
+                    RegistrationDate = new DateTime(2020,1,10),
+                    EntryDate =  new DateTime(2020,4,15),
+                    ReleaseDate = new DateTime(2020,4,17),
+                    Area = BE.Enums.Area.North,
+                    type = BE.Enums.UnitType.RentingRoom,
+                    Adults = 3,
+                    Children = 2,
+                    Pool = true,
+                    Jecuzzi = true,
+                    Garden = true,
+                    ChildrenAttractions = true,
+                }
             };
         public static List<BE.BankBranch> _bankBranchList = new List<BE.BankBranch>()
             {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DalTest
 {
+    using DAL;
     class Program
     {
         private static DAL.IDal _dal = DAL.FactoryDAL.Instance;
@@ -62,15 +63,29 @@ namespace DalTest
         private static void GuestRequest()
         {
             //add
-            BE.GuestRequest gR = new BE.GuestRequest("shachar", "markovich", "21com.bat21@gmail.com",
-                BE.Enums.Status.NotYetApproved, DateTime.Now, new DateTime(2020, 8, 9), new DateTime(2020, 8, 12),
-                BE.Enums.Area.Center, BE.Enums.UnitType.Hotel, 2, 3, true, true, false, true);
-            _dal.AddGuestRequest(gR);
+            BE.GuestRequest gR = new BE.GuestRequest();
+            gR.GuestRequestKey = ++BE.Configuration.GuestRequestKey;
+            gR.PrivateName = "shachar";
+            gR.FamilyName = "markovich";
+            gR.Email = "21com.bat21@gmail.com";
+            gR.Stat = BE.Enums.Status.NotYetApproved;
+            gR.RegistrationDate = DateTime.Now;
+            gR.EntryDate = new DateTime(2020, 8, 9);
+            gR.ReleaseDate = new DateTime(2020, 8, 12);
+            gR.Area = BE.Enums.Area.Center;
+            gR.type = BE.Enums.UnitType.Hotel;
+            gR.Adults = 2;
+            gR.Children = 3;
+            gR.Pool = true;
+            gR.Jecuzzi = true;
+            gR.Garden = true;
+            gR.ChildrenAttractions = true;
+            _dal.AddGuestRequest(gR.Clone());
             PrintRequests();
 
             //update
             Console.WriteLine("after update:");
-            _dal.UpdateGuestRequest(gR, BE.Enums.Status.CloseByClient);
+            _dal.UpdateGuestRequest(gR.Clone(), BE.Enums.Status.CloseByClient);
             PrintRequests();
         }
 
@@ -92,17 +107,17 @@ namespace DalTest
                 Area = BE.Enums.Area.Center,
                 Diary = new bool[BE.Configuration._month, BE.Configuration._days],
             };
-            _dal.AddHostingUnit(unit);
+            _dal.AddHostingUnit(unit.Clone());
             PrintHostingUnits();
 
             // update
             unit.Owner = unitsList[2].Owner;
-            _dal.UpdateHostingUnit(unit);
+            _dal.UpdateHostingUnit(unit.Clone());
             Console.WriteLine("after update:");
             PrintHostingUnits();
 
             //delete
-            _dal.DeleteHostingUnit(unit);
+            _dal.DeleteHostingUnit(unit.Clone());
             Console.WriteLine("after delete:");
             PrintHostingUnits();
         }
@@ -124,12 +139,12 @@ namespace DalTest
             };
             
             // add
-            _dal.AddOrder(newOrder);
+            _dal.AddOrder(newOrder.Clone());
             PrintOrder();
 
             //update
             Console.WriteLine("after update:");
-            _dal.UpdateOrder(newOrder, BE.Enums.Status.Approved);
+            _dal.UpdateOrder(newOrder.Clone(), BE.Enums.Status.Approved);
             PrintOrder();
         }
 

@@ -130,33 +130,6 @@ namespace BE
             get => _childrenAttractions;
         }
 
-
-        /// <summary>
-        /// for now the c'tor is public, in order to make 3 instances that needed in DS.DataSource in the next part of the project we will make this class singleton
-        /// </summary>
-        public GuestRequest(string privateName, string familyName, string email, Enums.Status stat,
-                            DateTime registrationDate, DateTime entryDate, DateTime releaseDate,
-                            Enums.Area area, Enums.UnitType type_, int adults, int children,
-                            bool pool, bool jecuzzi, bool garden, bool childrenAttractions)
-        {
-            GuestRequestKey = ++Configuration.GuestRequestKey;
-            PrivateName = privateName;
-            FamilyName = familyName;
-            Email = email;
-            Stat = stat;
-            RegistrationDate = registrationDate;
-            EntryDate = entryDate;
-            ReleaseDate = releaseDate;
-            Area = area;
-            type = type_;
-            Adults = adults;
-            Children = children;
-            Pool = pool;
-            Jecuzzi = jecuzzi;
-            Garden = garden;
-            ChildrenAttractions = childrenAttractions;
-        }
-
         public override string ToString()
         {
 

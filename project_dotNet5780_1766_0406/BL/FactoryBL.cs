@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BL
 {
-    class FactoryBL
+    public class FactoryBL
     {
         public static IBL Instance
         { get => BL_imp.Instance; }

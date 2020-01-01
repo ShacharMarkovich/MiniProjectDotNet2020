@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace BL
 {
-
-
-    interface IBL
+    public interface IBL
     {
         /// <summary>
         /// return true if entryDate is at least 1 day earlyer than releaseDate
@@ -60,8 +58,7 @@ namespace BL
         /// </summary>
         List<BE.HostingUnit> ListOptionsFree(DateTime entryDate, int daysNumber);
         /// <summary>
-        ///return int
-        /// number of days from first date to second date or the number of days from the date given to today
+        /// return number of days between ArrDate or the number of days past from date given
         /// </summary>
         int DaysNumber(params DateTime[] ArrDate);
         List<BE.Order> AtLeastnDays(int daysNumber);

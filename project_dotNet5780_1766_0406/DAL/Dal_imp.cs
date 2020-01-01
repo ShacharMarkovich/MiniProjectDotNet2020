@@ -71,28 +71,28 @@ namespace DAL
         {
             IEnumerable<BE.GuestRequest> newList = from gReq in DS.DataSource._guestRequestsList
                                                    orderby gReq.PrivateName
-                                                   select gReq;
+                                                   select gReq.Clone();
             return newList.ToList();
         }
 
         public List<BE.HostingUnit> GetAllHostingUnits()
         {
             IEnumerable<BE.HostingUnit> newList = from hostingUnit in DS.DataSource._hostingUnitsList
-                                                  select hostingUnit;
+                                                  select hostingUnit.Clone();
             return newList.ToList();
         }
 
         public List<BE.Order> GetAllOrders()
         {
             IEnumerable<BE.Order> newList = from order in DS.DataSource._ordersList
-                                            select order;
+                                            select order.Clone();
             return newList.ToList();
         }
 
         public List<BE.BankBranch> GetAllBranches()
         {
             IEnumerable<BE.BankBranch> newList = from bankBranch in DS.DataSource._bankBranchList
-                                                 select bankBranch;
+                                                 select bankBranch.Clone();
             return newList.ToList();
         }
     }
