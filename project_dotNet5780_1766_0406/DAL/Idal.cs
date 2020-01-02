@@ -30,12 +30,10 @@ namespace DAL
         /// <summary>
         /// delete the given BE.HostingUnit from the data source
         /// </summary>
-        /// <param name="hostingUnit">HostingUnit to remove</param>
         void DeleteHostingUnit(BE.HostingUnit hostingUnit);
         /// <summary>
         /// update the matching unit in DS to his new filed
         /// </summary>
-        /// <param name="hostingUnit">hostingUnit to update</param>
         void UpdateHostingUnit(BE.HostingUnit hostingUnit);
         #endregion
 
@@ -47,8 +45,6 @@ namespace DAL
         /// <summary>
         /// update the given BE.Order to the new BE.Enums.Status
         /// </summary>
-        /// <param name="order">exists BE.Order to update </param>
-        /// <param name="newStat">new BE.Enums.Status</param>
         void UpdateOrder(BE.Order order, BE.Enums.Status newStat);
         #endregion
 
@@ -65,6 +61,7 @@ namespace DAL
         /// return all BE.Order
         /// </summary>
         List<BE.Order> GetAllOrders();
+
         /// <summary>
         /// return all BE.BankBranch
         /// </summary>

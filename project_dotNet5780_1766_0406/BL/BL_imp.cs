@@ -28,10 +28,12 @@ namespace BL
         {
             return (releaseDate - entryDate).Days >= 1;
         }
+
         public bool IsCollectionClearance(BE.Host host)
         {
             return host.CollectionClearance;
         }
+
         public bool IsDateArmor(BE.HostingUnit hostingUnit, DateTime entryDate, DateTime releaseDate)
         {
             if (!Ischronological(entryDate, releaseDate))
@@ -40,42 +42,59 @@ namespace BL
             int count = (releaseDate - entryDate).Days;
             return IsDateArmor(hostingUnit, entryDate, count);
         }
-        
+
         public bool IsOrderClose(BE.Order order)
         {
             return order.Status >= BE.Enums.Status.CloseByClient;
         }
+
         public void TakeFee(BE.Order order)
         {
-            List<BE.GuestRequest> a = _dal.GetAllRequests();
-            IEnumerable<BE.GuestRequest> req = from gReq in a
+            // find match GuestRequest to given order
+            List<BE.GuestRequest> GuestRequestsList = _dal.GetAllRequests();
+            IEnumerable<BE.GuestRequest> req = from gReq in GuestRequestsList
                                                where gReq.GuestRequestKey == order.GuestRequestKey
                                                select gReq;
             int days = 0;
             try
             {
+                // get number of vacation days 
                 BE.GuestRequest gReq = req.Single();
                 days = (gReq.ReleaseDate - gReq.EntryDate).Days;
-
             }
+            // handle exceptions
             catch (ArgumentNullException exc)
             {
-                Console.WriteLine("EROR IN Guest Request too much or less argument");
+                Console.WriteLine("guestsRequest is null");
             }
-            List<BE.HostingUnit> d = _dal.GetAllHostingUnits();
-            IEnumerable<BE.HostingUnit> Hos = from gHos in d
-                                              where gHos.HostingUnitKey == order.HostingUnitKey
-                                              select gHos;
+            catch (InvalidOperationException exc)
+            {
+                Console.WriteLine("guestsRequest has more than one element");
+            }
+
+
+            List<BE.HostingUnit> HostingUnitsList = _dal.GetAllHostingUnits();
+            IEnumerable<BE.HostingUnit> units = from unit in HostingUnitsList
+                                                where unit.HostingUnitKey == order.HostingUnitKey
+                                                select unit;
             try
             {
-                BE.HostingUnit unit = Hos.Single();
-                unit.Owner.Balance = (unit.Owner.Balance - days * BE.Configuration.Fee);
+                // take fee
+                BE.HostingUnit unit = units.Single();
+                unit.Owner.Balance -= days * BE.Configuration.Fee;
+                _dal.UpdateHostingUnit(unit); // update DS
             }
-            catch (ArgumentNullException exc1)
+            // handle exceptions
+            catch (ArgumentNullException exc)
             {
-                Console.WriteLine("EROR IN SELECT HostingUnit");
+                Console.WriteLine("guestsRequest is null");
             }
-        }  
+            catch (InvalidOperationException exc)
+            {
+                Console.WriteLine("guestsRequest has more than one element");
+            }
+        }
+
         public void UpdateCalendar(BE.HostingUnit hostingUnit, DateTime entryDate, DateTime releaseDate)
         {
             if (IsDateArmor(hostingUnit, entryDate, releaseDate))
@@ -102,31 +121,39 @@ namespace BL
             else
                 throw new Exception("Dates already taken in this hosting unit");
         }
+
         public void SelectInvitation(BE.Order order)
         {
-            _dal.UpdateOrder(order, BE.Enums.Status.CloseByClient);
-            List<BE.GuestRequest> a = _dal.GetAllRequests();
-            IEnumerable<BE.GuestRequest> Req = from gReq in a
-                                               where gReq.GuestRequestKey == order.GuestRequestKey
-                                               select gReq;
-            BE.GuestRequest c = null;
+            List<BE.GuestRequest> allReq = _dal.GetAllRequests();
+
+            BE.GuestRequest request = null;
             try
             {
-                c = Req.Single();
-                _dal.UpdateGuestRequest(c, BE.Enums.Status.CloseByApp);
-
+                // find the much guest request to the given order...
+                request = (from gReq in allReq
+                           where gReq.GuestRequestKey == order.GuestRequestKey
+                           select gReq).Single();
+                // /// and update his status
+                _dal.UpdateGuestRequest(request, BE.Enums.Status.CloseByApp);
             }
             catch (ArgumentNullException exc)
             {
-                Console.WriteLine("EROR IN Guest Request too much or less argument");
+                Console.WriteLine("guestsRequest is null");
             }
-            IEnumerable<BE.Order> cc = from matchOrder in _dal.GetAllOrders()
-                                       where matchOrder.GuestRequestKey == c.GuestRequestKey
-                                       select matchOrder;
+            catch (InvalidOperationException exc)
+            {
+                Console.WriteLine("guestsRequest has more than one element");
+            }
 
-            foreach (BE.Order matchOrder in cc)
+            // find the rest of the orders which mach to the request...
+            IEnumerable<BE.Order> orders = from matchOrder in _dal.GetAllOrders()
+                                           where matchOrder.GuestRequestKey == request.GuestRequestKey
+                                           select matchOrder;
+            // ...and close them too
+            foreach (BE.Order matchOrder in orders)
                 _dal.UpdateOrder(matchOrder, BE.Enums.Status.CloseByApp);
         }
+
         public bool IsPossibleToDelete(BE.HostingUnit hostingUnit)
         {
             List<BE.Order> orders = _dal.GetAllOrders();
@@ -137,6 +164,7 @@ namespace BL
 
             return belongsTo.Count() == 0;
         }
+
         public bool IsCanCancalCollectionClearance(BE.Host host)
         {
             List<BE.HostingUnit> units = _dal.GetAllHostingUnits();
@@ -152,6 +180,7 @@ namespace BL
 
             return true;
         }
+
         public void SendEmail(BE.Host host/*FROM*/, string gReqEmail/*TO*/)
         {
             // TODO: realy send the mail
@@ -162,6 +191,7 @@ namespace BL
         }
 
         //////////////////////////////////////////////////////////
+
         public List<BE.HostingUnit> ListOptionsFree(DateTime entryDate, int daysNumber)
         {
             List<BE.HostingUnit> free = (from unit in _dal.GetAllHostingUnits()
@@ -169,6 +199,7 @@ namespace BL
                                          select unit).ToList();
             return free;
         }
+
         public int DaysNumber(params DateTime[] ArrDate)
         {
             if (ArrDate.Length == 1)
@@ -251,10 +282,7 @@ namespace BL
 
         //////////////////////////////////////////////////////////
         // our additional functions:
-
-        /// <summary>
-        /// return true if time is max 11 months ahead from now
-        /// </summary>
+        
         public bool InCalendar(DateTime time)
         {
             DateTime now = DateTime.Now;
@@ -262,7 +290,7 @@ namespace BL
         }
 
         /// <summary>
-        /// Are dates available to order
+        /// check if dates available to order
         /// </summary>
         private bool IsDateArmor(BE.HostingUnit hostingUnit, DateTime entryDate, int count)
         {
@@ -287,43 +315,9 @@ namespace BL
                     else
                         diary[month, day] = true;
                 }
-
                 return true;
             }
-
             return false;
         }
-
-        private bool DateArmor(BE.HostingUnit hostingUnit, DateTime entryDate, int count)
-        {
-            int month = entryDate.Month, day = entryDate.Day;
-            bool[,] diary = hostingUnit.Diary;
-
-            if (diary[month, day] == false || (diary[month, day] == true && diary[month, day + 1] == false))
-            {
-                for (int i = 0; i < count; i++, day++)
-                {
-                    if (day == BE.Configuration._days) // check if we in end of month
-                    {
-                        // past to next month
-                        day = 0;
-                        month++;
-                        if (month == BE.Configuration._month) // check if we in end of year
-                            month = 0;
-                    }
-                    // check for exists busy day 
-                    if (diary[month, day] == true && (i != 0 || i == count - 1))
-                        return false;
-                    else
-                        diary[month, day] = true;
-                }
-
-                return true;
-            }
-
-            return false;
-        }
-
-
     }
 }

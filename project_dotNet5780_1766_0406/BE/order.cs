@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    /// in the next part of the project we will make this class singleton
     public class Order
     {
         // TODO: do matching between order to hosting unit and guest request

@@ -9,6 +9,7 @@ namespace DAL
     public class Dal_imp : IDal
     {
         private static IDal _instance = null;
+
         private Dal_imp() { }
         internal static IDal Instance
         {
@@ -34,7 +35,6 @@ namespace DAL
             });
         }
 
-
         public void AddHostingUnit(BE.HostingUnit newHostingUnit)
         {
             DS.DataSource._hostingUnitsList.Add(newHostingUnit);
@@ -51,7 +51,6 @@ namespace DAL
             DS.DataSource._hostingUnitsList[DS.DataSource._hostingUnitsList.FindIndex(
                 key => key.HostingUnitKey == hostingUnit.HostingUnitKey)] = hostingUnit;
         }
-
 
         public void AddOrder(BE.Order newOrder)
         {
