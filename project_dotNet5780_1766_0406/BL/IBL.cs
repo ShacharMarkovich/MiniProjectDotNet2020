@@ -8,6 +8,49 @@ namespace BL
 {
     public interface IBL
     {
+        #region IDAL functions
+
+        #region GuestRequest functions signature
+        /// <summary>
+        /// this function add the new BE.GuestRequest to the data source
+        /// </summary>
+        void AddGuestRequest(BE.GuestRequest gRequest);
+        /// <summary>
+        /// update the given BE.GuestRequest to the new BE.Enums.Status
+        /// </summary>
+        /// <param name="gRequest">exists BE.GuestRequest to update </param>
+        /// <param name="newStat">new BE.Enums.Status</param>
+        void UpdateGuestRequest(BE.GuestRequest gRequest, BE.Enums.Status newStat);
+        #endregion
+
+        #region HostingUnit functions signature
+        /// <summary>
+        /// this function add the new BE.HostingUnit to data source
+        /// </summary>
+        void AddHostingUnit(BE.HostingUnit newHostingUnit);
+        /// <summary>
+        /// delete the given BE.HostingUnit from the data source
+        /// </summary>
+        void DeleteHostingUnit(BE.HostingUnit hostingUnit);
+        /// <summary>
+        /// update the matching unit in DS to his new filed
+        /// </summary>
+        void UpdateHostingUnit(BE.HostingUnit hostingUnit);
+        #endregion
+
+        #region Order functions signature
+        /// <summary>
+        /// this function add the new BE.Order to data source
+        /// </summary>
+        void AddOrder(BE.Order newOrder);
+        /// <summary>
+        /// update the given BE.Order to the new BE.Enums.Status
+        /// </summary>
+        void UpdateOrder(BE.Order order, BE.Enums.Status newStat);
+        #endregion
+        #endregion
+        
+
         /// <summary>
         /// return true if entryDate is at least 1 day earlier than releaseDate
         /// </summary>
@@ -30,7 +73,13 @@ namespace BL
         /// else - return false
         /// </summary>
         bool IsOrderClose(BE.Order order);
-        
+
+        /// <summary>
+        /// return true if gReq stauts is CloseByClient or CloseByApp or Approved
+        /// else - return false
+        /// </summary>
+        bool IsGuestRequestClose(BE.GuestRequest gReq);
+
         /// <summary>
         /// Take a fee from matching Host 
         /// </summary>
@@ -84,15 +133,20 @@ namespace BL
         /// <summary>
         /// returns a list of all GuestRequest that match a specific condition.
         /// </summary>
-        List<BE.GuestRequest> AccordingTo(BE.Configuration.Term foo);
-        
+        List<BE.GuestRequest> AccordingTo(BE.Configuration.Term<BE.GuestRequest> foo);
+
+        /// <summary>
+        /// returns a list of all HostingUnit that match a specific condition.
+        /// </summary>
+        List<BE.HostingUnit> AccordingTo(BE.Configuration.Term<BE.HostingUnit> term);
+
         /// <summary>
         /// getting guestRequest and return the number of orders sent to him
         /// </summary>
         int OrderCount(BE.GuestRequest gReq);
         
         /// <summary>
-        /// get a hosting unit and returns a namber of all order that have been closed for the hosting unit
+        /// get a hosting unit and returns a number of all order that have been closed for the hosting unit
         /// </summary>
         int ApprovedCount(BE.HostingUnit hostingUnit);
 

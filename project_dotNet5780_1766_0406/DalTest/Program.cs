@@ -63,23 +63,25 @@ namespace DalTest
         private static void GuestRequest()
         {
             //add
-            BE.GuestRequest gR = new BE.GuestRequest();
-            gR.GuestRequestKey = ++BE.Configuration.GuestRequestKey;
-            gR.PrivateName = "shachar";
-            gR.FamilyName = "markovich";
-            gR.Email = "21com.bat21@gmail.com";
-            gR.Stat = BE.Enums.Status.NotYetApproved;
-            gR.RegistrationDate = DateTime.Now;
-            gR.EntryDate = new DateTime(2020, 8, 9);
-            gR.ReleaseDate = new DateTime(2020, 8, 12);
-            gR.Area = BE.Enums.Area.Center;
-            gR.type = BE.Enums.UnitType.Hotel;
-            gR.Adults = 2;
-            gR.Children = 3;
-            gR.Pool = true;
-            gR.Jecuzzi = true;
-            gR.Garden = true;
-            gR.ChildrenAttractions = true;
+            BE.GuestRequest gR = new BE.GuestRequest
+            {
+                GuestRequestKey = ++BE.Configuration.GuestRequestKey,
+                PrivateName = "shachar",
+                FamilyName = "markovich",
+                Email = "21com.bat21@gmail.com",
+                Stat = BE.Enums.Status.NotYetApproved,
+                RegistrationDate = DateTime.Now,
+                EntryDate = new DateTime(2020, 8, 9),
+                ReleaseDate = new DateTime(2020, 8, 12),
+                Area = BE.Enums.Area.Center,
+                type = BE.Enums.UnitType.Hotel,
+                Adults = 2,
+                Children = 3,
+                Pool = true,
+                Jecuzzi = true,
+                Garden = true,
+                ChildrenAttractions = true
+            };
             _dal.AddGuestRequest(gR.Clone());
             PrintRequests();
 

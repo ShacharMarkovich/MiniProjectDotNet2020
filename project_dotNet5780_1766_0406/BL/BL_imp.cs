@@ -6,8 +6,73 @@ using System.Threading.Tasks;
 
 namespace BL
 {
+    using DAL;
+    using BE;
     class BL_imp : IBL
     {
+        #region GuestRequest functions signature
+        public void AddGuestRequest(BE.GuestRequest gRequest)
+        {
+            if (InCalendar(gRequest.RegistrationDate) && InCalendar(gRequest.EntryDate) && InCalendar(gRequest.ReleaseDate) &&
+                Ischronological(gRequest.EntryDate, gRequest.ReleaseDate))
+            {
+                // TODO:  check email
+                _dal.AddGuestRequest(gRequest.Clone());
+            }
+            else
+                throw new ArgumentException("dates are not in this year / not chronological! try again!");
+        }
+
+        public void UpdateGuestRequest(BE.GuestRequest gRequest, BE.Enums.Status newStat)
+        {
+            if (!IsGuestRequestClose(gRequest))
+                _dal.UpdateGuestRequest(gRequest.Clone(), newStat);
+            else
+                throw new ArgumentOutOfRangeException("can't change close Guest Request!");
+        }
+        #endregion
+
+        #region HostingUnit functions signature
+        public void AddHostingUnit(BE.HostingUnit newHostingUnit)
+        {
+            // TODO in part 3: check if newHostingUnit.Owner.BankBranchDetails is exists in israel
+            _dal.AddHostingUnit(newHostingUnit.Clone());
+        }
+
+        public void DeleteHostingUnit(BE.HostingUnit hostingUnit)
+        {
+            if (IsPossibleToDelete(hostingUnit))
+                _dal.DeleteHostingUnit(hostingUnit.Clone());
+            else
+                throw new ArgumentException($"cannot delete hostingunit({hostingUnit.HostingUnitKey}/({hostingUnit.HostingUnitName})" +
+                    $"needed to first close all the orders)");
+        }
+
+        public void UpdateHostingUnit(BE.HostingUnit hostingUnit) => _dal.UpdateHostingUnit(hostingUnit.Clone());
+        #endregion
+
+        #region Order functions signature
+        public void AddOrder(BE.Order newOrder)
+        {
+            int requestsCount = AccordingTo(gReq => gReq.GuestRequestKey == newOrder.GuestRequestKey).Count;
+            int unitsCount = AccordingTo(unit => unit.HostingUnitKey == newOrder.HostingUnitKey).Count;
+
+            // == 0 means that there isn't exists unit/request with those keys
+            if (requestsCount == 0 || unitsCount == 0)
+                throw new ArgumentNullException("unfamiliar GuestRequest or HostingUnit with those keys!please try again!");
+
+            _dal.AddOrder(newOrder.Clone());
+        }
+
+        public void UpdateOrder(BE.Order order, BE.Enums.Status newStat)
+        {
+            if (!IsOrderClose(order.Clone()))
+                _dal.UpdateOrder(order.Clone(), newStat);
+            else
+                throw new ArgumentOutOfRangeException("can't change close order!");
+        }
+        #endregion
+
         private DAL.IDal _dal;
 
         private static IBL _instance = null;
@@ -38,73 +103,75 @@ namespace BL
         {
             if (!Ischronological(entryDate, releaseDate))
                 return false;
-
-            int count = (releaseDate - entryDate).Days;
+            int count = Count2Diary(entryDate, releaseDate);
             return IsDateArmor(hostingUnit, entryDate, count);
+           
         }
 
-        public bool IsOrderClose(BE.Order order)
-        {
-            return order.Status >= BE.Enums.Status.CloseByClient;
-        }
+        public bool IsOrderClose(BE.Order order) => order.Status >= BE.Enums.Status.CloseByClient;
+
+        public bool IsGuestRequestClose(BE.GuestRequest gReq) => gReq.Stat >= BE.Enums.Status.CloseByClient;
 
         public void TakeFee(BE.Order order)
         {
-            // find match GuestRequest to given order
+            // find matching GuestRequest to given order
             List<BE.GuestRequest> GuestRequestsList = _dal.GetAllRequests();
-            IEnumerable<BE.GuestRequest> req = from gReq in GuestRequestsList
-                                               where gReq.GuestRequestKey == order.GuestRequestKey
-                                               select gReq;
+            IEnumerable<BE.GuestRequest> req = from guestRequest in GuestRequestsList
+                                               where guestRequest.GuestRequestKey == order.GuestRequestKey
+                                               select guestRequest;
             int days = 0;
+            BE.GuestRequest gReq = null;
             try
             {
-                // get number of vacation days 
-                BE.GuestRequest gReq = req.Single();
-                days = (gReq.ReleaseDate - gReq.EntryDate).Days;
+                gReq = req.Single();
             }
             // handle exceptions
             catch (ArgumentNullException exc)
             {
-                Console.WriteLine("guestsRequest is null");
+                Console.WriteLine(exc.Message);
             }
             catch (InvalidOperationException exc)
             {
-                Console.WriteLine("guestsRequest has more than one element");
+                Console.WriteLine(exc.Message);
             }
+            // get number of vacation days 
+            days = (gReq.ReleaseDate - gReq.EntryDate).Days;
 
 
+            // find matching HostingUnit to given order
             List<BE.HostingUnit> HostingUnitsList = _dal.GetAllHostingUnits();
-            IEnumerable<BE.HostingUnit> units = from unit in HostingUnitsList
-                                                where unit.HostingUnitKey == order.HostingUnitKey
-                                                select unit;
+            IEnumerable<BE.HostingUnit> units = from hostingUnit in HostingUnitsList
+                                                where hostingUnit.HostingUnitKey == order.HostingUnitKey
+                                                select hostingUnit;
+            BE.HostingUnit unit = null;
             try
             {
-                // take fee
-                BE.HostingUnit unit = units.Single();
-                unit.Owner.Balance -= days * BE.Configuration.Fee;
-                _dal.UpdateHostingUnit(unit); // update DS
+                unit = units.Single();
             }
             // handle exceptions
             catch (ArgumentNullException exc)
             {
-                Console.WriteLine("guestsRequest is null");
+                Console.WriteLine(exc.Message);
             }
             catch (InvalidOperationException exc)
             {
-                Console.WriteLine("guestsRequest has more than one element");
+                Console.WriteLine(exc.Message);
             }
+            // take fee
+            unit.Owner.Balance -= days * BE.Configuration.Fee;
+            _dal.UpdateHostingUnit(unit); // update DS
         }
 
         public void UpdateCalendar(BE.HostingUnit hostingUnit, DateTime entryDate, DateTime releaseDate)
         {
+
             if (IsDateArmor(hostingUnit, entryDate, releaseDate))
             {
-                int count = (releaseDate - entryDate).Days,
-                    month = entryDate.Month,
-                    day = entryDate.Day;
+                int month = entryDate.Month - 1,
+                    day = entryDate.Day - 1;
                 bool[,] diary = hostingUnit.Diary;
-
-                for (int i = 0; i < count; i++, day++)
+                int count = Count2Diary(entryDate, releaseDate);
+                for (int i = 0; i < count; i++,++day)
                 {
                     if (day == BE.Configuration._days) // check if we in end of month
                     {
@@ -117,6 +184,7 @@ namespace BL
                     diary[month, day] = true;
                 }
                 hostingUnit.Diary = diary; // update the data structer
+                _dal.UpdateHostingUnit(hostingUnit);
             }
             else
                 throw new Exception("Dates already taken in this hosting unit");
@@ -138,11 +206,11 @@ namespace BL
             }
             catch (ArgumentNullException exc)
             {
-                Console.WriteLine("guestsRequest is null");
+                Console.WriteLine(exc.Message);
             }
             catch (InvalidOperationException exc)
             {
-                Console.WriteLine("guestsRequest has more than one element");
+                Console.WriteLine(exc.Message);
             }
 
             // find the rest of the orders which mach to the request...
@@ -157,7 +225,7 @@ namespace BL
         public bool IsPossibleToDelete(BE.HostingUnit hostingUnit)
         {
             List<BE.Order> orders = _dal.GetAllOrders();
-
+            // get all open orders who belong to the given hostingUnit
             IEnumerable<BE.Order> belongsTo = from order in orders
                                               where (order.HostingUnitKey == hostingUnit.HostingUnitKey && !IsOrderClose(order))
                                               select order;
@@ -202,29 +270,42 @@ namespace BL
 
         public int DaysNumber(params DateTime[] ArrDate)
         {
-            if (ArrDate.Length == 1)
-                return (ArrDate[0] - DateTime.Now).Days;
-            else if (ArrDate.Length == 2)
-                return (ArrDate[1] - ArrDate[0]).Days;
-            else
-                throw new ArgumentException("ArrDate.Length > 2 || ArrDate.Length < 1");
+            switch (ArrDate.Length)
+            {
+                case 1:
+                    return (ArrDate[0] - DateTime.Now).Days;
+                case 2:
+                    return (ArrDate[1] - ArrDate[0]).Days;
+                default:
+                    throw new ArgumentException("ArrDate.Length > 2 || ArrDate.Length < 1");
+            }
         }
 
         public List<BE.Order> AtLeastnDays(int n)
         {
             IEnumerable<BE.Order> enumerator = from order in _dal.GetAllOrders()
-                                               where ((DateTime.Now - order.CreateDate).Days >= n || (DateTime.Now - order.OrderDate).Days >= n)
+                                               where ((DateTime.Now - order.CreateDate).Days >= n ||
+                                               (DateTime.Now - order.OrderDate).Days >= n)
                                                select order;
             return enumerator.ToList();
         }
 
-        public List<BE.GuestRequest> AccordingTo(BE.Configuration.Term term)
+        public List<BE.GuestRequest> AccordingTo(BE.Configuration.Term<BE.GuestRequest> term)
         {
             IEnumerable<BE.GuestRequest> gReqs = from gReq in _dal.GetAllRequests()
                                                  where term(gReq)
                                                  select gReq;
 
             return gReqs.ToList();
+        }
+
+        public List<BE.HostingUnit> AccordingTo(BE.Configuration.Term<BE.HostingUnit> term)
+        {
+            IEnumerable<BE.HostingUnit> units = from unit in _dal.GetAllHostingUnits()
+                                                 where term(unit)
+                                                 select unit;
+
+            return units.ToList();
         }
 
         public int OrderCount(BE.GuestRequest gReq)
@@ -269,15 +350,14 @@ namespace BL
             IEnumerable<IGrouping<int, BE.Host>> lst = from IGrouping<BE.Host, BE.HostingUnit> g in host2unit
                                                        let count = g.Count()
                                                        group g.Key by count;
-
             return lst.ToList();
         }
 
         public List<IGrouping<BE.Enums.Area, BE.HostingUnit>> GroupHostingUnitByArea()
         {
-            IEnumerable<IGrouping<BE.Enums.Area, BE.HostingUnit>> Hosting_unit = from Hunit in _dal.GetAllHostingUnits()
-                                                                                 group Hunit by Hunit.Area;
-            return Hosting_unit.ToList();
+            IEnumerable<IGrouping<BE.Enums.Area, BE.HostingUnit>> hostingUnits = from unit in _dal.GetAllHostingUnits()
+                                                                                 group unit by unit.Area;
+            return hostingUnits.ToList();
         }
 
         //////////////////////////////////////////////////////////
@@ -286,7 +366,7 @@ namespace BL
         public bool InCalendar(DateTime time)
         {
             DateTime now = DateTime.Now;
-            return (time - now).Days > ((BE.Configuration._month - 1) * BE.Configuration._days);
+            return (time - now).Days < BE.Configuration._daysInYear;
         }
 
         /// <summary>
@@ -294,12 +374,15 @@ namespace BL
         /// </summary>
         private bool IsDateArmor(BE.HostingUnit hostingUnit, DateTime entryDate, int count)
         {
-            int month = entryDate.Month, day = entryDate.Day;
+            // get day and month, value between 0 and 30.
+            int month = entryDate.Month - 1, day = entryDate.Day - 1;
             bool[,] diary = hostingUnit.Diary;
 
-            if (diary[month, day] == false || (diary[month, day] == true && diary[month, day + 1] == false))
+            if (diary[month, day] == false)
             {
-                for (int i = 0; i < count; i++, day++)
+                // in release day - diary[release day] = false
+                // don't even check release day 'cause it doesn't matter
+                for (int i = 0; i < count; ++i, ++day)
                 {
                     if (day == BE.Configuration._days) // check if we in end of month
                     {
@@ -310,14 +393,23 @@ namespace BL
                             month = 0;
                     }
                     // check for exists busy day 
-                    if (diary[month, day] == true && (i != 0 || i == count - 1))
+                    if (diary[month, day] == true)
                         return false;
-                    else
-                        diary[month, day] = true;
                 }
                 return true;
             }
             return false;
+        }
+
+        /// <summary>
+        /// this function return the amount of days between the given dates,
+        /// BUT in format That in every month the days number is 31
+        /// </summary>
+        static private int Count2Diary(DateTime entryDate, DateTime releaseDate)
+        {
+            // return (month*31 + day) - (month*31 + day)
+            return (releaseDate.Month * BE.Configuration._days + releaseDate.Day) - 
+                (entryDate.Month * BE.Configuration._days + entryDate.Day);
         }
     }
 }

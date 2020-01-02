@@ -8,8 +8,10 @@ namespace BE
 {
     public class HostingUnit
     {
+        // the following bool property is in order to make the next key
+        // only once possible to change, like 'readonly' but not in c'tor.
+        // we make it because we need to create new instances of this class manually
         private bool _hostingUnitKey_setAlready = false;
-
         private double _hostingUnitKey;
         public double HostingUnitKey
         {

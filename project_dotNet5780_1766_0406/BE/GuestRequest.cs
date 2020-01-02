@@ -8,6 +8,9 @@ namespace BE
 {
     public class GuestRequest
     {
+        // the following bool property is in order to make the next key
+        // only once possible to change, like 'readonly' but not in c'tor.
+        // we make it because we need to create new instances of this class manually
         private bool _guestRequestKey_setAlready = false;
         private double _guestRequestKey;
         public double GuestRequestKey

@@ -8,8 +8,9 @@ namespace BE
 {
     public class Order
     {
-        // TODO: do matching between order to hosting unit and guest request
-
+        // the following 3 bool properties are in order to make the next 3 keys 
+        // only once possible to change, like 'readonly' but not in c'tor.
+        // we make it because we need to create new instances of this class manually
         private bool _hostingUnitKey_setAlready = false;
         private bool _guestRequestKey_setAlready = false;
         private bool _orderKey_setAlready = false;
@@ -82,9 +83,7 @@ namespace BE
             set => _orderDate = value; 
             get => _orderDate;
         }
-        /// <summary>
-        /// swap to string
-        /// </summary>
+
         public override string ToString()
         {
 
