@@ -152,6 +152,28 @@ namespace DalTest
 
         static void Main(string[] args)
         {
+
+            BE.GuestRequest gR = new BE.GuestRequest();
+            gR.GuestRequestKey = ++BE.Configuration.GuestRequestKey;
+            gR.PrivateName = "shachar";
+            gR.FamilyName = "markovich";
+            gR.Email = "21com.bat21@gmail.com";
+            gR.Stat = BE.Enums.Status.NotYetApproved;
+            gR.RegistrationDate = DateTime.Now;
+            gR.EntryDate = new DateTime(2020, 8, 9);
+            gR.ReleaseDate = new DateTime(2020, 8, 12);
+            gR.Area = BE.Enums.Area.Center;
+            gR.type = BE.Enums.UnitType.Hotel;
+            gR.Adults = 2;
+            gR.Children = 3;
+            gR.Pool = true;
+            gR.Jecuzzi = true;
+            gR.Garden = true;
+            gR.ChildrenAttractions = true;
+
+            BE.GuestRequest gR2 = gR.Clone();
+
+            return;
             Console.WriteLine("before all changes:");
             PrintDS();
             Console.ReadKey();

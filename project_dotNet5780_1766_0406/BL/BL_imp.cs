@@ -91,7 +91,8 @@ namespace BL
 
         public bool Ischronological(DateTime entryDate, DateTime releaseDate)
         {
-            return (releaseDate - entryDate).Days >= 1;
+            int days = (releaseDate - entryDate).Days;
+            return days >= 1;
         }
 
         public bool IsCollectionClearance(BE.Host host)
