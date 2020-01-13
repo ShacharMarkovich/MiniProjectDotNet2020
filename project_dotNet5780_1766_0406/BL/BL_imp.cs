@@ -46,6 +46,8 @@ namespace BL
         #region HostingUnit functions signature
         public void AddHostingUnit(BE.HostingUnit newHostingUnit)
         {
+            if (newHostingUnit.HostingUnitName == null)
+                throw new ArgumentException("less Hosting Unit Name");
             // TODO in part 3: check if newHostingUnit.Owner.BankBranchDetails is exists in israel
             _dal.AddHostingUnit(newHostingUnit.Clone());
         }

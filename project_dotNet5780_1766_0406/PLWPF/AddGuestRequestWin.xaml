@@ -26,8 +26,8 @@
     </Window.Resources>
     <Grid  Background ="{StaticResource BackgroundBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="85*"/>
-            <ColumnDefinition Width="307*"/>
+            <ColumnDefinition Width="29*"/>
+            <ColumnDefinition Width="167*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/>
@@ -39,7 +39,7 @@
                    Grid.Column="1" Grid.Row="0" 
                    RenderTransformOrigin="1.207,-2.333" Margin="38,5" TextDecorations="{x:Null}" TextAlignment="Center"  />
 
-        <Grid x:Name="grid1" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" DataContext="{StaticResource guestRequestViewSource}" >
+        <Grid x:Name="grid1" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" DataContext="{StaticResource guestRequestViewSource}" Margin="26,0,34,0" Width="274" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>

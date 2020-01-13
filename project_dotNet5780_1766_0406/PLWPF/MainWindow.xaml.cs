@@ -27,7 +27,7 @@ namespace PLWPF
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            System.Windows.Data.CollectionViewSource orderViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("orderViewSource")));
+            //System.Windows.Data.CollectionViewSource orderViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("orderViewSource")));
             // Load data by setting the CollectionViewSource.Source property:
             // orderViewSource.Source = [generic data source]
         }
@@ -43,7 +43,7 @@ namespace PLWPF
         }
         private void AddHostButton_Click(object sender, RoutedEventArgs e)
         {
-            new AddHostWin().ShowDialog();
+            new AddHostingUnitWin().ShowDialog();
         }
     }
 }
