@@ -47,14 +47,14 @@ namespace BL
                 throw new ArgumentException("email illegal");
             }
 
-            BE.GuestRequest gR = gRequest.Clone();
+            BE.GuestRequest gR = gRequest.clone();
             _dal.AddGuestRequest(gR);
         }
 
         public void UpdateGuestRequest(BE.GuestRequest gRequest, BE.Enums.Status newStat)
         {
             if (!IsGuestRequestClose(gRequest))
-                _dal.UpdateGuestRequest(gRequest.Clone(), newStat);
+                _dal.UpdateGuestRequest(gRequest.clone(), newStat);
             else
                 throw new ArgumentOutOfRangeException("can't change close Guest Request!");
         }
@@ -63,20 +63,22 @@ namespace BL
         #region HostingUnit functions signature
         public void AddHostingUnit(BE.HostingUnit newHostingUnit)
         {
+            if (newHostingUnit.HostingUnitName == null)
+                throw new ArgumentException("less Hosting Unit Name");
             // TODO in part 3: check if newHostingUnit.Owner.BankBranchDetails is exists in israel
-            _dal.AddHostingUnit(newHostingUnit.Clone());
+            _dal.AddHostingUnit(newHostingUnit.clone());
         }
 
         public void DeleteHostingUnit(BE.HostingUnit hostingUnit)
         {
             if (IsPossibleToDelete(hostingUnit))
-                _dal.DeleteHostingUnit(hostingUnit.Clone());
+                _dal.DeleteHostingUnit(hostingUnit.clone());
             else
                 throw new ArgumentException($"cannot delete hostingunit({hostingUnit.HostingUnitKey}/({hostingUnit.HostingUnitName})" +
                     $"needed to first close all the orders)");
         }
 
-        public void UpdateHostingUnit(BE.HostingUnit hostingUnit) => _dal.UpdateHostingUnit(hostingUnit.Clone());
+        public void UpdateHostingUnit(BE.HostingUnit hostingUnit) => _dal.UpdateHostingUnit(hostingUnit.clone());
         #endregion
 
         #region Order functions signature
@@ -89,13 +91,13 @@ namespace BL
             if (requestsCount == 0 || unitsCount == 0)
                 throw new ArgumentNullException("unfamiliar GuestRequest or HostingUnit with those keys!please try again!");
 
-            _dal.AddOrder(newOrder.Clone());
+            _dal.AddOrder(newOrder.clone());
         }
 
         public void UpdateOrder(BE.Order order, BE.Enums.Status newStat)
         {
-            if (!IsOrderClose(order.Clone()))
-                _dal.UpdateOrder(order.Clone(), newStat);
+            if (!IsOrderClose(order.clone()))
+                _dal.UpdateOrder(order.clone(), newStat);
             else
                 throw new ArgumentOutOfRangeException("can't change close order!");
         }
@@ -131,7 +133,7 @@ namespace BL
                 throw new ArgumentException("email illegal");
             }
 
-            _dal.AddHost(newHost.Clone());
+            _dal.AddHost(newHost.clone());
         }
 
         public List<BE.Host> GetAllHosts()

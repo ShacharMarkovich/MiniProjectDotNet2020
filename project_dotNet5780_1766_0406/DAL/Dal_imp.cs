@@ -10,7 +10,7 @@ namespace DAL
     {
         private static IDal _instance = null;
 
-        private Dal_imp() {}
+        private Dal_imp() { DS.DataSource.Init(); }
         internal static IDal Instance
         {
             get
@@ -23,10 +23,6 @@ namespace DAL
 
         public void AddGuestRequest(BE.GuestRequest gRequest)
         {
-            foreach (var item in DS.DataSource._guestRequestsList)
-            {
-                var item2 = item.Clone();
-            }
             try
             {
                 DS.DataSource._guestRequestsList.Add(gRequest);
@@ -88,21 +84,21 @@ namespace DAL
         {
             IEnumerable<BE.GuestRequest> newList = from gReq in DS.DataSource._guestRequestsList
                                                    orderby gReq.PrivateName
-                                                   select gReq.Clone();
+                                                   select gReq.clone();
             return newList.ToList();
         }
 
         public List<BE.HostingUnit> GetAllHostingUnits()
         {
             IEnumerable<BE.HostingUnit> newList = from hostingUnit in DS.DataSource._hostingUnitsList
-                                                  select hostingUnit.Clone();
+                                                  select hostingUnit.clone();
             return newList.ToList();
         }
 
         public List<BE.Order> GetAllOrders()
         {
             IEnumerable<BE.Order> newList = from order in DS.DataSource._ordersList
-                                            select order.Clone();
+                                            select order.clone();
             return newList.ToList();
         }
 
@@ -110,17 +106,14 @@ namespace DAL
         {
 
             IEnumerable<BE.BankBranch> newList = from bankBranch in DS.DataSource._bankBranchList
-                                                 select bankBranch.Clone();
+                                                 select bankBranch.clone();
             return newList.ToList();
         }
 
         public List<BE.Host> GetAllHosts()
         {
-            var a = DS.DataSource._hostsList;
-            var b = DS.DataSource._hostingUnitsList;
-            return DS.DataSource._hostsList.Clone();
-            //return (from host in DS.DataSource._hostsList
-            //        select host.Clone()).ToList();
+            return (from host in DS.DataSource._hostsList
+                    select host.clone()).ToList();
         }
 
     }

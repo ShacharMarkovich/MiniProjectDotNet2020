@@ -50,6 +50,8 @@ namespace BE
         }
 
         private string _branchCity;
+        public double bankNumber;
+
         public string BranchCity
         {
             set => _branchCity = value;

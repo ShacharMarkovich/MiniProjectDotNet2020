@@ -48,18 +48,10 @@ namespace PLWPF
 
         private void SetComboBox()
         {
-            List<BE.Host> hosts;
-            try
-            {
-            hosts = _bL.GetAllHosts();
-            }
-            catch (Exception exp)
-            {
-                MessageBox.Show(exp.Message);
-            }
-            //IEnumerable<string> hostsNames = (from host in hosts
-            //                                  select $"{host.PrivateName} {host.FamilyName}").ToList();
-            //hostsComboBox.ItemsSource = hostsNames;
+            List<BE.Host> hosts = _bL.GetAllHosts();
+            List<string> hostsNames = (from host in hosts
+                                       select $"({host.HostKey}){host.PrivateName} {host.FamilyName}").ToList();
+            hostsComboBox.ItemsSource = hostsNames;
         }
 
         public AddHostWin()
@@ -101,6 +93,11 @@ namespace PLWPF
             {
                 errorMessage.Text = exp.Message;
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new AddHostingUnitWin().ShowDialog();
         }
     }
 }

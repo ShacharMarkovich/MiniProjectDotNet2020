@@ -20,14 +20,16 @@ namespace PLWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private BL.IBL _bl = null;
         public MainWindow()
         {
             InitializeComponent();
+            _bl = BL.FactoryBL.Instance;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            System.Windows.Data.CollectionViewSource orderViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("orderViewSource")));
+            //System.Windows.Data.CollectionViewSource orderViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("orderViewSource")));
             // Load data by setting the CollectionViewSource.Source property:
             // orderViewSource.Source = [generic data source]
         }

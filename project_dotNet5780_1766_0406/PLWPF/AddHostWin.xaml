@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PLWPF"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.AddHostWin"
         mc:Ignorable="d"
-        Title="Host Windows" Height="600" Width="800" Loaded="Window_Loaded">
+        Title="Host Windows" Height="600" Width="850" Loaded="Window_Loaded">
     <Window.Resources>
         <CollectionViewSource x:Key="hostViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Host}, CreateList=True}"/>
     </Window.Resources>
@@ -14,6 +14,7 @@
         <TabControl>
             <TabItem Header ="Sign up">
                 <StackPanel>
+                    <Button Content="Add hosting unit" Click="Button_Click"/>
                     <TextBlock x:Name="errorMessage" Foreground="Red" Text="" HorizontalAlignment="Center" VerticalAlignment="Center"  />
                     <Grid x:Name="grid1" DataContext="{StaticResource hostViewSource}" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center">
                         <Grid.ColumnDefinitions>
@@ -70,19 +71,23 @@
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="Sign In" >
+            <TabItem Header="Sign In" Margin="0" >
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="350*"/>
+                        <ColumnDefinition Width="250*"/>
+                        <ColumnDefinition Width="250*"/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        <ComboBox x:Name="hostsComboBox" Grid.Column="0" ItemsSource="{Binding Path=PrivateName}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Margin="24,260,117,260"/>
-                        <Button Content="OK" Width="75" Margin="160,260,26,260" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="155*"/>
+                            <ColumnDefinition Width="106*"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox x:Name="hostsComboBox" Grid.Column="0" ItemsSource="{Binding}" HorizontalAlignment="Center" Width="120" Margin="17,260,18,260" VerticalAlignment="Center" Height="20"/>
+                        <Button Content="OK" Width="74" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Margin="16,260"/>
                     </Grid>
-                    <Button Content="Button" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75"/>
-                    <Button Content="Button" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75"/>
+                    <Button Content="Button" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="74" Height="20" Margin="93,260,100,260"/>
+                    <Button Content="Button" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="76" Height="20" Margin="68,260,72,260"/>
 
                 </Grid>
             </TabItem>
