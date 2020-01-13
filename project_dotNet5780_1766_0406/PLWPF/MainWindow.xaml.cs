@@ -36,10 +36,14 @@ namespace PLWPF
         {
             throw new NotImplementedException("func StatusComboBox_SelectionChanged Not implemented");
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        
+        private void AddGuestRequestButton_Click(object sender, RoutedEventArgs e)
         {
             new AddGuestRequestWin().ShowDialog();
+        }
+        private void AddHostButton_Click(object sender, RoutedEventArgs e)
+        {
+            new AddHostWin().ShowDialog();
         }
     }
 }

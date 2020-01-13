@@ -13,14 +13,25 @@ namespace BL
         #region GuestRequest functions signature
         public void AddGuestRequest(BE.GuestRequest gRequest)
         {
-            if (InCalendar(gRequest.RegistrationDate) && InCalendar(gRequest.EntryDate) && InCalendar(gRequest.ReleaseDate) &&
-                Ischronological(gRequest.EntryDate, gRequest.ReleaseDate))
-            {
-                // TODO:  check email
-                _dal.AddGuestRequest(gRequest.Clone());
-            }
-            else
+            if (!(InCalendar(gRequest.RegistrationDate) && InCalendar(gRequest.EntryDate) &&
+                InCalendar(gRequest.ReleaseDate) && Ischronological(gRequest.EntryDate, gRequest.ReleaseDate)))
                 throw new ArgumentException("dates are not in this year / not chronological! try again!");
+            if (gRequest.PrivateName.Length == 0 || gRequest.FamilyName.Length == 0)
+                throw new ArgumentException("names illegal");
+            if ((gRequest.Adults != 0 && gRequest.Children == 0) || (gRequest.Adults == 0 && gRequest.Children != 0))
+                throw new ArgumentException("Must have at least one child or adult");
+            try
+            {
+                // if this line not throw an Exception - gRequest.Email is a legal email
+                new System.Net.Mail.MailAddress(gRequest.Email);
+            }
+            catch
+            {
+                throw new ArgumentException("email illegal");
+            }
+
+
+            _dal.AddGuestRequest(gRequest.Clone());
         }
 
         public void UpdateGuestRequest(BE.GuestRequest gRequest, BE.Enums.Status newStat)

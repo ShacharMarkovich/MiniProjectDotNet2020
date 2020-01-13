@@ -20,16 +20,53 @@ namespace PLWPF
     public partial class AddGuestRequestWin : Window
     {
         public BL.IBL _bl = BL.FactoryBL.Instance;
+        public BE.GuestRequest _guestRequest;
+
+        //data blinding
+        private void SettingDataContext()
+        {
+            guestRequestKeyTextBlock.DataContext = _guestRequest;
+
+            registrationDateDatePicker.DataContext = _guestRequest;
+            entryDateDatePicker.DataContext = _guestRequest;
+            releaseDateDatePicker.DataContext = _guestRequest;
+
+            privateNameTextBox.DataContext = _guestRequest;
+            familyNameTextBox.DataContext = _guestRequest;
+            emailTextBox.DataContext = _guestRequest;
+
+            areaComboBox.DataContext = _guestRequest;
+            typeComboBox.DataContext = _guestRequest;
+
+            adultsTextBox.DataContext = _guestRequest;
+            childrenTextBox.DataContext = _guestRequest;
+
+            gardenCheckBox.DataContext = _guestRequest;
+            childrenAttractionsCheckBox.DataContext = _guestRequest;
+            jecuzziCheckBox.DataContext = _guestRequest;
+            poolCheckBox.DataContext = _guestRequest;
+
+        }
         public AddGuestRequestWin()
         {
             InitializeComponent();
 
-            //data blinding
-            this.guestRequestKeyTextBlock.Text = (BE.Configuration.GuestRequestKey + 1).ToString();
-            registrationDateDatePicker.SelectedDate = DateTime.Now;
+            _guestRequest = new BE.GuestRequest
+            {
+                GuestRequestKey = ++BE.Configuration.GuestRequestKey,
+                RegistrationDate = DateTime.Now,
+                EntryDate = DateTime.Now,
+                ReleaseDate = DateTime.Now,
+                Stat = BE.Enums.Status.NotYetApproved
+            };
+
             this.areaComboBox.ItemsSource = Enum.GetValues(typeof(BE.Enums.Area));
-            this.statComboBox.ItemsSource = Enum.GetValues(typeof(BE.Enums.Status));
             this.typeComboBox.ItemsSource = Enum.GetValues(typeof(BE.Enums.UnitType));
+
+            SettingDataContext();
+            // Default
+            areaComboBox.SelectedIndex = 0;
+            typeComboBox.SelectedIndex = 0;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -47,39 +84,22 @@ namespace PLWPF
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            BE.GuestRequest gR = new BE.GuestRequest();
-            // convert comboBox value to maych enum
-            Enum.TryParse(areaComboBox.Text, out BE.Enums.Area area);
-            Enum.TryParse(statComboBox.Text, out BE.Enums.Status status);
-            Enum.TryParse(typeComboBox.Text, out BE.Enums.UnitType unitType);
-
-            gR.GuestRequestKey = int.Parse(guestRequestKeyTextBlock.Text);
-
-            gR.RegistrationDate = (DateTime)registrationDateDatePicker.SelectedDate;
-            gR.EntryDate = (DateTime)entryDateDatePicker.SelectedDate;
-            gR.ReleaseDate = (DateTime)releaseDateDatePicker.SelectedDate;
+            errorMessage.Foreground = new SolidColorBrush(Colors.Red);
             try
             {
-            gR.Adults = int.Parse(this.adultsTextBox.Text);
-            gR.Children = int.Parse(this.childrenTextBox.Text);
+                _guestRequest.Adults = int.Parse(this.adultsTextBox.Text);
+                _guestRequest.Children = int.Parse(this.childrenTextBox.Text);
+                _bl.AddGuestRequest(_guestRequest);
+                errorMessage.Foreground = new SolidColorBrush(Colors.Green);
+                errorMessage.Text = "Guest Request Add successfully!";
             }
-            catch (Exception)
+            catch (ArgumentException exp)
             {
-                MessageBox.Show("number of children/adults must be a NUMBER");
-            }
-
-            gR.ChildrenAttractions = (bool)this.childrenAttractionsCheckBox.IsChecked;
-            gR.Garden = (bool)this.gardenCheckBox.IsChecked;
-            gR.Jecuzzi = (bool)this.jecuzziCheckBox.IsChecked;
-            gR.Pool = (bool)this.poolCheckBox.IsChecked;
-
-            try
-            {
-                _bl.AddGuestRequest(gR);
+                errorMessage.Text = exp.Message;
             }
             catch (Exception exp)
             {
-                MessageBox.Show(exp.Message);
+                errorMessage.Text = exp.Message;
             }
         }
     }

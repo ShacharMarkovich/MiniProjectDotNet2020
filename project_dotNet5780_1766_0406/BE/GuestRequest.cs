@@ -84,35 +84,35 @@ namespace BE
             get => _area;
         }
 
-        private Enums.UnitType _type { get; set; }
+        private Enums.UnitType _type;
         public Enums.UnitType type
         {
             set => _type = value;
             get => _type;
         }
 
-        private int _adults { get; set; }
+        private int _adults;
         public int Adults
         {
             set => _adults = value;
             get => _adults;
         }
 
-        private int _children { get; set; }
+        private int _children;
         public int Children
         {
             set => _children = value;
             get => _children;
         }
 
-        private bool _pool { get; set; }
+        private bool _pool;
         public bool Pool
         {
             set => _pool = value;
             get => _pool;
         }
 
-        private bool _jecuzzi { get; set; }
+        private bool _jecuzzi;
         public bool Jecuzzi
         {
             set => _jecuzzi = value;
@@ -153,6 +153,5 @@ namespace BE
                 "\nGarden:\t\t\t" + _garden +
                 "\nChildren Attractions:\t" + _childrenAttractions;
         }
-
     }
 }
