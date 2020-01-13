@@ -48,8 +48,18 @@ namespace BL
         /// </summary>
         void UpdateOrder(BE.Order order, BE.Enums.Status newStat);
         #endregion
+
+        /// <summary>
+        /// this function add new BE.Host to the data source
+        /// </summary>
+        void AddHost(BE.Host newHost);
+
+        /// <summary>
+        /// this function return list of all Hosts in the dataSource
+        /// </summary>
+        List<BE.Host> GetAllHosts();
         #endregion
-        
+
 
         /// <summary>
         /// return true if entryDate is at least 1 day earlier than releaseDate
@@ -153,19 +163,16 @@ namespace BL
         /// <summary>
         /// return list of hosting unit group by area
         /// </summary>
-        /// <returns></returns>
         List<IGrouping<BE.Enums.Area, BE.GuestRequest>> GroupGuestRequestByArea();
         
         /// <summary>
         /// return list of hosting unit group by amount of people 
         /// </summary>
-        /// <returns></returns>
         List<IGrouping<int, BE.GuestRequest>> GroupGuestRequestByPeopleCount();
         
         /// <summary>
         /// return list of host group by hosting unit count they have
         /// </summary>
-        /// <returns></returns>
         List<IGrouping<int, BE.Host>> GroupHostByfHostingUnitCount();
         
         /// <summary>

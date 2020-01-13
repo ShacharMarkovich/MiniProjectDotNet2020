@@ -4,14 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlTest
+namespace DS
 {
-    class Program
+    class FactoryDS
     {
-        static void Main(string[] args)
-        {
-            
 
-        }
     }
 }

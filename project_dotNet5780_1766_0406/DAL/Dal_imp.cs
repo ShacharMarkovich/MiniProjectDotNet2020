@@ -10,7 +10,7 @@ namespace DAL
     {
         private static IDal _instance = null;
 
-        private Dal_imp() { }
+        private Dal_imp() {}
         internal static IDal Instance
         {
             get
@@ -23,7 +23,19 @@ namespace DAL
 
         public void AddGuestRequest(BE.GuestRequest gRequest)
         {
-            DS.DataSource._guestRequestsList.Add(gRequest);
+            foreach (var item in DS.DataSource._guestRequestsList)
+            {
+                var item2 = item.Clone();
+            }
+            try
+            {
+                DS.DataSource._guestRequestsList.Add(gRequest);
+
+            }
+            catch (Exception exp)
+            {
+                var str = exp.Message;
+            }
         }
 
         public void UpdateGuestRequest(BE.GuestRequest gRequest, BE.Enums.Status newStat)
@@ -66,6 +78,12 @@ namespace DAL
             });
         }
 
+        public void AddHost(BE.Host newHost)
+        {
+            DS.DataSource._hostsList.Add(newHost);
+        }
+
+
         public List<BE.GuestRequest> GetAllRequests()
         {
             IEnumerable<BE.GuestRequest> newList = from gReq in DS.DataSource._guestRequestsList
@@ -90,9 +108,20 @@ namespace DAL
 
         public List<BE.BankBranch> GetAllBranches()
         {
+
             IEnumerable<BE.BankBranch> newList = from bankBranch in DS.DataSource._bankBranchList
                                                  select bankBranch.Clone();
             return newList.ToList();
         }
+
+        public List<BE.Host> GetAllHosts()
+        {
+            var a = DS.DataSource._hostsList;
+            var b = DS.DataSource._hostingUnitsList;
+            return DS.DataSource._hostsList.Clone();
+            //return (from host in DS.DataSource._hostsList
+            //        select host.Clone()).ToList();
+        }
+
     }
 }

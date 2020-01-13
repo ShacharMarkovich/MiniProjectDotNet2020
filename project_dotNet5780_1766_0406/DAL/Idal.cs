@@ -66,6 +66,16 @@ namespace DAL
         /// return all BE.BankBranch
         /// </summary>
         List<BE.BankBranch> GetAllBranches();
+
+        /// <summary>
+        /// this function return all hosts in list
+        /// </summary>
+        List<BE.Host> GetAllHosts();
         #endregion
+
+        /// <summary>
+        /// this function add new BE.Host to the data source
+        /// </summary>
+        void AddHost(BE.Host newHost);
     }
 }

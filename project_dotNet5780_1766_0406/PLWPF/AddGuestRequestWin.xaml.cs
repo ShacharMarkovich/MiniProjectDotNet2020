@@ -47,10 +47,10 @@ namespace PLWPF
             poolCheckBox.DataContext = _guestRequest;
 
         }
+
         public AddGuestRequestWin()
         {
             InitializeComponent();
-
             _guestRequest = new BE.GuestRequest
             {
                 GuestRequestKey = ++BE.Configuration.GuestRequestKey,
@@ -92,6 +92,7 @@ namespace PLWPF
                 _bl.AddGuestRequest(_guestRequest);
                 errorMessage.Foreground = new SolidColorBrush(Colors.Green);
                 errorMessage.Text = "Guest Request Add successfully!";
+                List<IGrouping<int, BE.GuestRequest>> s = _bl.GroupGuestRequestByPeopleCount();
             }
             catch (ArgumentException exp)
             {

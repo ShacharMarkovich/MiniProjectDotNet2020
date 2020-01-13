@@ -9,7 +9,8 @@ namespace DS
     public class DataSource
     {
         //manual entry of values to lists
-        public static List<BE.GuestRequest> _guestRequestsList = new List<BE.GuestRequest>()
+        public static List<BE.GuestRequest> _guestRequestsList { get; set; }
+        public static List<BE.GuestRequest> sd2 = new List<BE.GuestRequest>()
             {
                 new BE.GuestRequest()
                 {
@@ -117,18 +118,7 @@ namespace DS
                     Diary = new bool[12, 31],
                     Area = _guestRequestsList[0].Area,
                     type = _guestRequestsList[0].type,
-                    Owner = new BE.Host()
-                    {
-                        HostKey = ++BE.Configuration.HostKey,
-                        Balance = 1000,
-                        PrivateName = "name1",
-                        FamilyName = "pname1",
-                        PhoneNumber = "phone1",
-                        Email = "smarkovi@g.jct.ac.il",
-                        BankAccountNumber = 120159,
-                        CollectionClearance = false,
-                        BankBranchDetails = _bankBranchList[0]
-                    }
+                    Owner =_hostsList[0]
                 },
                 new BE.HostingUnit()
                 {
@@ -137,19 +127,7 @@ namespace DS
                     Diary = new bool[12, 31],
                     Area = _guestRequestsList[1].Area,
                     type = _guestRequestsList[1].type,
-                    Owner = new BE.Host()
-                    {
-                        // same owner as before
-                        HostKey = BE.Configuration.HostKey,
-                        Balance = 1000,
-                        PrivateName = "name1",
-                        FamilyName = "pname1",
-                        PhoneNumber = "phone1",
-                        Email = "smarkovi@g.jct.ac.il",
-                        BankAccountNumber =120159,
-                        CollectionClearance = false,
-                        BankBranchDetails = _bankBranchList[0]
-                    }
+                    Owner = _hostsList[0]
                 },
                 new BE.HostingUnit()
                 {
@@ -158,18 +136,7 @@ namespace DS
                     Diary = new bool[12, 31],
                     Area = _guestRequestsList[2].Area,
                     type = _guestRequestsList[2].type,
-                    Owner = new BE.Host()
-                    {
-                        HostKey = ++BE.Configuration.HostKey,
-                        Balance = 1000,
-                        PrivateName = "name3",
-                        FamilyName = "pname3",
-                        PhoneNumber = "phone3",
-                        Email = "shachar.markovich@gmail.com",
-                        BankAccountNumber = 10151,
-                        CollectionClearance = false,
-                        BankBranchDetails = _bankBranchList[3]
-                    }
+                    Owner = _hostsList[1]
                 },
                 new BE.HostingUnit()
                 {
@@ -178,18 +145,7 @@ namespace DS
                     Diary = new bool[12, 31],
                     Area = BE.Enums.Area.South,
                     type = BE.Enums.UnitType.Zimmer,
-                    Owner = new BE.Host()
-                    {
-                        HostKey = ++BE.Configuration.HostKey,
-                        Balance = 1000,
-                        PrivateName = "name4",
-                        FamilyName = "pname4",
-                        PhoneNumber = "phone4",
-                        Email = "234shachar@gmail.com",
-                        BankAccountNumber = 3,
-                        CollectionClearance = true,
-                        BankBranchDetails = _bankBranchList[4]
-                    }
+                    Owner = _hostsList[2]
                 },
             };
         public static List<BE.Order> _ordersList = new List<BE.Order>()
@@ -220,5 +176,45 @@ namespace DS
                 },
 
             };
+        public static List<BE.Host> _hostsList = new List<BE.Host>()
+        {
+            new BE.Host()
+            {
+                HostKey = ++BE.Configuration.HostKey,
+                Balance = 1000,
+                PrivateName = "name1",
+                FamilyName = "pname1",
+                PhoneNumber = "phone1",
+                Email = "smarkovi@g.jct.ac.il",
+                BankAccountNumber = 120159,
+                CollectionClearance = false,
+                BankBranchDetails = _bankBranchList[0]
+            },
+            new BE.Host()
+            {
+                HostKey = ++BE.Configuration.HostKey,
+                Balance = 1000,
+                PrivateName = "name3",
+                FamilyName = "pname3",
+                PhoneNumber = "phone3",
+                Email = "shachar.markovich@gmail.com",
+                BankAccountNumber = 10151,
+                CollectionClearance = false,
+                BankBranchDetails = _bankBranchList[3]
+            },
+            new BE.Host()
+            {
+                HostKey = ++BE.Configuration.HostKey,
+                Balance = 1000,
+                PrivateName = "name4",
+                FamilyName = "pname4",
+                PhoneNumber = "phone4",
+                Email = "234shachar@gmail.com",
+                BankAccountNumber = 3,
+                CollectionClearance = true,
+                BankBranchDetails = _bankBranchList[4]
+            }
+        };
+
     }
 }

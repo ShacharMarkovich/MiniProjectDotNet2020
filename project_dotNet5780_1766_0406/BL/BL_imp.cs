@@ -10,6 +10,23 @@ namespace BL
     using BE;
     class BL_imp : IBL
     {
+        #region singleton
+        private DAL.IDal _dal;
+
+        private static IBL _instance = null;
+        public static IBL Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new BL_imp();
+                return _instance;
+            }
+        }
+
+        private BL_imp() { _dal = DAL.FactoryDAL.Instance; }
+        #endregion
+
         #region GuestRequest functions signature
         public void AddGuestRequest(BE.GuestRequest gRequest)
         {
@@ -30,8 +47,8 @@ namespace BL
                 throw new ArgumentException("email illegal");
             }
 
-
-            _dal.AddGuestRequest(gRequest.Clone());
+            BE.GuestRequest gR = gRequest.Clone();
+            _dal.AddGuestRequest(gR);
         }
 
         public void UpdateGuestRequest(BE.GuestRequest gRequest, BE.Enums.Status newStat)
@@ -84,21 +101,43 @@ namespace BL
         }
         #endregion
 
-        private DAL.IDal _dal;
-
-        private static IBL _instance = null;
-
-        public static IBL Instance
+        public void AddHost(BE.Host newHost)
         {
-            get
+            try
             {
-                if (_instance == null)
-                    _instance = new BL_imp();
-                return _instance;
+                if (newHost.BankBranchDetails == null || newHost.PrivateName == null || newHost.FamilyName == null || newHost.Email == null || newHost.PhoneNumber == null) ;
             }
+            catch
+            {
+                throw new ArgumentNullException("Please enter data in all fields");
+            }
+
+            BE.BankBranch bank = newHost.BankBranchDetails;
+            if (bank.BankName == null || bank.BranchAddress == null || bank.BranchCity == null) 
+                throw new ArgumentNullException("Please enter data in all fields");
+
+            if (bank.BranchNumber == 0 || newHost.BankAccountNumber == 0)
+                throw new ArgumentException("Bank Branch number cannot be zero");
+
+            if (IsCollectionClearance(newHost))
+                throw new ArgumentException("Collection Clearance must be checked!");
+
+            try
+            {
+                new System.Net.Mail.MailAddress(newHost.Email);
+            }
+            catch
+            {
+                throw new ArgumentException("email illegal");
+            }
+
+            _dal.AddHost(newHost.Clone());
         }
 
-        private BL_imp() { _dal = DAL.FactoryDAL.Instance; }
+        public List<BE.Host> GetAllHosts()
+        {
+            return _dal.GetAllHosts();
+        }
 
         public bool Ischronological(DateTime entryDate, DateTime releaseDate)
         {

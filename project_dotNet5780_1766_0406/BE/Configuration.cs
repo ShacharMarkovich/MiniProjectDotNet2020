@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BE
 {
+    using System.Reflection;
     public static class Configuration
     {
         /// <summary>

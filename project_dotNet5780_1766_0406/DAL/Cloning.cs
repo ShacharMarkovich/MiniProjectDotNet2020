@@ -18,7 +18,7 @@ namespace DAL
         public static T Clone<T>(this T source) where T : new()
         {
             // create new type and save his type
-            T target = new T(); 
+            T target = new T();
             Type type = typeof(T);
 
             // copy all properties from source to target
