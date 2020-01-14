@@ -32,7 +32,7 @@ namespace PLWPF
         public BE.HostingUnit _uostingUnit;
         private BE.BankBranch _myBank;
 
-        private void SettingDataContext()
+        private void SetSignUpDataContext()
         {
             /*key*/
             hostKeyTextBlock.DataContext = _host;
@@ -54,7 +54,6 @@ namespace PLWPF
 
             collectionClearanceCheckBox.DataContext = _host;
         }
-
         private void SetComboBox()
         {
             List<BE.Host> hosts = _bl.GetAllHosts();
@@ -62,35 +61,8 @@ namespace PLWPF
                                        select $"({host.HostKey}){host.PrivateName} {host.FamilyName}").ToList();
             hostsComboBox.ItemsSource = hostsNames;
         }
-
-        public AddHostWin()
+        private void SetAddHostingUnitDataContext()
         {
-            InitializeComponent();
-            _host = new BE.Host()
-            {
-                HostKey = ++BE.Configuration.HostKey,
-                Balance = 1000,
-                PrivateName = "name1",
-                FamilyName = "pname1",
-                PhoneNumber = "phone1",
-                Email = "smarkovi@g.jct.ac.il",
-                BankAccountNumber = 120159,
-                CollectionClearance = false,
-                BankBranchDetails = new BE.BankBranch()
-                {
-                    BankNumber = ++BE.Configuration.BankNumber,
-                    BankName = "bank1",
-                    BranchNumber = 1,
-                    BranchAddress = "address1",
-                    BranchCity = "city1"
-                }
-            };
-            _uostingUnit = new BE.HostingUnit
-            {
-                HostingUnitKey = ++BE.Configuration.HostingUnitKey,
-                Owner = _host
-            };
-
             areaComboBox.DataContext = _uostingUnit;
             this.areaComboBox.ItemsSource = Enum.GetValues(typeof(BE.Enums.Area));
             areaComboBox.SelectedIndex = 0;
@@ -112,7 +84,16 @@ namespace PLWPF
             phoneNumberTextBlock.DataContext = _uostingUnit.Owner;
 
             privateNameTextBlock.DataContext = _uostingUnit.Owner;
-            ///////////////////////////////
+        }
+
+        public AddHostWin()
+        {
+            InitializeComponent();
+            _uostingUnit = new BE.HostingUnit
+            {
+                HostingUnitKey = ++BE.Configuration.HostingUnitKey,
+                Owner = _host
+            };
             _myBank = new BE.BankBranch()
             {
                 BankNumber = ++BE.Configuration.BankNumber,
@@ -124,9 +105,11 @@ namespace PLWPF
                 BankBranchDetails = _myBank
             };
 
-            SettingDataContext();
+            SetAddHostingUnitDataContext();
+            SetSignUpDataContext();
             SetComboBox();
         }
+
 
         private void AddHostButton_Click(object sender, RoutedEventArgs e)
         {
@@ -161,6 +144,29 @@ namespace PLWPF
                 AddHostingUnitErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
                 AddHostingUnitErrorMessage.Text = exp.Message;
             }
+        }
+
+        private void OKButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (hostsComboBox.SelectedItem == null)
+            {
+                loginErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                loginErrorMessage.Text = "Please Select an Host in order to contine";
+                return;
+            }
+            //TODO...
+            // format of hostsComboBox items: <(hostKey)><hostPrivateName> <hostFamliyName>
+            string hostDetails = hostsComboBox.SelectedItem as string;
+            // so in the splited string's first place will be the hostKey
+            double hostKey = double.Parse(hostDetails.Split('(', ')')[0]);
+            //_host = from host in _bl.GetAllHosts()
+            //        where host.HostKey == hostKey
+            //        select host;
+            loginErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
+            loginErrorMessage.Text = "";
+            AddHostingUnitTab.IsEnabled = true;
+            UpdateTab.IsEnabled = true;
+            deleteTab.IsEnabled = true;
         }
     }
 }

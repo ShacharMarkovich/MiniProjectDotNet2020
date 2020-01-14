@@ -11,7 +11,7 @@
         <CollectionViewSource x:Key="hostViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Host}, CreateList=True}"/>
         <CollectionViewSource x:Key="hostingUnitViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:HostingUnit}, CreateList=True}"/>
     </Window.Resources>
-    <Grid>
+    <Grid DataContext="{StaticResource hostingUnitViewSource}">
         <TabControl>
             <TabItem Header ="Sign up">
                 <StackPanel>
@@ -72,14 +72,19 @@
             </TabItem>
 
             <TabItem Header="Sign In" Margin="0" >
-                <TabControl>
+                <TabControl SelectedIndex="{Binding Mode=OneWay}">
                     <TabItem Header="login" Margin="0" >
+
                         <StackPanel>
-                                <ComboBox x:Name="hostsComboBox" Grid.Column="0" ItemsSource="{Binding}" HorizontalAlignment="Center" Width="120" VerticalAlignment="Center" Height="20"/>
-                                <Button Content="OK" Width="74" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20"/>
+                            <TextBlock x:Name="loginErrorMessage" Text="" 
+                                       Foreground="Red" FontFamily="Agency FB" FontSize="18" Grid.Row="0" 
+                                       RenderTransformOrigin="1.207,-2.333" TextDecorations="{x:Null}" TextAlignment="Center"  />
+
+                            <ComboBox x:Name="hostsComboBox" Grid.Column="0" ItemsSource="{Binding}" HorizontalAlignment="Center" Width="120" VerticalAlignment="Center" Height="20"/>
+                            <Button Content="OK" Click="OKButton_Click" Width="74" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20"/>
                         </StackPanel>
                     </TabItem>
-                    <TabItem Header="Add hosting unit" Margin="0" >
+                    <TabItem x:Name="AddHostingUnitTab" Header="Add hosting unit" IsEnabled="False" Margin="0" >
                         <Grid>
                             <TextBlock x:Name="AddHostingUnitErrorMessage" Text="" 
                                        Foreground="Red" FontFamily="Agency FB" FontSize="18" Grid.Row="0" 
@@ -123,16 +128,17 @@
                             <Button Content="add hosting unit" Click="AddUostingUnitButton_Click" HorizontalAlignment="Left" Margin="372,472,0,0" VerticalAlignment="Top" Width="128" RenderTransformOrigin="0.013,0.5" Height="19" />
                         </Grid>
                         <!-- TODO-->
-                   </TabItem>
-                    <TabItem Header="upsate setting" Margin="0" >
+                    </TabItem>
+                    <TabItem x:Name="UpdateTab" Header="update setting" IsEnabled="False" Margin="0" >
                         <!-- TODO-->
                     </TabItem>
-                    <TabItem Header="delete unit" Margin="0" >
-                        <!-- TODO-->
-                        </TabItem>
-                    </TabControl>
+                    <TabItem x:Name="deleteTab" Header="delete unit" IsEnabled="False" Margin="0" >
 
-                  </TabItem>
+                        <!-- TODO-->
+                    </TabItem>
+                </TabControl>
+
+            </TabItem>
         </TabControl>
     </Grid>
 
