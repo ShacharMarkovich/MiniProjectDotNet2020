@@ -26,7 +26,6 @@ namespace DAL
             try
             {
                 DS.DataSource._guestRequestsList.Add(gRequest);
-
             }
             catch (Exception exp)
             {

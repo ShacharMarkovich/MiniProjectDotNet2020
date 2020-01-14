@@ -9,14 +9,14 @@
         Title="Host Windows" Height="600" Width="850" Loaded="Window_Loaded">
     <Window.Resources>
         <CollectionViewSource x:Key="hostViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Host}, CreateList=True}"/>
+        <CollectionViewSource x:Key="hostingUnitViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:HostingUnit}, CreateList=True}"/>
     </Window.Resources>
     <Grid>
         <TabControl>
             <TabItem Header ="Sign up">
                 <StackPanel>
-                    <Button Content="Add hosting unit" Click="Button_Click"/>
-                    <TextBlock x:Name="errorMessage" Foreground="Red" Text="" HorizontalAlignment="Center" VerticalAlignment="Center"  />
-                    <Grid x:Name="grid1" DataContext="{StaticResource hostViewSource}" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center">
+                    <TextBlock x:Name="SignUpErrorMessage" Text="" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+                    <Grid DataContext="{StaticResource hostViewSource}" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
@@ -72,25 +72,67 @@
             </TabItem>
 
             <TabItem Header="Sign In" Margin="0" >
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="350*"/>
-                        <ColumnDefinition Width="250*"/>
-                        <ColumnDefinition Width="250*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="155*"/>
-                            <ColumnDefinition Width="106*"/>
-                        </Grid.ColumnDefinitions>
-                        <ComboBox x:Name="hostsComboBox" Grid.Column="0" ItemsSource="{Binding}" HorizontalAlignment="Center" Width="120" Margin="17,260,18,260" VerticalAlignment="Center" Height="20"/>
-                        <Button Content="OK" Width="74" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Margin="16,260"/>
-                    </Grid>
-                    <Button Content="Button" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="74" Height="20" Margin="93,260,100,260"/>
-                    <Button Content="Button" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="76" Height="20" Margin="68,260,72,260"/>
+                <TabControl>
+                    <TabItem Header="login" Margin="0" >
+                        <StackPanel>
+                                <ComboBox x:Name="hostsComboBox" Grid.Column="0" ItemsSource="{Binding}" HorizontalAlignment="Center" Width="120" VerticalAlignment="Center" Height="20"/>
+                                <Button Content="OK" Width="74" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20"/>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Add hosting unit" Margin="0" >
+                        <Grid>
+                            <TextBlock x:Name="AddHostingUnitErrorMessage" Text="" 
+                                       Foreground="Red" FontFamily="Agency FB" FontSize="18" Grid.Row="0" 
+                                       RenderTransformOrigin="1.207,-2.333" TextDecorations="{x:Null}" TextAlignment="Center"  />
+                            <Grid DataContext="{StaticResource hostingUnitViewSource}" HorizontalAlignment="Left" Margin="278,138,0,-12" VerticalAlignment="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Label FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="0" Margin="3,3,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="Area:"/>
+                                <ComboBox x:Name="areaComboBox" Grid.Column="1" Height="Auto" ItemsSource="{Binding Path=Area}" Margin="3,5" Grid.Row="0" VerticalAlignment="Center"/>
+                                <Label Content="Hosting Unit Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="hostKeyTextBlcoe" Grid.Column="6" HorizontalAlignment="Left" Margin="3" Grid.Row="6" Text="{Binding Path=HostKey}" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="hostingUnitKeyTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="1" Text="{Binding Path = HostingUnitKey}" VerticalAlignment="Center"/>
+                                <Label Content="Hosting Unit Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+                                <TextBox x:Name="hostingUnitNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding Path=HostingUnitName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                                <Label Content="type:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+                                <ComboBox x:Name="typeComboBox" Grid.Column="1" HorizontalAlignment="Left" Height="Auto" ItemsSource="{Binding Path=type}" Margin="3" Grid.Row="3" VerticalAlignment="Center" Width="120"/>
+                                <Label Content="Email:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="emailTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3,7,0,7" Grid.Row="4" Text="{Binding Path= Email}" VerticalAlignment="Center" Width="113"/>
+                                <Label Content="Family Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="familyNameTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="5" Text="{Binding Path=FamilyName}" VerticalAlignment="Center"/>
+                                <Label Content="Host Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="hostKeyTextBlock1" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="6" Text="{Binding Path=Owner.HostKey}" VerticalAlignment="Center"/>
+                                <Label Content="Phone Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="phoneNumberTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="7" Text="{Binding Path=PhoneNumber}" VerticalAlignment="Center"/>
+                                <Label Content="Private Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="privateNameTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="8" Text="{Binding Path=PrivateName}" VerticalAlignment="Center"/>
+                            </Grid>
+                            <Button Content="add hosting unit" Click="AddUostingUnitButton_Click" HorizontalAlignment="Left" Margin="372,472,0,0" VerticalAlignment="Top" Width="128" RenderTransformOrigin="0.013,0.5" Height="19" />
+                        </Grid>
+                        <!-- TODO-->
+                   </TabItem>
+                    <TabItem Header="upsate setting" Margin="0" >
+                        <!-- TODO-->
+                    </TabItem>
+                    <TabItem Header="delete unit" Margin="0" >
+                        <!-- TODO-->
+                        </TabItem>
+                    </TabControl>
 
-                </Grid>
-            </TabItem>
+                  </TabItem>
         </TabControl>
     </Grid>
 

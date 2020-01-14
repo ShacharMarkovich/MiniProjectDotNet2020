@@ -59,10 +59,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddHostingUnitWin.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="AddHostWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -73,9 +69,6 @@
     </Page>
     <Compile Include="AddGuestRequestWin.xaml.cs">
       <DependentUpon>AddGuestRequestWin.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AddHostingUnitWin.xaml.cs">
-      <DependentUpon>AddHostingUnitWin.xaml</DependentUpon>
     </Compile>
     <Compile Include="AddHostWin.xaml.cs">
       <DependentUpon>AddHostWin.xaml</DependentUpon>

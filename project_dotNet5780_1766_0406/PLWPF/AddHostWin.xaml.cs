@@ -19,8 +19,17 @@ namespace PLWPF
     /// </summary>
     public partial class AddHostWin : Window
     {
-        public BL.IBL _bL = BL.FactoryBL.Instance;
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            System.Windows.Data.CollectionViewSource hostViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("hostViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // hostViewSource.Source = [generic data source]
+        }
+
+        public BL.IBL _bl = BL.FactoryBL.Instance;
         public BE.Host _host;
+        public BE.HostingUnit _uostingUnit;
         private BE.BankBranch _myBank;
 
         private void SettingDataContext()
@@ -48,7 +57,7 @@ namespace PLWPF
 
         private void SetComboBox()
         {
-            List<BE.Host> hosts = _bL.GetAllHosts();
+            List<BE.Host> hosts = _bl.GetAllHosts();
             List<string> hostsNames = (from host in hosts
                                        select $"({host.HostKey}){host.PrivateName} {host.FamilyName}").ToList();
             hostsComboBox.ItemsSource = hostsNames;
@@ -57,7 +66,53 @@ namespace PLWPF
         public AddHostWin()
         {
             InitializeComponent();
+            _host = new BE.Host()
+            {
+                HostKey = ++BE.Configuration.HostKey,
+                Balance = 1000,
+                PrivateName = "name1",
+                FamilyName = "pname1",
+                PhoneNumber = "phone1",
+                Email = "smarkovi@g.jct.ac.il",
+                BankAccountNumber = 120159,
+                CollectionClearance = false,
+                BankBranchDetails = new BE.BankBranch()
+                {
+                    BankNumber = ++BE.Configuration.BankNumber,
+                    BankName = "bank1",
+                    BranchNumber = 1,
+                    BranchAddress = "address1",
+                    BranchCity = "city1"
+                }
+            };
+            _uostingUnit = new BE.HostingUnit
+            {
+                HostingUnitKey = ++BE.Configuration.HostingUnitKey,
+                Owner = _host
+            };
 
+            areaComboBox.DataContext = _uostingUnit;
+            this.areaComboBox.ItemsSource = Enum.GetValues(typeof(BE.Enums.Area));
+            areaComboBox.SelectedIndex = 0;
+
+            hostingUnitKeyTextBlock.DataContext = _uostingUnit;
+
+            hostingUnitNameTextBox.DataContext = _uostingUnit;
+
+            typeComboBox.DataContext = _uostingUnit;
+            this.typeComboBox.ItemsSource = Enum.GetValues(typeof(BE.Enums.UnitType));
+            typeComboBox.SelectedIndex = 0;
+
+            emailTextBlock.DataContext = _uostingUnit.Owner;
+
+            familyNameTextBlock.DataContext = _uostingUnit.Owner;
+
+            hostKeyTextBlock.DataContext = _uostingUnit;
+
+            phoneNumberTextBlock.DataContext = _uostingUnit.Owner;
+
+            privateNameTextBlock.DataContext = _uostingUnit.Owner;
+            ///////////////////////////////
             _myBank = new BE.BankBranch()
             {
                 BankNumber = ++BE.Configuration.BankNumber,
@@ -73,31 +128,39 @@ namespace PLWPF
             SetComboBox();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-            System.Windows.Data.CollectionViewSource hostViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("hostViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // hostViewSource.Source = [generic data source]
-        }
-
         private void AddHostButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                _bL.AddHost(_host);
-                errorMessage.Foreground = new SolidColorBrush(Colors.Green);
-                errorMessage.Text = "Host Add successfully!";
+                _bl.AddHost(_host);
+                
+                SignUpErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
+                SignUpErrorMessage.Text = "Host Add successfully!";
             }
             catch (ArgumentException exp)
             {
-                errorMessage.Text = exp.Message;
+                SignUpErrorMessage.Text = exp.Message;
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AddUostingUnitButton_Click(object sender, RoutedEventArgs e)
         {
-            new AddHostingUnitWin().ShowDialog();
+            AddHostingUnitErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
+            try
+            {
+                _bl.AddHostingUnit(_uostingUnit);
+                AddHostingUnitErrorMessage.Text = "Add hosting unit successfully!";
+            }
+            catch (ArgumentException exp)
+            {
+                AddHostingUnitErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                AddHostingUnitErrorMessage.Text = exp.Message;
+            }
+            catch (Exception exp)
+            {
+                AddHostingUnitErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                AddHostingUnitErrorMessage.Text = exp.Message;
+            }
         }
     }
 }
