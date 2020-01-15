@@ -411,36 +411,7 @@ namespace PLWPF
 
         private void SignIn_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.OriginalSource == SignInTabControl)
-            {
-                TabControl tabControl = sender as TabControl;
-                TabItem tabItem1 = tabControl.SelectedItem as TabItem;
-                object header = tabItem1.Header;
-                string tabItem = header as string;
-                switch (tabItem)
-                {
-                    case "login":
-                        MessageBox.Show("login tab");
-                        break;
 
-                    case "Add hosting unit":
-                        MessageBox.Show("Add hosting unit tab");
-                        break;
-
-                    case "Details":
-                        MessageBox.Show("Details tab");
-                        break;
-
-                    case "delete unit":
-                        MessageBox.Show("delete unit tab");
-                        break;
-
-                    default:
-                        MessageBox.Show("not impossible!!!");
-                        break;
-                }
-                MessageBox.Show("YOY");
-            }
         }
     }
 }
