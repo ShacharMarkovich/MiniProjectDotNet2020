@@ -61,13 +61,19 @@ namespace PLWPF
             areaComboBox.SelectedIndex = 0;
         }
 
-        private void SetUnitComboBox(ComboBox unitsComboBox_)
+        private void SetUnitComboBox(ComboBox unitsComboBox_, BE.Configuration.Term<BE.HostingUnit> term = null)
         {
-            List<BE.HostingUnit> units = _bl.AccordingTo(delegate (BE.HostingUnit u) { return true; });
+            List<BE.HostingUnit> units;
+            if (term == null)
+                units = _bl.AccordingTo(delegate (BE.HostingUnit u) { return true; });
+            else
+                units = _bl.AccordingTo(term);
+
             List<string> unitNames = (from unit in units
                                       select $"({unit.HostingUnitKey}){unit.HostingUnitName}").ToList();
             unitsComboBox_.ItemsSource = unitNames;
         }
+
         private void SetHostsComboBox(ComboBox hostsComboBox_)
         {
             List<BE.Host> hosts = _bl.GetAllHosts();
@@ -97,7 +103,21 @@ namespace PLWPF
             branchCityTextBox.DataContext = _host.BankBranchDetails;
         }
 
-        private void SetDetailsDataContext()
+        private void SetAddHostingUnitDataContext()
+        {
+            hostKeyTextBlock.DataContext = _hostingUnit;
+            familyNameTextBlock.DataContext = _hostingUnit.Owner;
+            privateNameTextBlock.DataContext = _hostingUnit.Owner;
+            emailTextBlock.DataContext = _hostingUnit.Owner;
+            phoneNumberTextBlock.DataContext = _hostingUnit.Owner;
+
+            hostingUnitKeyTextBlock.DataContext = _hostingUnit;
+            hostingUnitNameTextBox.DataContext = _hostingUnit;
+            areaComboBox.DataContext = _hostingUnit;
+            typeComboBox.DataContext = _hostingUnit;
+        }
+
+        private void SetHostDetailsDataContext()
         {
             detailsHostKeyTextBlock.DataContext = _host;
             detailsPrivateNameTextBox.DataContext = _host;
@@ -115,22 +135,15 @@ namespace PLWPF
             detailsBranchAddressTextBox.DataContext = _host.BankBranchDetails;
             detailsBranchCityTextBox.DataContext = _host.BankBranchDetails;
         }
-        
-        private void SetAddHostingUnitDataContext()
+        private void SetHostingUnitDetailsDataContext()
         {
-            hostKeyTextBlock.DataContext = _hostingUnit;
-            familyNameTextBlock.DataContext = _hostingUnit.Owner;
-            privateNameTextBlock.DataContext = _hostingUnit.Owner;
-            emailTextBlock.DataContext = _hostingUnit.Owner;
-            phoneNumberTextBlock.DataContext = _hostingUnit.Owner;
-
-            hostingUnitKeyTextBlock.DataContext = _hostingUnit;
-            hostingUnitNameTextBox.DataContext = _hostingUnit;
-            areaComboBox.DataContext = _hostingUnit;
-            typeComboBox.DataContext = _hostingUnit;
+            hostingUnitKeyTextBlockDetails.DataContext = _hostingUnit;
+            hostingUnitNameTextBoxDetails.DataContext = _hostingUnit;
+            areaTextBoxDetails.DataContext = _hostingUnit;
+            typeTextBoxDetails.DataContext = _hostingUnit;
         }
-
-
+        
+        
         private void ClearAddHostingUnit()
         {
             _hostingUnit = new BE.HostingUnit()
@@ -219,10 +232,14 @@ namespace PLWPF
                 Owner = _host
             };
             SetAddHostingUnitDataContext();
+            SetHostingUnitDetailsDataContext();
+            SetHostDetailsDataContext();
+            SetHostingUnitDetailsDataContext();
+            SetHostsComboBox(hostingUnitDetails);
 
-            // show _host in detail tab
-            SetDetailsDataContext();
 
+            SetUnitComboBox(hostingUnitDetails, delegate (BE.HostingUnit u) { return u.Owner.HostKey == _host.HostKey; });
+            
             // makes tabs enabled 
             AddHostingUnitTab.IsEnabled = true;
             UpdateTab.IsEnabled = true;
@@ -277,8 +294,10 @@ namespace PLWPF
             AddHostingUnitErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
             AddHostingUnitErrorMessage.Text = "Add hosting unit successfully!";
 
-            // prepare to get more new BE.Host
+            // prepare to get more new BE.HostingUnit
             ClearAddHostingUnit();
+            // add new hosting unit to hostingUnitDetails comboBox
+            SetUnitComboBox(hostingUnitDetails, delegate (BE.HostingUnit u) { return u.Owner.HostKey == _host.HostKey; });
 
             /////////
             /// for Degub only
@@ -291,8 +310,6 @@ namespace PLWPF
             HosthingUnitsComboBox.ItemsSource = unitNames;
             /////////
         }
-
-
 
         private void UpdateHostButton_Click(object sender, RoutedEventArgs e)
         {
@@ -322,7 +339,21 @@ namespace PLWPF
             // todo check if there is an selected hosting unit
             try
             {
+                try
+                {
+                    if (hostingUnitDetails.SelectedItem == null) ;
+                }
+                catch
+                {
+                    throw new ArgumentNullException("please select an hosting unit");
+                }
                 _bl.UpdateHostingUnit(_hostingUnit);
+            }
+            catch (ArgumentNullException exp)
+            {
+                errorMessageDetailsHost.Foreground = new SolidColorBrush(Colors.Red);
+                errorMessageDetailsHost.Text = exp.Message;
+                return;
             }
             catch (ArgumentException exp)
             {
@@ -330,11 +361,86 @@ namespace PLWPF
                 errorMessageDetailsHost.Text = exp.Message;
                 return;
             }
+
             errorMessageDetailsHost.Foreground = new SolidColorBrush(Colors.Green);
             errorMessageDetailsHost.Text = "Update successfully";
 
             SetUnitComboBox(HosthingUnitsComboBox);
         }
+
+        private void HostingUnitDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // get selected hostingUnitkey:
+            
+            // format of hostsComboBox items: <(hostingUnitKey)><hostingUnitName>
+            string hostingUnitName = hostingUnitDetails.SelectedItem as string;
+            if (hostingUnitName == null)
+            {
+
+            }
+            // so in the splited string's second place will be the hostKey
+            double hostingUnitKey;
+            try
+            {
+                hostingUnitKey = double.Parse(hostingUnitName.Split('(', ')')[1]);
+            }
+            catch
+            {
+                errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
+                errorMessageDetailsHostingUnit.Text = "please choose a hostingunit first";
+                return;
+            }
+
+            // and no update _host to selected host
+            List<BE.HostingUnit> hostingUnitlst = _bl.AccordingTo(delegate (BE.HostingUnit unit) {
+                return unit.HostingUnitKey == hostingUnitKey;
+            });
+            if (hostingUnitlst.Count() != 1)
+                throw new ArgumentOutOfRangeException("More than one hosting unit with same key");
+            _hostingUnit = hostingUnitlst.Single();
+            SetHostingUnitDetailsDataContext();
+            // TODO: show in hosting unit tab
+        }
+
         #endregion
+
+        private void DeleteHostingUnitButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Lior - YOU NEED DO IT!");
+        }
+
+        private void SignIn_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.OriginalSource == SignInTabControl)
+            {
+                TabControl tabControl = sender as TabControl;
+                TabItem tabItem1 = tabControl.SelectedItem as TabItem;
+                object header = tabItem1.Header;
+                string tabItem = header as string;
+                switch (tabItem)
+                {
+                    case "login":
+                        MessageBox.Show("login tab");
+                        break;
+
+                    case "Add hosting unit":
+                        MessageBox.Show("Add hosting unit tab");
+                        break;
+
+                    case "Details":
+                        MessageBox.Show("Details tab");
+                        break;
+
+                    case "delete unit":
+                        MessageBox.Show("delete unit tab");
+                        break;
+
+                    default:
+                        MessageBox.Show("not impossible!!!");
+                        break;
+                }
+                MessageBox.Show("YOY");
+            }
+        }
     }
 }

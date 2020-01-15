@@ -72,10 +72,9 @@
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="Sign In" Margin="0" >
-                <TabControl>
-                    <TabItem Header="login" Margin="0" >
-
+            <TabItem Header="Sign In"  Margin="0" >
+                <TabControl Name="SignInTabControl" SelectionChanged="SignIn_SelectionChanged">
+                    <TabItem Header="login"  Margin="0" >
                         <StackPanel>
                             <TextBlock x:Name="loginErrorMessage" Text="" 
                                        Foreground="Red" FontFamily="Agency FB" FontSize="18" Grid.Row="0" 
@@ -196,8 +195,46 @@
                             <Button  Grid.Column="0" Grid.Row="2" Content="Update Changes" Width="162" Height="22" Click="UpdateHostButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="123,11,126,-3"/>
 
                             <TextBlock x:Name="errorMessageDetailsHostingUnit" Grid.Column="1" Grid.Row="0" Text="" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <Button  Grid.Column="1" Grid.Row="2" Content="Update Changes" Width="162" Height="22" Click="UpdateHostingUnitButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="123,11,126,-3"/>
+                            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2" Margin="0,0,0,-19" >
+                                <Button Content="Update Changes" Width="162" Height="22" Click="UpdateHostingUnitButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30,0,0,0"/>
+                                <Button Content="Delete HOsting Unit" Click="DeleteHostingUnitButton_Click" Width="162" Height="22" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30,0,0,0"/>
+                            </StackPanel>
+                            <Grid Grid.Column="1" Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="47*"/>
+                                    <RowDefinition Height="379*"/>
+                                </Grid.RowDefinitions>
+                                <StackPanel Orientation="Horizontal" Grid.Row="0">
+                                    <TextBlock  Visibility="Hidden" Text="TextBlock"/>
+                                    <TextBlock  Text="Choose hosting Unit:" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <ComboBox Visibility="Hidden" Width="20"/>
+                                    <ComboBox x:Name="hostingUnitDetails" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" SelectionChanged="HostingUnitDetails_SelectionChanged"/>
+                                </StackPanel>
+                                <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Content="Hosting Unit Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="hostingUnitKeyTextBlockDetails" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" Text="{Binding HostingUnitKey}" VerticalAlignment="Center"/>
+                                    <Label Content="Hosting Unit Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+                                    <TextBox x:Name="hostingUnitNameTextBoxDetails" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding HostingUnitName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                                    <Label Content="Area:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="areaTextBoxDetails" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding Area, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                                    <Label Content="type:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="typeTextBoxDetails" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding type, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                                </Grid>
 
+                                <!-- 
+                                   hosting unit
+                                    -->
+                            </Grid>
 
                         </Grid>
                     </TabItem>
