@@ -77,5 +77,10 @@ namespace DAL
         /// this function add new BE.Host to the data source
         /// </summary>
         void AddHost(BE.Host newHost);
+
+        /// <summary>
+        /// this function get an exusts BE.Host in DataSource and update it details
+        /// </summary>
+        void UpdateHost(BE.Host host);
     }
 }

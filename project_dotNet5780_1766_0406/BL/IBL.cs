@@ -55,6 +55,11 @@ namespace BL
         void AddHost(BE.Host newHost);
 
         /// <summary>
+        /// this function get BE.Host that exists in datasource and update it
+        /// </summary>
+        void UpdateHost(BE.Host newHost);
+
+        /// <summary>
         /// this function return list of all Hosts in the dataSource
         /// </summary>
         List<BE.Host> GetAllHosts();
@@ -139,7 +144,7 @@ namespace BL
         /// return list of all order that the number of days since created is greater than or equal to the number of days received
         /// </summary>
         List<BE.Order> AtLeastnDays(int daysNumber);
-        
+
         /// <summary>
         /// returns a list of all GuestRequest that match a specific condition.
         /// </summary>

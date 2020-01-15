@@ -30,13 +30,20 @@ namespace BL
         #region GuestRequest functions signature
         public void AddGuestRequest(BE.GuestRequest gRequest)
         {
+            List<GuestRequest> units = AccordingTo(delegate (BE.GuestRequest unit) { return unit.GuestRequestKey == gRequest.GuestRequestKey; });
+            if (units.Count() != 0)
+                throw new ArgumentException("BE.HostingUnit.HostingUnitKey already exists");
+
             if (!(InCalendar(gRequest.RegistrationDate) && InCalendar(gRequest.EntryDate) &&
                 InCalendar(gRequest.ReleaseDate) && Ischronological(gRequest.EntryDate, gRequest.ReleaseDate)))
                 throw new ArgumentException("dates are not in this year / not chronological! try again!");
+
+            if (gRequest.PrivateName == null || gRequest.FamilyName == null) 
+                throw new ArgumentException("please enter data in all fields");
+
             if (gRequest.PrivateName.Length == 0 || gRequest.FamilyName.Length == 0)
                 throw new ArgumentException("names illegal");
-            if ((gRequest.Adults != 0 && gRequest.Children == 0) || (gRequest.Adults == 0 && gRequest.Children != 0))
-                throw new ArgumentException("Must have at least one child or adult");
+
             try
             {
                 // if this line not throw an Exception - gRequest.Email is a legal email
@@ -47,8 +54,11 @@ namespace BL
                 throw new ArgumentException("email illegal");
             }
 
-            BE.GuestRequest gR = gRequest.clone();
-            _dal.AddGuestRequest(gR);
+            if ((gRequest.Adults == 0 && gRequest.Children == 0) || (gRequest.Adults == 0 && gRequest.Children != 0))
+                throw new ArgumentException("Must have at least one adult");
+
+
+            _dal.AddGuestRequest(gRequest.clone());
         }
 
         public void UpdateGuestRequest(BE.GuestRequest gRequest, BE.Enums.Status newStat)
@@ -65,7 +75,12 @@ namespace BL
         {
             if (newHostingUnit.HostingUnitName == null)
                 throw new ArgumentException("less Hosting Unit Name");
+
+            List<HostingUnit> units = AccordingTo(delegate (BE.HostingUnit unit) { return unit.HostingUnitKey == newHostingUnit.HostingUnitKey; });
+            if (units.Count() != 0)
+                throw new ArgumentException("BE.HostingUnit.HostingUnitKey already exists");
             // TODO in part 3: check if newHostingUnit.Owner.BankBranchDetails is exists in israel
+
             _dal.AddHostingUnit(newHostingUnit.clone());
         }
 
@@ -105,6 +120,50 @@ namespace BL
 
         public void AddHost(BE.Host newHost)
         {
+            CheckHostDetails(newHost);
+
+            IEnumerable<Host> s = from host in _dal.GetAllHosts()
+                                  where host.HostKey == newHost.HostKey
+                                  select host;
+            if (s.Count() != 0)
+            {
+                BE.Configuration.HostKey++;
+                throw new ArgumentException("HostKey allready exists");
+            }
+
+            _dal.AddHost(newHost.clone());
+        }
+
+        public void UpdateHost(BE.Host host)
+        {
+            CheckHostDetails(host);
+
+            // check if host in DataSource
+            IEnumerable<Host> s = from hostDS in _dal.GetAllHosts()
+                                  where hostDS.HostKey == host.HostKey
+                                  select hostDS;
+            if (s.Count() == 0)
+            {
+                ///BE.Configuration.HostKey++;
+                throw new ArgumentException("HostKey not exists");
+            }
+
+            _dal.UpdateHost(host);
+        }
+
+        /// <summary>
+        /// this function get BE.Host and check if all the details are legal
+        /// </summary>
+        private void CheckHostDetails(BE.Host newHost)
+        {
+            try
+            {
+                int.Parse(newHost.PhoneNumber);
+            }
+            catch
+            {
+                throw new ArgumentException("Phone number must be a number");
+            }
             try
             {
                 if (newHost.BankBranchDetails == null || newHost.PrivateName == null || newHost.FamilyName == null || newHost.Email == null || newHost.PhoneNumber == null) ;
@@ -115,13 +174,13 @@ namespace BL
             }
 
             BE.BankBranch bank = newHost.BankBranchDetails;
-            if (bank.BankName == null || bank.BranchAddress == null || bank.BranchCity == null) 
+            if (bank.BankName == null || bank.BranchAddress == null || bank.BranchCity == null)
                 throw new ArgumentNullException("Please enter data in all fields");
 
             if (bank.BranchNumber == 0 || newHost.BankAccountNumber == 0)
                 throw new ArgumentException("Bank Branch number cannot be zero");
 
-            if (IsCollectionClearance(newHost))
+            if (!IsCollectionClearance(newHost))
                 throw new ArgumentException("Collection Clearance must be checked!");
 
             try
@@ -132,8 +191,6 @@ namespace BL
             {
                 throw new ArgumentException("email illegal");
             }
-
-            _dal.AddHost(newHost.clone());
         }
 
         public List<BE.Host> GetAllHosts()
@@ -343,15 +400,6 @@ namespace BL
             return enumerator.ToList();
         }
 
-        public List<BE.GuestRequest> AccordingTo(BE.Configuration.Term<BE.GuestRequest> term)
-        {
-            IEnumerable<BE.GuestRequest> gReqs = from gReq in _dal.GetAllRequests()
-                                                 where term(gReq)
-                                                 select gReq;
-
-            return gReqs.ToList();
-        }
-
         public List<BE.HostingUnit> AccordingTo(BE.Configuration.Term<BE.HostingUnit> term)
         {
             IEnumerable<BE.HostingUnit> units = from unit in _dal.GetAllHostingUnits()
@@ -359,6 +407,15 @@ namespace BL
                                                  select unit;
 
             return units.ToList();
+        }
+
+        public List<BE.GuestRequest> AccordingTo(BE.Configuration.Term<BE.GuestRequest> term)
+        {
+            IEnumerable<BE.GuestRequest> gReqs = from gReq in _dal.GetAllRequests()
+                                                 where term(gReq)
+                                                 select gReq;
+
+            return gReqs.ToList();
         }
 
         public int OrderCount(BE.GuestRequest gReq)

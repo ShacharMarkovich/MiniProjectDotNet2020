@@ -19,11 +19,16 @@ namespace PLWPF
     /// </summary>
     public partial class AddGuestRequestWin : Window
     {
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            CollectionViewSource guestRequestViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("guestRequestViewSource")));
+        }
+
         public BL.IBL _bl = BL.FactoryBL.Instance;
         public BE.GuestRequest _guestRequest;
 
         //data blinding
-        private void SettingDataContext()
+        private void SetDataContext()
         {
             guestRequestKeyTextBlock.DataContext = _guestRequest;
 
@@ -59,49 +64,53 @@ namespace PLWPF
                 ReleaseDate = DateTime.Now,
                 Stat = BE.Enums.Status.NotYetApproved
             };
+            SetDataContext();
 
+            // Default
             this.areaComboBox.ItemsSource = Enum.GetValues(typeof(BE.Enums.Area));
             this.typeComboBox.ItemsSource = Enum.GetValues(typeof(BE.Enums.UnitType));
-
-            SettingDataContext();
-            // Default
             areaComboBox.SelectedIndex = 0;
             typeComboBox.SelectedIndex = 0;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Window_Loaded_1(object sender, RoutedEventArgs e)
-        {
-
-            System.Windows.Data.CollectionViewSource guestRequestViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("guestRequestViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // guestRequestViewSource.Source = [generic data source]
-        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            errorMessage.Foreground = new SolidColorBrush(Colors.Red);
             try
             {
                 _guestRequest.Adults = int.Parse(this.adultsTextBox.Text);
                 _guestRequest.Children = int.Parse(this.childrenTextBox.Text);
                 _bl.AddGuestRequest(_guestRequest);
-                errorMessage.Foreground = new SolidColorBrush(Colors.Green);
-                errorMessage.Text = "Guest Request Add successfully!";
-                List<IGrouping<int, BE.GuestRequest>> s = _bl.GroupGuestRequestByPeopleCount();
             }
             catch (ArgumentException exp)
             {
+                // show fit comment
+                errorMessage.Foreground = new SolidColorBrush(Colors.Red);
                 errorMessage.Text = exp.Message;
+                return;
             }
             catch (Exception exp)
             {
+                // show fit comment
+                errorMessage.Foreground = new SolidColorBrush(Colors.Red);
                 errorMessage.Text = exp.Message;
+                return;
             }
+
+            // show fit comment
+            errorMessage.Foreground = new SolidColorBrush(Colors.Green);
+            errorMessage.Text = "Guest Request Add successfully!";
+
+            // prepare to get more new BE.GuestRequest
+            _guestRequest = new BE.GuestRequest
+            {
+                GuestRequestKey = ++BE.Configuration.GuestRequestKey,
+                RegistrationDate = DateTime.Now,
+                EntryDate = DateTime.Now,
+                ReleaseDate = DateTime.Now,
+                Stat = BE.Enums.Status.NotYetApproved
+            };
+            SetDataContext();
         }
     }
 }

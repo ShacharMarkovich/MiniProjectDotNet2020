@@ -78,6 +78,12 @@ namespace DAL
             DS.DataSource._hostsList.Add(newHost);
         }
 
+        public void UpdateHost(BE.Host host)
+        {
+            DS.DataSource._hostsList[DS.DataSource._hostsList.FindIndex(
+                key => key.HostKey == host.HostKey)] = host;
+        }
+
 
         public List<BE.GuestRequest> GetAllRequests()
         {
