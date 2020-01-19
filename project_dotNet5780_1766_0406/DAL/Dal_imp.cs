@@ -51,7 +51,7 @@ namespace DAL
         {
             BE.HostingUnit unit2Del = DS.DataSource._hostingUnitsList.Find(unit => unit.HostingUnitKey == hostingUnit.HostingUnitKey);
             if (DS.DataSource._hostingUnitsList.Remove(unit2Del) == false)
-                throw new ArgumentException("delete from DS.DataSource._hostingUnitsList not succeed!", "hostingUnit");
+                throw new ArgumentException("delete hosting unit from Data Source didn't succeed!");
         }
 
         public void UpdateHostingUnit(BE.HostingUnit hostingUnit)

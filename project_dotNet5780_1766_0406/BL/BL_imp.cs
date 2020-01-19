@@ -93,7 +93,13 @@ namespace BL
                     $"needed to first close all the orders)");
         }
 
-        public void UpdateHostingUnit(BE.HostingUnit hostingUnit) => _dal.UpdateHostingUnit(hostingUnit.clone());
+        public void UpdateHostingUnit(HostingUnit hostingUnit)
+        {
+            List<HostingUnit> units = AccordingTo(delegate (BE.HostingUnit unit) { return unit.HostingUnitKey == hostingUnit.HostingUnitKey; });
+            if (units.Count() == 0)
+                throw new ArgumentException("please select an hosting unit");
+            _dal.UpdateHostingUnit(hostingUnit.clone());
+        }
         #endregion
 
         #region Order functions signature

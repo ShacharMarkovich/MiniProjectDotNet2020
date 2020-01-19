@@ -192,12 +192,6 @@ namespace PLWPF
 
             // prepare to get more new BE.Host
             ClearSignUp();
-
-            ///////
-            /// for Debug only
-            SetHostsComboBox(HostsComboBox);
-            SetHostsComboBox(hostsComboBox);
-            ///////
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -206,7 +200,7 @@ namespace PLWPF
             if (hostsComboBox.SelectedItem == null)
             {
                 loginErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
-                loginErrorMessage.Text = "Please Select an Host in order to contine";
+                loginErrorMessage.Text = "Please Select a Host in order to contine";
                 return;
             }
             
@@ -243,18 +237,7 @@ namespace PLWPF
             // makes tabs enabled 
             AddHostingUnitTab.IsEnabled = true;
             UpdateTab.IsEnabled = true;
-            deleteTab.IsEnabled = true;
             SignInTab.IsEnabled = false;
-
-            /////////
-            /// for Degub only
-            // show in comboBox of delete tab all units of selected host
-            List<BE.HostingUnit> units = _bl.AccordingTo(delegate (BE.HostingUnit unit){
-                return unit.Owner.HostKey == _host.HostKey; });
-            List<string> unitNames = (from unit in units
-                                      select $"({unit.HostingUnitKey}){unit.HostingUnitName}").ToList();
-            HosthingUnitsComboBox.ItemsSource = unitNames;
-            /////////
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
@@ -265,7 +248,6 @@ namespace PLWPF
             // make fits tabs enabled
             AddHostingUnitTab.IsEnabled = false;
             UpdateTab.IsEnabled = false;
-            deleteTab.IsEnabled = false;
             SignInTab.IsEnabled = true;
         }
 
@@ -299,16 +281,6 @@ namespace PLWPF
             // add new hosting unit to hostingUnitDetails comboBox
             SetUnitComboBox(hostingUnitDetails, delegate (BE.HostingUnit u) { return u.Owner.HostKey == _host.HostKey; });
 
-            /////////
-            /// for Degub only
-            // show in comboBox of delete tab all units of selected host
-            List<BE.HostingUnit> units = _bl.AccordingTo(delegate (BE.HostingUnit unit) {
-                return unit.Owner.HostKey == _host.HostKey;
-            });
-            List<string> unitNames = (from unit in units
-                                      select $"({unit.HostingUnitKey}){unit.HostingUnitName}").ToList();
-            HosthingUnitsComboBox.ItemsSource = unitNames;
-            /////////
         }
 
         private void UpdateHostButton_Click(object sender, RoutedEventArgs e)
@@ -328,48 +300,76 @@ namespace PLWPF
 
             // update ocmboBox in Login Tab
             SetHostsComboBox(hostsComboBox);
-
-            /// for Debug only
-            SetHostsComboBox(HostsComboBox);
-            ///
         }
 
         private void UpdateHostingUnitButton_Click(object sender, RoutedEventArgs e)
         {
-            // todo check if there is an selected hosting unit
             try
             {
-                try
-                {
-                    if (hostingUnitDetails.SelectedItem == null) ;
-                }
-                catch
-                {
-                    throw new ArgumentNullException("please select an hosting unit");
-                }
+                if (hostingUnitDetails.SelectedIndex == -1)
+                    throw new ArgumentException("please select a hosting unit");
+
                 _bl.UpdateHostingUnit(_hostingUnit);
             }
             catch (ArgumentNullException exp)
             {
-                errorMessageDetailsHost.Foreground = new SolidColorBrush(Colors.Red);
-                errorMessageDetailsHost.Text = exp.Message;
+                errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
+                errorMessageDetailsHostingUnit.Text = exp.Message;
                 return;
             }
             catch (ArgumentException exp)
             {
-                errorMessageDetailsHost.Foreground = new SolidColorBrush(Colors.Red);
-                errorMessageDetailsHost.Text = exp.Message;
+                errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
+                errorMessageDetailsHostingUnit.Text = exp.Message;
                 return;
             }
 
-            errorMessageDetailsHost.Foreground = new SolidColorBrush(Colors.Green);
-            errorMessageDetailsHost.Text = "Update successfully";
+            _hostingUnit = new BE.HostingUnit()
+            {
+                HostingUnitKey = ++BE.Configuration.HostingUnitKey,
+                Owner = _host
+            };
+            SetHostingUnitDetailsDataContext();
+            SetUnitComboBox(hostingUnitDetails, delegate (BE.HostingUnit unit) { return unit.Owner.HostKey == _host.HostKey; });
 
-            SetUnitComboBox(HosthingUnitsComboBox);
+            errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Green);
+            errorMessageDetailsHostingUnit.Text = "Update successfully";
+            hostingUnitDetails.SelectedIndex = -1;
         }
+
+        private void DeleteHostingUnitButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                _bl.DeleteHostingUnit(_hostingUnit);
+            }
+            catch (ArgumentException exp)
+            {
+                errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
+                errorMessageDetailsHostingUnit.Text = exp.Message;
+                return;
+            }
+
+            errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
+            errorMessageDetailsHostingUnit.Text = "Hosting unit successfully removed";
+
+            _hostingUnit = new BE.HostingUnit()
+            {
+                HostingUnitKey = ++BE.Configuration.HostingUnitKey,
+                Owner = _host
+            };
+            SetHostingUnitDetailsDataContext();
+            SetUnitComboBox(hostingUnitDetails, delegate(BE.HostingUnit unit) { return unit.Owner.HostKey == _host.HostKey; });
+
+        }
+
+        #endregion
 
         private void HostingUnitDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //TODO: regognize who call the event
+
+
             // get selected hostingUnitkey:
             
             // format of hostsComboBox items: <(hostingUnitKey)><hostingUnitName>
@@ -387,11 +387,11 @@ namespace PLWPF
             catch
             {
                 errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
-                errorMessageDetailsHostingUnit.Text = "please choose a hostingunit first";
+                errorMessageDetailsHostingUnit.Text = "please choose a hosting unit first";
                 return;
             }
 
-            // and no update _host to selected host
+            // and no update _hosting unit to selected hosting unit
             List<BE.HostingUnit> hostingUnitlst = _bl.AccordingTo(delegate (BE.HostingUnit unit) {
                 return unit.HostingUnitKey == hostingUnitKey;
             });
@@ -400,32 +400,6 @@ namespace PLWPF
             _hostingUnit = hostingUnitlst.Single();
             SetHostingUnitDetailsDataContext();
             // TODO: show in hosting unit tab
-        }
-
-        #endregion
-
-        private void DeleteHostingUnitButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                _bl.DeleteHostingUnit(_hostingUnit);
-            }
-            catch
-            {
-                MessageBox.Show("not can delete hosting unit!");
-                return;
-            }
-
-            _hostingUnit = new BE.HostingUnit()
-            {
-                HostingUnitKey = ++BE.Configuration.HostingUnitKey,
-                Owner = _host
-            };
-            SetHostingUnitDetailsDataContext();
-            SetUnitComboBox(hostingUnitDetails, delegate(BE.HostingUnit unit) { return unit.Owner.HostKey == _host.HostKey; });
-
-            MessageBox.Show("the hosting unit delete!");
-
         }
 
         private void SignIn_SelectionChanged(object sender, SelectionChangedEventArgs e)

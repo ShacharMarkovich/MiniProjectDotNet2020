@@ -128,7 +128,6 @@
                             </Grid>
                             <Button Content="add hosting unit" Click="AddUostingUnitButton_Click" HorizontalAlignment="Left" Margin="372,472,0,0" VerticalAlignment="Top" Width="128" RenderTransformOrigin="0.013,0.5" Height="19" />
                         </Grid>
-                        <!-- TODO-->
                     </TabItem>
                     <TabItem x:Name="UpdateTab" Header="Details" IsEnabled="False">
                         <Grid>
@@ -230,25 +229,9 @@
                                     <Label Content="type:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
                                     <TextBlock x:Name="typeTextBoxDetails" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding type, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
                                 </Grid>
-
-                                <!-- 
-                                   hosting unit
-                                    -->
                             </Grid>
 
                         </Grid>
-                    </TabItem>
-                    <TabItem x:Name="deleteTab" Header="delete unit" IsEnabled="False" Margin="0" >
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5*"/>
-                                <ColumnDefinition Width="132*"/>
-                                <ColumnDefinition Width="137*"/>
-                            </Grid.ColumnDefinitions>
-                            <ComboBox x:Name="HostsComboBox"         Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Margin="131,245,145,245"/>
-                            <ComboBox x:Name="HosthingUnitsComboBox" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Margin="145,245,146,245"/>
-                        </Grid>
-                        <!-- TODO-->
                     </TabItem>
                 </TabControl>
 
