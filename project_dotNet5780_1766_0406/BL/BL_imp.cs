@@ -109,9 +109,17 @@ namespace BL
         #region Order functions signature
         public void AddOrder(BE.Order newOrder)
         {
+            // check if there is allready order with this keys
+            List<BE.Order> ordersList = AccordingTo(delegate (BE.Order order) {
+                return order.GuestRequestKey == newOrder.GuestRequestKey &&
+                order.HostingUnitKey == newOrder.HostingUnitKey;
+            });
 
-            List<GuestRequest> guestRequestList = AccordingTo(gReq => gReq.GuestRequestKey == newOrder.GuestRequestKey);
-            List<HostingUnit> hostingUnitList = AccordingTo(unit => unit.HostingUnitKey == newOrder.HostingUnitKey);
+            if (ordersList.Count() != 0)
+                throw new ArgumentException("order allready exists for this GuestRequest in this HostingUnit");
+
+                List<BE.GuestRequest> guestRequestList = AccordingTo(delegate (BE.GuestRequest gReq) { return gReq.GuestRequestKey == newOrder.GuestRequestKey; });
+            List<HostingUnit> hostingUnitList = AccordingTo(delegate (BE.HostingUnit unit) { return unit.HostingUnitKey == newOrder.HostingUnitKey; });
 
             int requestsCount = guestRequestList.Count;
             int unitsCount = hostingUnitList.Count;
@@ -121,6 +129,8 @@ namespace BL
 
             BE.GuestRequest matchRG = guestRequestList.Single();
             BE.HostingUnit matchUnit = hostingUnitList.Single();
+            if (IsGuestRequestClose(matchRG))
+                throw new ArgumentException("can't make order to close GuestRequest!");
 
             // check if areas and type are match:
             if (matchRG.Area != matchUnit.Area)
