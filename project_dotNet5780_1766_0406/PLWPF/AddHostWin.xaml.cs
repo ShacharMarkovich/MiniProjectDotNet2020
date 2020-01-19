@@ -406,7 +406,26 @@ namespace PLWPF
 
         private void DeleteHostingUnitButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Lior - YOU NEED DO IT!");
+            try
+            {
+                _bl.DeleteHostingUnit(_hostingUnit);
+            }
+            catch
+            {
+                MessageBox.Show("not can delete hosting unit!");
+                return;
+            }
+
+            _hostingUnit = new BE.HostingUnit()
+            {
+                HostingUnitKey = ++BE.Configuration.HostingUnitKey,
+                Owner = _host
+            };
+            SetHostingUnitDetailsDataContext();
+            SetUnitComboBox(hostingUnitDetails, delegate(BE.HostingUnit unit) { return unit.Owner.HostKey == _host.HostKey; });
+
+            MessageBox.Show("the hosting unit delete!");
+
         }
 
         private void SignIn_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -340,7 +340,10 @@ namespace BL
                                               where (order.HostingUnitKey == hostingUnit.HostingUnitKey && !IsOrderClose(order))
                                               select order;
 
-            return belongsTo.Count() == 0;
+            List<Order> list = belongsTo.ToList();
+            int v = list.Count();
+            var s = v == 0;
+            return s;
         }
 
         public bool IsCanCancalCollectionClearance(BE.Host host)

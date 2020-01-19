@@ -222,5 +222,13 @@ namespace DS
 
                 };
         }
+        public static void Init22()
+        {
+            _guestRequestsList = new List<BE.GuestRequest>();
+            _bankBranchList = new List<BE.BankBranch>();
+            _hostsList = new List<BE.Host>();
+            _hostingUnitsList = new List<BE.HostingUnit>();
+            _ordersList = new List<BE.Order>();
+        }
     }
 }

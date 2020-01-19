@@ -135,7 +135,6 @@ namespace BE
 
         public override string ToString()
         {
-
             return "Guest Request Key:\t" + _guestRequestKey +
                 "\nPrivate Name:\t" + _privateName +
                 "\nFamily Name:\t" + _familyName +

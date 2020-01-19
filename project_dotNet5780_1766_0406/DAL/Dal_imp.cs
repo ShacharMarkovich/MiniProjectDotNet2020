@@ -49,7 +49,8 @@ namespace DAL
 
         public void DeleteHostingUnit(BE.HostingUnit hostingUnit)
         {
-            if (DS.DataSource._hostingUnitsList.Remove(hostingUnit) == false)
+            BE.HostingUnit unit2Del = DS.DataSource._hostingUnitsList.Find(unit => unit.HostingUnitKey == hostingUnit.HostingUnitKey);
+            if (DS.DataSource._hostingUnitsList.Remove(unit2Del) == false)
                 throw new ArgumentException("delete from DS.DataSource._hostingUnitsList not succeed!", "hostingUnit");
         }
 
