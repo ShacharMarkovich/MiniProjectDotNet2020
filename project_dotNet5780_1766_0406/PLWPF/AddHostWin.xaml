@@ -120,7 +120,7 @@
                                 <Label Content="Family Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
                                 <TextBlock x:Name="familyNameTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="5" Text="{Binding Path=FamilyName}" VerticalAlignment="Center"/>
                                 <Label Content="Host Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="hostKeyTextBlock1" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="6" Text="{Binding Path=Owner.HostKey}" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="addhostKeyTextBlock" Grid.Column="1" HorizontalAlignment="Right" Margin="0,8,117,0" Grid.Row="6" Text="{Binding Path=Owner.HostKey}" VerticalAlignment="Top"/>
                                 <Label Content="Phone Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
                                 <TextBlock x:Name="phoneNumberTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="7" Text="{Binding Path=PhoneNumber}" VerticalAlignment="Center"/>
                                 <Label Content="Private Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>

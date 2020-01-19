@@ -105,7 +105,7 @@ namespace PLWPF
 
         private void SetAddHostingUnitDataContext()
         {
-            hostKeyTextBlock.DataContext = _hostingUnit;
+            addhostKeyTextBlock.DataContext = _hostingUnit;
             familyNameTextBlock.DataContext = _hostingUnit.Owner;
             privateNameTextBlock.DataContext = _hostingUnit.Owner;
             emailTextBlock.DataContext = _hostingUnit.Owner;

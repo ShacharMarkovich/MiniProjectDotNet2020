@@ -11,3 +11,16 @@ D:\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BL\obj\Debug\BL.csproj.Cor
 D:\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BL\obj\Debug\BL.csproj.CopyComplete
 D:\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BL\obj\Debug\BL.dll
 D:\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BL\obj\Debug\BL.pdb
+C:\MiniProjectDotNet2020\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BL\bin\Debug\BL.dll
+C:\MiniProjectDotNet2020\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BL\bin\Debug\BL.pdb
+C:\MiniProjectDotNet2020\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BL\bin\Debug\BE.dll
+C:\MiniProjectDotNet2020\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BL\bin\Debug\DAL.dll
+C:\MiniProjectDotNet2020\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BL\bin\Debug\DS.dll
+C:\MiniProjectDotNet2020\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BL\bin\Debug\BE.pdb
+C:\MiniProjectDotNet2020\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BL\bin\Debug\DAL.pdb
+C:\MiniProjectDotNet2020\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BL\bin\Debug\DS.pdb
+C:\MiniProjectDotNet2020\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BL\obj\Debug\BL.csprojAssemblyReference.cache
+C:\MiniProjectDotNet2020\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BL\obj\Debug\BL.csproj.CoreCompileInputs.cache
+C:\MiniProjectDotNet2020\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BL\obj\Debug\BL.csproj.CopyComplete
+C:\MiniProjectDotNet2020\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BL\obj\Debug\BL.dll
+C:\MiniProjectDotNet2020\MiniProjectDotNet2020\project_dotNet5780_1766_0406\BL\obj\Debug\BL.pdb
