@@ -77,6 +77,9 @@ namespace PLWPF
             typeComboBox.SelectedIndex = 0;
             areaComboBox.ItemsSource = Enum.GetValues(typeof(BE.Enums.Area));
             areaComboBox.SelectedIndex = 0;
+
+
+            
         }
 
         /// <summary>
@@ -268,7 +271,7 @@ namespace PLWPF
         /// make new (temp) _hostingUnit
         /// </summary>
         private void LoginButton_Click(object sender, RoutedEventArgs e)
-        {
+        {            
             // check if any host has been selected
             if (hostsComboBox.SelectedItem == null)
             {
@@ -313,6 +316,12 @@ namespace PLWPF
             UpdateTab.IsEnabled = true;
             OrderTub.IsEnabled = true;
             SignupTab.IsEnabled = false;
+
+            ///////
+            //order:
+            hostingUnitDataGrid.ItemsSource = _bl.AccordingTo(delegate (BE.HostingUnit unit) { return unit.Owner.HostKey == _host.HostKey; });
+            guestRequestDataGrid.ItemsSource = _bl.AccordingTo(delegate (BE.GuestRequest gR) { return !_bl.IsGuestRequestClose(gR); });
+            //////
         }
 
         /// <summary>
@@ -462,6 +471,49 @@ namespace PLWPF
             SetUnitComboBox(hostingUnitDetails, delegate(BE.HostingUnit unit) { return unit.Owner.HostKey == _host.HostKey; });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private void CreateOrderButton_Click(object sender, RoutedEventArgs e)
+        {
+            BE.HostingUnit unit = hostingUnitDataGrid.SelectedItem as BE.HostingUnit;
+            BE.GuestRequest guestRequest = guestRequestDataGrid.SelectedItem as BE.GuestRequest;
+
+            // check if both unit and guestRequest  was selected
+            if (unit == null)
+            {
+                MessageBox.Show("please select unit");
+                return;
+            }
+
+            if(guestRequest == null)
+            {
+                MessageBox.Show("please select guestRequest");
+                return;
+            }
+
+            // create temp new order
+            BE.Order order = new BE.Order()
+            {
+                OrderKey = ++BE.Configuration.OrderKey,
+                CreateDate = DateTime.Now,
+                GuestRequestKey = guestRequest.GuestRequestKey,
+                HostingUnitKey = unit.HostingUnitKey,
+                OrderDate = new DateTime(),
+                Status = BE.Enums.Status.NotYetApproved
+            };
+            try
+            {
+                _bl.AddOrder(order);
+            }
+            catch (ArgumentException exp)
+            {
+                MessageBox.Show(exp.Message);
+            }
+
+
+        }
+
         #endregion
 
         /// <summary>
@@ -518,5 +570,55 @@ namespace PLWPF
             _hostingUnit = hostingUnitlst.Single();
             SetHostingUnitDetailsDataContext();
         }
+
+
+
+        public static List<CalendarDateRange> DiaryToRangeOfDatetime(bool[,] Diary)
+        {
+            List<CalendarDateRange> blackoutDates = new List<CalendarDateRange>();
+            //curr Date is in index of Diary[1,0];
+            //for to get previews month
+            int j = 0;
+
+            for (int i = 0; i < BE.Configuration._days; i++)
+                if (Diary[0, i])
+                {
+                    //finding numbers of occupied days in row
+                    j = i;
+                    while (Diary[0, j] && j < BE.Configuration._days)
+                        j++;
+
+                    //only one day occupied un row
+                    blackoutDates.Add(i == (j - 1)
+                        ? new CalendarDateRange(DateTime.Today.AddDays(i - BE.Configuration._days))
+                        : new CalendarDateRange(DateTime.Today.AddDays(i - BE.Configuration._days), DateTime.Today.AddDays(j - BE.Configuration._days - 1)));
+                    i = j;
+                }
+
+            for (int k = 1; k < BE.Configuration._month; k++)
+                for (int i = 0; i < BE.Configuration._days; i++)
+                    if (Diary[k, i])
+                    {
+                        //finding numbers of occupied days in row
+                        j = i;
+                        while (Diary[k, j])
+                        {
+                            j++;
+                            //check for next month
+                            if (j > BE.Configuration._month - 1)
+                            {
+                                j = 0;
+                                k++;
+                            }
+                        }
+                        //only one day occupied un row
+                        blackoutDates.Add(i == (j - 1)
+                            ? new CalendarDateRange(DateTime.Today.AddMonths(k - 1).AddDays(i))
+                            : new CalendarDateRange(DateTime.Today.AddMonths(k - 1).AddDays(i), DateTime.Today.AddMonths(k - 1).AddDays(j - 1)));
+                        i = j;
+                    }
+            return blackoutDates;
+        }
+
     }
 }

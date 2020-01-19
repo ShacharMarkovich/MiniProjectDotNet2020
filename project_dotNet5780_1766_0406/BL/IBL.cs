@@ -106,7 +106,8 @@ namespace BL
         void UpdateCalendar(BE.HostingUnit hostingUnit, DateTime entryDate, DateTime releaseDate);
 
         /// <summary>
-        /// update matching GuestRequest's stauts to given order, and cancel other offers.
+        /// update status of given order to approved,
+        /// and close all other open orders of the matching guest request
         /// </summary>
         void SelectInvitation(BE.Order order);
         

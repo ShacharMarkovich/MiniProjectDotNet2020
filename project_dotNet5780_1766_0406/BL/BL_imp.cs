@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BL
 {
@@ -38,7 +39,7 @@ namespace BL
                 InCalendar(gRequest.ReleaseDate) && Ischronological(gRequest.EntryDate, gRequest.ReleaseDate)))
                 throw new ArgumentException("dates are not in this year / not chronological! try again!");
 
-            if (gRequest.PrivateName == null || gRequest.FamilyName == null) 
+            if (gRequest.PrivateName == null || gRequest.FamilyName == null)
                 throw new ArgumentException("please enter data in all fields");
 
             if (gRequest.PrivateName.Length == 0 || gRequest.FamilyName.Length == 0)
@@ -108,12 +109,27 @@ namespace BL
         #region Order functions signature
         public void AddOrder(BE.Order newOrder)
         {
-            int requestsCount = AccordingTo(gReq => gReq.GuestRequestKey == newOrder.GuestRequestKey).Count;
-            int unitsCount = AccordingTo(unit => unit.HostingUnitKey == newOrder.HostingUnitKey).Count;
+            List<GuestRequest> guestRequestList = AccordingTo(gReq => gReq.GuestRequestKey == newOrder.GuestRequestKey);
+            List<HostingUnit> hostingUnitList = AccordingTo(unit => unit.HostingUnitKey == newOrder.HostingUnitKey);
 
+            int requestsCount = guestRequestList.Count;
+            int unitsCount = hostingUnitList.Count;
             // == 0 means that there isn't exists unit/request with those keys
             if (requestsCount == 0 || unitsCount == 0)
-                throw new ArgumentNullException("unfamiliar GuestRequest or HostingUnit with those keys!please try again!");
+                throw new ArgumentException("unfamiliar GuestRequest or HostingUnit with those keys!please try again!");
+
+            BE.GuestRequest matchRG = guestRequestList.Single();
+            BE.HostingUnit matchUnit = hostingUnitList.Single();
+
+            // check if areas and type are match:
+            if (matchRG.Area != matchUnit.Area)
+                throw new ArgumentException("Areas does not match");
+            if (matchRG.type != matchUnit.type)
+                throw new ArgumentException("Types does not match");
+
+            // check if hosting unit calendar is free between those dates
+            if (!IsDateArmor(matchUnit, matchRG.EntryDate, matchRG.ReleaseDate))
+                throw new ArgumentOutOfRangeException($"dates between {matchRG.EntryDate.toString()} to {matchRG.EntryDate.toString()} are not available to order");
 
             _dal.AddOrder(newOrder.clone());
         }
@@ -224,7 +240,7 @@ namespace BL
                 return false;
             int count = Count2Diary(entryDate, releaseDate);
             return IsDateArmor(hostingUnit, entryDate, count);
-           
+
         }
 
         public bool IsOrderClose(BE.Order order) => order.Status >= BE.Enums.Status.CloseByClient;
@@ -290,7 +306,7 @@ namespace BL
                     day = entryDate.Day - 1;
                 bool[,] diary = hostingUnit.Diary;
                 int count = Count2Diary(entryDate, releaseDate);
-                for (int i = 0; i < count; i++,++day)
+                for (int i = 0; i < count; i++, ++day)
                 {
                     if (day == BE.Configuration._days) // check if we in end of month
                     {
@@ -321,15 +337,15 @@ namespace BL
                            where gReq.GuestRequestKey == order.GuestRequestKey
                            select gReq).Single();
                 // /// and update his status
-                _dal.UpdateGuestRequest(request, BE.Enums.Status.CloseByApp);
+                _dal.UpdateGuestRequest(request, BE.Enums.Status.Approved);
             }
-            catch (ArgumentNullException exc)
+            catch (ArgumentNullException)
             {
-                Console.WriteLine(exc.Message);
+                throw new ArgumentException("there is no such GuestRequestKey!");
             }
-            catch (InvalidOperationException exc)
+            catch (InvalidOperationException)
             {
-                Console.WriteLine(exc.Message);
+                throw new ArgumentException("more than one GuestRequest with this key!");
             }
 
             // find the rest of the orders which mach to the request...
@@ -415,8 +431,8 @@ namespace BL
         public List<BE.HostingUnit> AccordingTo(BE.Configuration.Term<BE.HostingUnit> term)
         {
             IEnumerable<BE.HostingUnit> units = from unit in _dal.GetAllHostingUnits()
-                                                 where term(unit)
-                                                 select unit;
+                                                where term(unit)
+                                                select unit;
 
             return units.ToList();
         }
@@ -484,7 +500,7 @@ namespace BL
 
         //////////////////////////////////////////////////////////
         // our additional functions:
-        
+
         public bool InCalendar(DateTime time)
         {
             DateTime now = DateTime.Now;
@@ -525,12 +541,12 @@ namespace BL
 
         /// <summary>
         /// this function return the amount of days between the given dates,
-        /// BUT in format That in every month the days number is 31
+        /// BUT in format That in every month there is 31 days
         /// </summary>
         static private int Count2Diary(DateTime entryDate, DateTime releaseDate)
         {
             // return (month*31 + day) - (month*31 + day)
-            return (releaseDate.Month * BE.Configuration._days + releaseDate.Day) - 
+            return (releaseDate.Month * BE.Configuration._days + releaseDate.Day) -
                 (entryDate.Month * BE.Configuration._days + entryDate.Day);
         }
     }

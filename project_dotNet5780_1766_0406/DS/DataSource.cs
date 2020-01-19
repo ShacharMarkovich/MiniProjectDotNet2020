@@ -193,8 +193,8 @@ namespace DS
                         Owner = _hostsList[2]
                     },
                 };
-            _ordersList = new List<BE.Order>()
-                {
+            _ordersList = new List<BE.Order>();
+               /* {
                     new BE.Order(){
                         GuestRequestKey=_guestRequestsList[0].GuestRequestKey,
                         HostingUnitKey=_hostingUnitsList[0].HostingUnitKey,
@@ -220,7 +220,7 @@ namespace DS
                         OrderDate = new DateTime(2020,2,10)
                     },
 
-                };
+                };*/
         }
         public static void Init22()
         {

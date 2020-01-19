@@ -236,89 +236,34 @@
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="OrderTub" Header="Order"  Margin="0" IsEnabled="False" >
-                        <TabControl Name="OrerTubControl" RenderTransformOrigin="0.5,0.5" >
+                        <TabControl Name="OrerTubControl" RenderTransformOrigin="0.5,0.5" SelectedIndex="{Binding Mode=OneWay}" >
                             <TabItem x:Name="ListOfOrdersTub" Header="List Of Orders"  Margin="0" >
+                                <!--
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <DataGrid x:Name="guestRequestDataGrid" Grid.Column="0" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource guestRequestViewSource}}" Margin="0" RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <DataGrid x:Name="hostingUnitsDataGrid" Grid.Column="0" >
                                         <DataGrid.Columns>
-                                            <DataGridTemplateColumn x:Name="areaColumn" Header="Area" Width="SizeToHeader">
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <TextBlock Text="{Binding Area}"/>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTemplateColumn x:Name="emailColumn" Header="Email" Width="SizeToHeader">
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Label Content="{Binding Email}"/>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTemplateColumn x:Name="entryDateColumn" Header="Entry Date" Width="SizeToHeader">
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Label Content="{Binding EntryDate}"/>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTemplateColumn x:Name="guestRequestKeyColumn" Header="Guest Request Key" Width="SizeToHeader">
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <TextBlock Text="{Binding GuestRequestKey}"/>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTemplateColumn x:Name="jecuzziColumn" Header="Jecuzzi" Width="SizeToHeader">
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Label Content="{Binding Jecuzzi}"/>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTemplateColumn x:Name="poolColumn" Header="Pool" Width="SizeToHeader">
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Label Content="{Binding Pool}"/>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTemplateColumn x:Name="releaseDateColumn" Header="Release Date" Width="SizeToHeader">
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Label Content="{Binding ReleaseDate}"/>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTemplateColumn x:Name="statColumn" Header="Stat" Width="SizeToHeader">
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Label Content="{Binding Stat}"/>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTemplateColumn x:Name="typeColumn" Header="type" Width="SizeToHeader">
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Label Content="{Binding type}"/>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
+                                            <DataGridTextColumn Header="name" Binding="{Binding HostingUnitName}"/>
+                                            <DataGridTextColumn Header="type" Binding="{Binding type}"/>
+                                            <DataGridTextColumn Header="Area" Binding="{Binding Area}"/>
                                         </DataGrid.Columns>
                                     </DataGrid>
-                                    <DataGrid x:Name="hostingUnitDataGrid" Grid.Column="1" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="0" RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                </Grid>
+-->
+                                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="10*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <DataGrid x:Name="hostingUnitDataGrid" IsReadOnly="True" Grid.Column="0" Grid.Row="0" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="Auto" ItemsSource="{Binding}" Margin="10" RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto">
                                         <DataGrid.Columns>
-                                            <DataGridTemplateColumn x:Name="areaColumn1" Header="Area" Width="SizeToHeader">
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Label Content="{Binding Area}"/>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
                                             <DataGridTemplateColumn x:Name="hostingUnitKeyColumn" Header="Hosting Unit Key" Width="SizeToHeader">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
@@ -326,15 +271,86 @@
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="hostingUnitNameColumn" Header="Hosting Unit Name" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding HostingUnitName}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="areaColumn" Header="Area" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Label Content="{Binding Area}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="typeColumn" Header="type" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding type}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+
+                                    <DataGrid x:Name="guestRequestDataGrid" IsReadOnly="True" Grid.Column="1" Grid.Row="0" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="Auto" ItemsSource="{Binding Source={StaticResource guestRequestViewSource}}" Margin="10" RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto">
+                                        <DataGrid.Columns>
+                                            <DataGridTemplateColumn x:Name="guestRequestKeyColumn" Header="Guest Request Key" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding GuestRequestKey}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="privateNameColumn" Header="Private Name" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding PrivateName}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="familyNameColumn" Header="Family Name" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding FamilyName}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="entryDateColumn" Header="Entry Date" IsReadOnly="True" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <DatePicker SelectedDate="{Binding EntryDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="releaseDateColumn" Header="Release Date" IsReadOnly="True" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <DatePicker SelectedDate="{Binding ReleaseDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="areaColumn1" Header="Area" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Area}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
                                             <DataGridTemplateColumn x:Name="typeColumn1" Header="type" Width="SizeToHeader">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <Label Content="{Binding type}"/>
+                                                        <TextBlock Text="{Binding type}"/>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>
+
+                                    <Button Content="Create Order" Click="CreateOrderButton_Click" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Grid>
                             </TabItem>
                             <TabItem x:Name="ListOfclientsTub" Header="List Of clients" >
