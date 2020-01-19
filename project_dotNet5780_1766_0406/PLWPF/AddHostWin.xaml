@@ -73,7 +73,7 @@
             </TabItem>
 
             <TabItem Header="Sign In"  Margin="0" >
-                <TabControl Name="SignInTabControl" SelectionChanged="SignIn_SelectionChanged">
+                <TabControl Name="SignInTabControl">
                     <TabItem Header="login"  Margin="0" >
                         <StackPanel>
                             <TextBlock x:Name="loginErrorMessage" Text="" 
@@ -126,7 +126,7 @@
                                 <Label Content="Private Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>
                                 <TextBlock x:Name="privateNameTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="8" Text="{Binding Path=PrivateName}" VerticalAlignment="Center"/>
                             </Grid>
-                            <Button Content="add hosting unit" Click="AddUostingUnitButton_Click" HorizontalAlignment="Left" Margin="372,472,0,0" VerticalAlignment="Top" Width="128" RenderTransformOrigin="0.013,0.5" Height="19" />
+                            <Button Content="add hosting unit" Click="AddHostingUnitButton_Click" HorizontalAlignment="Left" Margin="372,472,0,0" VerticalAlignment="Top" Width="128" RenderTransformOrigin="0.013,0.5" Height="19" />
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UpdateTab" Header="Details" IsEnabled="False">
@@ -196,7 +196,7 @@
                             <TextBlock x:Name="errorMessageDetailsHostingUnit" Grid.Column="1" Grid.Row="0" Text="" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2" Margin="0,0,0,-19" >
                                 <Button Content="Update Changes" Width="162" Height="22" Click="UpdateHostingUnitButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30,0,0,0"/>
-                                <Button Content="Delete HOsting Unit" Click="DeleteHostingUnitButton_Click" Width="162" Height="22" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30,14,0,14"/>
+                                <Button Content="Delete Hosting Unit" Click="DeleteHostingUnitButton_Click" Width="162" Height="22" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30,14,0,14"/>
                             </StackPanel>
                             <Grid Grid.Column="1" Grid.Row="1">
                                 <Grid.RowDefinitions>

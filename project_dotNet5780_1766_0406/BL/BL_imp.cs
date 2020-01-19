@@ -95,6 +95,9 @@ namespace BL
 
         public void UpdateHostingUnit(HostingUnit hostingUnit)
         {
+            if (hostingUnit.HostingUnitName == null || hostingUnit.HostingUnitName.Length == 0)
+                throw new ArgumentException("ilegal name");
+
             List<HostingUnit> units = AccordingTo(delegate (BE.HostingUnit unit) { return unit.HostingUnitKey == hostingUnit.HostingUnitKey; });
             if (units.Count() == 0)
                 throw new ArgumentException("please select an hosting unit");
