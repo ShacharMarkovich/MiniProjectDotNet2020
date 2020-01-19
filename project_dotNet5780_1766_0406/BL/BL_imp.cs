@@ -109,6 +109,7 @@ namespace BL
         #region Order functions signature
         public void AddOrder(BE.Order newOrder)
         {
+
             List<GuestRequest> guestRequestList = AccordingTo(gReq => gReq.GuestRequestKey == newOrder.GuestRequestKey);
             List<HostingUnit> hostingUnitList = AccordingTo(unit => unit.HostingUnitKey == newOrder.HostingUnitKey);
 
@@ -426,6 +427,14 @@ namespace BL
                                                (DateTime.Now - order.OrderDate).Days >= n)
                                                select order;
             return enumerator.ToList();
+        }
+
+        public List<BE.Order> AccordingTo(BE.Configuration.Term<BE.Order> term)
+        {
+            IEnumerable<BE.Order> orders = from order in _dal.GetAllOrders()
+                                                where term(order)
+                                                select order;
+            return orders.ToList();
         }
 
         public List<BE.HostingUnit> AccordingTo(BE.Configuration.Term<BE.HostingUnit> term)

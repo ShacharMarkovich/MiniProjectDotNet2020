@@ -146,6 +146,12 @@ namespace BL
         /// </summary>
         List<BE.Order> AtLeastnDays(int daysNumber);
 
+
+        /// <summary>
+        /// returns a list of all Orders that match a specific condition.
+        /// </summary>
+        List<BE.Order> AccordingTo(BE.Configuration.Term<BE.Order> term);
+
         /// <summary>
         /// returns a list of all GuestRequest that match a specific condition.
         /// </summary>

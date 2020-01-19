@@ -99,7 +99,7 @@
             <Label FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="15" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Children Attractions:"/>
             <CheckBox x:Name="childrenAttractionsCheckBox" FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="15" Margin="3" IsChecked="{Binding Path=ChildrenAttractions, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="15"/>
         </Grid>
-        <Button Grid.Column="1" Grid.Row="2" Content="Add Host" Margin="109,10" Background ="{StaticResource ButtonsBrush}"
-            FontFamily="Agency FB" FontSize="15" FontWeight="Bold" Click="Button_Click" />
+        <Button Grid.Column="1" Grid.Row="2" Content="Add Host" Margin="0" Background ="{StaticResource ButtonsBrush}"
+            FontFamily="Agency FB" FontSize="15" FontWeight="Bold" Click="Button_Click" Width="73" VerticalAlignment="Center" HorizontalAlignment="Center" />
     </Grid>
 </Window>

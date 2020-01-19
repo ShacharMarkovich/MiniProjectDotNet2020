@@ -7,6 +7,7 @@
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+        
     <Window.Resources>
         <LinearGradientBrush x:Key="ButtonsBrush" EndPoint="0,1" StartPoint="0,0">
             <GradientStop Color="#FFF3F3F3" Offset="0"/>
@@ -29,9 +30,11 @@
         <Button Content="Add Host" FontFamily="Agency FB" FontSize="36"
                 VerticalAlignment="Center" Width="216" Background ="{StaticResource ButtonsBrush}"
                 HorizontalAlignment="Center" Click="AddHostButton_Click"/>
-
         <Button Content="Add Guest Request" FontFamily="Agency FB" FontSize="36"
                 VerticalAlignment="Center" Width="244" Background ="{StaticResource ButtonsBrush}"
                 HorizontalAlignment="Center" Click="AddGuestRequestButton_Click" Grid.Row="1"/>
+
+       
+
     </Grid>
 </Window>
