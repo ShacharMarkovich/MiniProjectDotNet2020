@@ -47,11 +47,13 @@ namespace PLWPF
         {
             InitializeComponent();
 
+            this.FontFamily = new FontFamily("Agency FB");
+            this.FontSize = 18;
             // create new temp host
             // do it just in case that the user will add new host.
             //      if he do it - update _host to his new properties
             //      else - the user login to exists host so we will update to the exists host properties
-            _host = new BE.Host()
+            _host = new BE.Host()   
             {
                 HostKey = ++BE.Configuration.HostKey,
                 Balance = 100,

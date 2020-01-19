@@ -12,11 +12,15 @@
         <CollectionViewSource x:Key="hostingUnitViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:HostingUnit}, CreateList=True}"/>
         <CollectionViewSource x:Key="orderViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Order}, CreateList=True}"/>
         <CollectionViewSource x:Key="guestRequestViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:GuestRequest}, CreateList=True}"/>
-
+    
+    
+    
     </Window.Resources>
+    
+
     <Grid DataContext="{StaticResource hostingUnitViewSource}">
         <TabControl>
-            <TabItem x:Name="SignupTab" Header ="Sign up">
+            <TabItem x:Name="SignupTab" Header ="Sign up" Height="22" VerticalAlignment="Bottom">
                 <StackPanel>
                     <TextBlock x:Name="SignUpErrorMessage" Text="" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"  />
                     <Grid DataContext="{StaticResource hostViewSource}" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center">
