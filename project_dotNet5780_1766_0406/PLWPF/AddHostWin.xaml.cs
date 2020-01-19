@@ -25,6 +25,12 @@ namespace PLWPF
             System.Windows.Data.CollectionViewSource hostViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("hostViewSource")));
             // Load data by setting the CollectionViewSource.Source property:
             // hostViewSource.Source = [generic data source]
+            System.Windows.Data.CollectionViewSource orderViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("orderViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // orderViewSource.Source = [generic data source]
+            System.Windows.Data.CollectionViewSource guestRequestViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("guestRequestViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // guestRequestViewSource.Source = [generic data source]
         }
 
         #region class proprties
@@ -237,7 +243,8 @@ namespace PLWPF
             // makes tabs enabled 
             AddHostingUnitTab.IsEnabled = true;
             UpdateTab.IsEnabled = true;
-            SignInTab.IsEnabled = false;
+            OrderTub.IsEnabled = true;
+            SignupTab.IsEnabled = false;
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
@@ -248,7 +255,7 @@ namespace PLWPF
             // make fits tabs enabled
             AddHostingUnitTab.IsEnabled = false;
             UpdateTab.IsEnabled = false;
-            SignInTab.IsEnabled = true;
+            SignupTab.IsEnabled = true;
         }
 
         private void AddUostingUnitButton_Click(object sender, RoutedEventArgs e)
@@ -402,9 +409,6 @@ namespace PLWPF
             // TODO: show in hosting unit tab
         }
 
-        private void SignIn_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+       
     }
 }

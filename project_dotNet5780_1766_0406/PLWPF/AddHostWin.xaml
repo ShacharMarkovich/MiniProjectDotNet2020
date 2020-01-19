@@ -10,11 +10,13 @@
     <Window.Resources>
         <CollectionViewSource x:Key="hostViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Host}, CreateList=True}"/>
         <CollectionViewSource x:Key="hostingUnitViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:HostingUnit}, CreateList=True}"/>
+        <CollectionViewSource x:Key="orderViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Order}, CreateList=True}"/>
+        <CollectionViewSource x:Key="guestRequestViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:GuestRequest}, CreateList=True}"/>
 
     </Window.Resources>
     <Grid DataContext="{StaticResource hostingUnitViewSource}">
         <TabControl>
-            <TabItem x:Name="SignInTab" Header ="Sign up">
+            <TabItem x:Name="SignupTab" Header ="Sign up">
                 <StackPanel>
                     <TextBlock x:Name="SignUpErrorMessage" Text="" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"  />
                     <Grid DataContext="{StaticResource hostViewSource}" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center">
@@ -73,7 +75,7 @@
             </TabItem>
 
             <TabItem Header="Sign In"  Margin="0" >
-                <TabControl Name="SignInTabControl" SelectionChanged="SignIn_SelectionChanged">
+                <TabControl Name="SignInTabControl">
                     <TabItem Header="login"  Margin="0" >
                         <StackPanel>
                             <TextBlock x:Name="loginErrorMessage" Text="" 
@@ -233,10 +235,124 @@
 
                         </Grid>
                     </TabItem>
-                </TabControl>
+                    <TabItem x:Name="OrderTub" Header="Order"  Margin="0" IsEnabled="False" >
+                        <TabControl Name="OrerTubControl" RenderTransformOrigin="0.5,0.5" >
+                            <TabItem x:Name="ListOfOrdersTub" Header="List Of Orders"  Margin="0" >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <DataGrid x:Name="guestRequestDataGrid" Grid.Column="0" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource guestRequestViewSource}}" Margin="0" RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <DataGrid.Columns>
+                                            <DataGridTemplateColumn x:Name="areaColumn" Header="Area" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Area}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="emailColumn" Header="Email" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Label Content="{Binding Email}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="entryDateColumn" Header="Entry Date" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Label Content="{Binding EntryDate}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="guestRequestKeyColumn" Header="Guest Request Key" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding GuestRequestKey}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="jecuzziColumn" Header="Jecuzzi" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Label Content="{Binding Jecuzzi}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="poolColumn" Header="Pool" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Label Content="{Binding Pool}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="releaseDateColumn" Header="Release Date" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Label Content="{Binding ReleaseDate}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="statColumn" Header="Stat" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Label Content="{Binding Stat}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="typeColumn" Header="type" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Label Content="{Binding type}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                    <DataGrid x:Name="hostingUnitDataGrid" Grid.Column="1" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="0" RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <DataGrid.Columns>
+                                            <DataGridTemplateColumn x:Name="areaColumn1" Header="Area" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Label Content="{Binding Area}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="hostingUnitKeyColumn" Header="Hosting Unit Key" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding HostingUnitKey}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="typeColumn1" Header="type" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Label Content="{Binding type}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+                            </TabItem>
+                            <TabItem x:Name="ListOfclientsTub" Header="List Of clients" >
+                                <StackPanel>
 
+                                </StackPanel>
+                            </TabItem>
+
+                        </TabControl>
+
+                    </TabItem>
+
+                </TabControl>
             </TabItem>
         </TabControl>
+
+
+
     </Grid>
 
 </Window>
