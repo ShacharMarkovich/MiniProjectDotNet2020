@@ -57,14 +57,5 @@ namespace BE
             set => _branchCity = value;
             get => _branchCity;
         }
-
-        public override string ToString()
-        {
-            return "Bank Number:\t" + _bankNumber +
-                "\nBank Name:\t" + _bankName +
-                "\nBranch Number:\t" + _branchNumber +
-                "\nBranch Address:\t" + _branchAddress +
-                "\nBranch City:\t" + _branchCity;
-        }
     }
 }

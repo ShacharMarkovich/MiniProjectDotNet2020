@@ -83,16 +83,5 @@ namespace BE
             set => _orderDate = value; 
             get => _orderDate;
         }
-
-        public override string ToString()
-        {
-
-            return "Order Key:\t\t" + _orderKey +
-                "\nHosting Unit Key:\t" + _hostingUnitKey +
-                "\nGuest Request Key:\t" + _guestRequestKey +
-                "\nOrder Status:\t" + _status +
-                "\nOrder Creation Date:\t" + _createDate.toString() +
-                "\nMail sent Date:\t" + _orderDate.toString();
-        }
     }
 }

@@ -193,6 +193,30 @@ namespace PLWPF
             typeTextBoxDetails.DataContext = _hostingUnit;
         }
 
+        private void SetOrdersDataContext()
+        {
+            // choose all _host hosting units
+            List<BE.HostingUnit> hostingUnits = _bl.AccordingTo(delegate (BE.HostingUnit unit) { return unit.Owner.HostKey == _host.HostKey; });
+            hostingUnitDataGrid.ItemsSource = hostingUnits;
+            // get all open BE.GuestRequest
+            guestRequestDataGrid.ItemsSource = _bl.AccordingTo(delegate (BE.GuestRequest gR) { return !_bl.IsGuestRequestClose(gR); });
+            // get all BE.Order that are belongs to _host
+            ordersDataGrid.ItemsSource = _bl.AccordingTo(delegate (BE.Order order)
+            // run through all orders
+            {
+                ///if (_bl.IsOrderClose(order)) // show only open orders
+                ///    return false;
+
+                // run through all  _host hosting units,
+                // ans foreach open order - check if this order belongs to one of _host hosting units
+                /// if not found return –1.
+                int index = hostingUnits.FindIndex(unit => unit.HostingUnitKey == order.GuestRequestKey);
+                if (index == -1)
+                    return false;
+                return true;
+            });
+        }
+
 
         /// <summary>
         /// create new _hostingUnit and show it on AddHostingUnit Tab
@@ -266,6 +290,8 @@ namespace PLWPF
 
             // prepare to get more new BE.Host
             ClearSignUp();
+
+            SetHostsComboBox(hostsComboBox);
         }
 
         /// <summary>
@@ -273,7 +299,7 @@ namespace PLWPF
         /// make new (temp) _hostingUnit
         /// </summary>
         private void LoginButton_Click(object sender, RoutedEventArgs e)
-        {            
+        {
             // check if any host has been selected
             if (hostsComboBox.SelectedItem == null)
             {
@@ -281,7 +307,7 @@ namespace PLWPF
                 loginErrorMessage.Text = "Please Select a Host in order to contine";
                 return;
             }
-            
+
             // show fit comment
             loginErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
             loginErrorMessage.Text = "Login successfully";
@@ -294,8 +320,8 @@ namespace PLWPF
             double hostKey = double.Parse(hostDetails.Split('(', ')')[1]);
             // and no update _host to selected host
             _host = (from host in _bl.GetAllHosts()
-                    where host.HostKey == hostKey
-                    select host).Single();
+                     where host.HostKey == hostKey
+                     select host).Single();
 
             // prepare to contain new BE.HostingUnit
             _hostingUnit = new BE.HostingUnit
@@ -309,22 +335,18 @@ namespace PLWPF
             SetHostingUnitDetailsDataContext();
             SetHostDetailsDataContext();
             SetHostingUnitDetailsDataContext();
+            SetOrdersDataContext();
 
             SetHostsComboBox(hostingUnitDetails);
             SetUnitComboBox(hostingUnitDetails, delegate (BE.HostingUnit u) { return u.Owner.HostKey == _host.HostKey; });
-            
+
             // makes tabs enabled 
             AddHostingUnitTab.IsEnabled = true;
             UpdateTab.IsEnabled = true;
             OrderTub.IsEnabled = true;
             SignupTab.IsEnabled = false;
-
-            ///////
-            //order:
-            hostingUnitDataGrid.ItemsSource = _bl.AccordingTo(delegate (BE.HostingUnit unit) { return unit.Owner.HostKey == _host.HostKey; });
-            guestRequestDataGrid.ItemsSource = _bl.AccordingTo(delegate (BE.GuestRequest gR) { return !_bl.IsGuestRequestClose(gR); });
-            //////
         }
+
 
         /// <summary>
         /// logout from exists host.
@@ -339,6 +361,7 @@ namespace PLWPF
             AddHostingUnitTab.IsEnabled = false;
             UpdateTab.IsEnabled = false;
             SignupTab.IsEnabled = true;
+            OrderTub.IsEnabled = false;
         }
 
         /// <summary>
@@ -372,6 +395,10 @@ namespace PLWPF
 
             // prepare to get more new BE.HostingUnit
             ClearAddHostingUnit();
+
+            //
+            SetOrdersDataContext();
+
             // add new hosting unit to hostingUnitDetails comboBox
             SetUnitComboBox(hostingUnitDetails, delegate (BE.HostingUnit u) { return u.Owner.HostKey == _host.HostKey; });
 
@@ -430,6 +457,8 @@ namespace PLWPF
             }
 
             ClearHostingUnitDetails();
+            //
+            SetOrdersDataContext();
 
             // update hostin unit comboBox in this Tab
             SetUnitComboBox(hostingUnitDetails, delegate (BE.HostingUnit unit) { return unit.Owner.HostKey == _host.HostKey; });
@@ -441,7 +470,6 @@ namespace PLWPF
             if (hostingUnitDetails.Items.Count == 1)
                 hostingUnitDetails.SelectedIndex = -1; // update selection to none
         }
-
 
         /// <summary>
         /// delete exists BE.hostingUnit from data base.
@@ -468,13 +496,15 @@ namespace PLWPF
 
             // clear this section
             ClearHostingUnitDetails();
+            //
+            SetOrdersDataContext();
 
             // update hosting units comboBox
             SetUnitComboBox(hostingUnitDetails, delegate(BE.HostingUnit unit) { return unit.Owner.HostKey == _host.HostKey; });
         }
 
         /// <summary>
-        /// 
+        /// create new order according to selected hostingUnit and guestRequest
         /// </summary>
         private void CreateOrderButton_Click(object sender, RoutedEventArgs e)
         {
@@ -482,15 +512,10 @@ namespace PLWPF
             BE.GuestRequest guestRequest = guestRequestDataGrid.SelectedItem as BE.GuestRequest;
 
             // check if both unit and guestRequest  was selected
-            if (unit == null)
+            if (unit == null || guestRequest == null)
             {
-                MessageBox.Show("please select unit");
-                return;
-            }
-
-            if(guestRequest == null)
-            {
-                MessageBox.Show("please select guestRequest");
+                newOrderErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                newOrderErrorMessage.Text = "hosting unit or guest request not selected!";
                 return;
             }
 
@@ -506,16 +531,68 @@ namespace PLWPF
             };
             try
             {
-                _bl.AddOrder(order);
+                _bl.CreateOrder(order);
             }
             catch (ArgumentException exp)
             {
-                MessageBox.Show(exp.Message);
+                newOrderErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                newOrderErrorMessage.Text = exp.Message;
+                return;
             }
 
+            newOrderErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
+            newOrderErrorMessage.Text = "Order create successfully";
 
+            //maybe TODO: more things...?
+            SetOrdersDataContext();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private void SendEmail_OrderList_Button_Click(object sender, RoutedEventArgs e)
+        {
+            BE.Order order = ordersDataGrid.SelectedItem as BE.Order;
+            try
+            {
+                _bl.UpdateOrder(order, BE.Enums.Status.MailSent);
+            }
+            catch (ArgumentException exp)
+            {
+                OrderListErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                OrderListErrorMessage.Text = exp.Message;
+                return;
+            }
+
+            OrderListErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
+            OrderListErrorMessage.Text = "Email Sent Successfully!";
+
+            //TODO: send real email
+            //TODO: reload data context
+
+            SetOrdersDataContext();
+        }
+
+        private void Approved_OrderList_Button_Click(object sender, RoutedEventArgs e)
+        {
+            BE.Order order = ordersDataGrid.SelectedItem as BE.Order;
+            try
+            {
+                _bl.ApprovedOrder(order);
+            }
+            catch (ArgumentException exp)
+            {
+                OrderListErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                OrderListErrorMessage.Text = exp.Message;
+                return;
+            }
+
+            OrderListErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
+            OrderListErrorMessage.Text = "Order Approved Successfully!";
+
+
+            SetOrdersDataContext();
+        }
         #endregion
 
         /// <summary>
@@ -574,7 +651,6 @@ namespace PLWPF
         }
 
 
-
         public static List<CalendarDateRange> DiaryToRangeOfDatetime(bool[,] Diary)
         {
             List<CalendarDateRange> blackoutDates = new List<CalendarDateRange>();
@@ -582,45 +658,45 @@ namespace PLWPF
             //for to get previews month
             int j = 0;
 
-            for (int i = 0; i < BE.Configuration._days; i++)
+            for (int i = 0; i < BE.Configuration._month; i++)
                 if (Diary[0, i])
                 {
                     //finding numbers of occupied days in row
                     j = i;
-                    while (Diary[0, j] && j < BE.Configuration._days)
-                        j++;
-
+                    while (Diary[0, j] && j < BE.Configuration._month) j++;
                     //only one day occupied un row
                     blackoutDates.Add(i == (j - 1)
-                        ? new CalendarDateRange(DateTime.Today.AddDays(i - BE.Configuration._days))
-                        : new CalendarDateRange(DateTime.Today.AddDays(i - BE.Configuration._days), DateTime.Today.AddDays(j - BE.Configuration._days - 1)));
+                        ? new CalendarDateRange(DateTime.Today.AddDays(i - BE.Configuration._month))
+                        : new CalendarDateRange(DateTime.Today.AddDays(i - BE.Configuration._month), DateTime.Today.AddDays(j - BE.Configuration._month - 1)));
                     i = j;
                 }
 
             for (int k = 1; k < BE.Configuration._month; k++)
                 for (int i = 0; i < BE.Configuration._days; i++)
-                    if (Diary[k, i])
+                    if (k < BE.Configuration._month && Diary[k, i])
                     {
                         //finding numbers of occupied days in row
                         j = i;
-                        while (Diary[k, j])
+                        while (k < BE.Configuration._month && Diary[k, j])
                         {
                             j++;
                             //check for next month
-                            if (j > BE.Configuration._month - 1)
+                            if (j > BE.Configuration._days - 1)
                             {
+                                if (k == BE.Configuration._month - 1) break;
                                 j = 0;
                                 k++;
                             }
                         }
+
                         //only one day occupied un row
                         blackoutDates.Add(i == (j - 1)
                             ? new CalendarDateRange(DateTime.Today.AddMonths(k - 1).AddDays(i))
                             : new CalendarDateRange(DateTime.Today.AddMonths(k - 1).AddDays(i), DateTime.Today.AddMonths(k - 1).AddDays(j - 1)));
                         i = j;
                     }
+
             return blackoutDates;
         }
-
     }
 }

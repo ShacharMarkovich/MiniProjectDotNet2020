@@ -132,25 +132,5 @@ namespace BE
             set => _childrenAttractions = value;
             get => _childrenAttractions;
         }
-
-        public override string ToString()
-        {
-            return "Guest Request Key:\t" + _guestRequestKey +
-                "\nPrivate Name:\t" + _privateName +
-                "\nFamily Name:\t" + _familyName +
-                "\nEmail:\t\t" + _email +
-                "\nRegistration Date:\t" + _registrationDate.toString() +
-                "\nEnty Date:\t\t" + _entryDate.toString() +
-                "\nRelease Date:\t\t" + _releaseDate.toString() +
-                "\nRequest Status:\t" + _stat +
-                "\nRequest Area:\t" + _area +
-                "\nType:\t\t" + _type +
-                "\nAdults:\t\t" + _adults +
-                "\nChildren:\t" + _children +
-                "\nPool:\t\t\t" + _pool +
-                "\nJecuzzi:\t\t" + _jecuzzi +
-                "\nGarden:\t\t\t" + _garden +
-                "\nChildren Attractions:\t" + _childrenAttractions;
-        }
     }
 }

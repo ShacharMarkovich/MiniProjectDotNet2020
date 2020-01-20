@@ -6,17 +6,16 @@
         xmlns:local="clr-namespace:PLWPF"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.AddHostWin"
         mc:Ignorable="d"
-        Title="Host Windows" Height="600" Width="850" Loaded="Window_Loaded">
+        Title="Host Windows" Height="700" Width="850" Loaded="Window_Loaded">
     <Window.Resources>
         <CollectionViewSource x:Key="hostViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Host}, CreateList=True}"/>
         <CollectionViewSource x:Key="hostingUnitViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:HostingUnit}, CreateList=True}"/>
         <CollectionViewSource x:Key="orderViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Order}, CreateList=True}"/>
         <CollectionViewSource x:Key="guestRequestViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:GuestRequest}, CreateList=True}"/>
-    
-    
-    
+
+
+
     </Window.Resources>
-    
 
     <Grid DataContext="{StaticResource hostingUnitViewSource}">
         <TabControl>
@@ -73,8 +72,7 @@
                         <Label Content="Collection Clearance:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="12" VerticalAlignment="Center"/>
                         <CheckBox x:Name="collectionClearanceCheckBox" Content="" Grid.Column="1" HorizontalAlignment="Left" IsChecked="{Binding Path=CollectionClearance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Margin="3" Grid.Row="12" VerticalAlignment="Center"/>
                     </Grid>
-                    <Button Content="Hidden Button" Visibility="Hidden"/>
-                    <Button Content="Add Host" HorizontalAlignment="Center" VerticalAlignment="Center" Click="AddHostButton_Click"/>
+                    <Button Content="Add Host" HorizontalAlignment="Center" VerticalAlignment="Center" Click="AddHostButton_Click" Margin="0,10,0,0"/>
                 </StackPanel>
             </TabItem>
 
@@ -86,53 +84,56 @@
                                        Foreground="Red" FontFamily="Agency FB" FontSize="18" Grid.Row="0" 
                                        RenderTransformOrigin="1.207,-2.333" TextDecorations="{x:Null}" TextAlignment="Center"  />
 
-                            <ComboBox x:Name="hostsComboBox" Grid.Column="0" ItemsSource="{Binding}" HorizontalAlignment="Center" Width="120" VerticalAlignment="Center" Height="20"/>
-                            <Button Content="Login" Click="LoginButton_Click" Width="74" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20"/>
-                            <Button Content="Logout" Click="LogoutButton_Click" Width="74" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Margin="374,0"/>
+                            <ComboBox x:Name="hostsComboBox" Grid.Column="0" ItemsSource="{Binding}" HorizontalAlignment="Center" Width="216" VerticalAlignment="Center" Height="30" Margin="0" FontSize="18"/>
+                            <Button Content="Login" Click="LoginButton_Click" Width="96" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Height="30"  FontSize="18" Margin="0"/>
+                            <Button Content="Logout" Click="LogoutButton_Click" Width="96" VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" Margin="0" FontSize="18"/>
                         </StackPanel>
                     </TabItem>
-                    <TabItem x:Name="AddHostingUnitTab" Header="Add hosting unit" IsEnabled="False" Margin="0" >
+                    <TabItem x:Name="AddHostingUnitTab" Header="Add hosting unit" IsEnabled="False">
                         <Grid>
-                            <TextBlock x:Name="AddHostingUnitErrorMessage" Text="" 
-                                       Foreground="Red" FontFamily="Agency FB" FontSize="18" Grid.Row="0" 
-                                       RenderTransformOrigin="1.207,-2.333" TextDecorations="{x:Null}" TextAlignment="Center"  />
-                            <Grid DataContext="{StaticResource hostingUnitViewSource}" HorizontalAlignment="Left" Margin="278,138,0,-12" VerticalAlignment="Top">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="55*"/>
+                                <RowDefinition Height="416*"/>
+                                <RowDefinition Height="135*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock x:Name="AddHostingUnitErrorMessage" Grid.Row="0" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Height="14" Margin="411,20,411,21" Width="0"/>
+                            <Grid DataContext="{StaticResource hostingUnitViewSource}" Grid.Row="1" Margin="303,101,303,99" HorizontalAlignment="Center" VerticalAlignment="Center" Height="216" Width="216" >
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <Label FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="0" Margin="3,3,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="Area:"/>
-                                <ComboBox x:Name="areaComboBox" Grid.Column="1" Height="Auto" ItemsSource="{Binding Path=Area}" Margin="3,5" Grid.Row="0" VerticalAlignment="Center"/>
-                                <Label Content="Hosting Unit Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="hostKeyTextBlcoe" Grid.Column="6" HorizontalAlignment="Left" Margin="3" Grid.Row="6" Text="{Binding Path=HostKey}" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="hostingUnitKeyTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="1" Text="{Binding Path = HostingUnitKey}" VerticalAlignment="Center"/>
-                                <Label Content="Hosting Unit Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-                                <TextBox x:Name="hostingUnitNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding Path=HostingUnitName, Mode=TwoWay, UpdateSourceTrigger=LostFocus, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                                <Label Content="type:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-                                <ComboBox x:Name="typeComboBox" Grid.Column="1" HorizontalAlignment="Left" Height="Auto" ItemsSource="{Binding Path=type}" Margin="3" Grid.Row="3" VerticalAlignment="Center" Width="120"/>
-                                <Label Content="Email:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="emailTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3,7,0,7" Grid.Row="4" Text="{Binding Path= Email}" VerticalAlignment="Center" Width="113"/>
-                                <Label Content="Family Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="familyNameTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="5" Text="{Binding Path=FamilyName}" VerticalAlignment="Center"/>
-                                <Label Content="Host Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="addhostKeyTextBlock" Grid.Column="1" HorizontalAlignment="Right" Margin="0,8,117,0" Grid.Row="6" Text="{Binding Path=Owner.HostKey}" VerticalAlignment="Top"/>
-                                <Label Content="Phone Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="phoneNumberTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="7" Text="{Binding Path=PhoneNumber}" VerticalAlignment="Center"/>
-                                <Label Content="Private Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="privateNameTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="8" Text="{Binding Path=PrivateName}" VerticalAlignment="Center"/>
+                                <Label Content="Area:" Grid.Row="0" Grid.Column="0" />
+                                <ComboBox x:Name="areaComboBox" ItemsSource="{Binding Path=Area}" Grid.Column="1" Grid.Row="0" />
+                                <Label Content="Hosting Unit Key:" Grid.Column="0" Grid.Row="1" />
+                                <TextBlock x:Name="hostKeyTextBlcoe" Grid.Column="1" Grid.Row="6" Text="{Binding Path=HostKey}"/>
+                                <TextBlock x:Name="hostingUnitKeyTextBlock" Grid.Column="1" Grid.Row="1" Text="{Binding Path = HostingUnitKey}" />
+                                <Label Content="Hosting Unit Name:" Grid.Column="0" Grid.Row="2" />
+                                <TextBox x:Name="hostingUnitNameTextBox" Grid.Column="1" Grid.Row="2" Text="{Binding Path=HostingUnitName, Mode=TwoWay, UpdateSourceTrigger=LostFocus, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+                                <Label Content="type:" Grid.Column="0" Grid.Row="3"/>
+                                <ComboBox x:Name="typeComboBox" Grid.Column="1" Grid.Row="3" ItemsSource="{Binding Path=type}" />
+                                <Label Content="Email:" Grid.Column="0" Grid.Row="4" />
+                                <TextBlock x:Name="emailTextBlock" Grid.Column="1" Grid.Row="4" Text="{Binding Path= Email}" />
+                                <Label Content="Family Name:" Grid.Column="0" Grid.Row="5" />
+                                <TextBlock x:Name="familyNameTextBlock" Grid.Column="1" Grid.Row="5" Text="{Binding Path=FamilyName}" />
+                                <Label Content="Host Key:" Grid.Column="0" Grid.Row="6" />
+                                <TextBlock x:Name="addhostKeyTextBlock" Grid.Column="1" Grid.Row="6" Text="{Binding Path=Owner.HostKey}" />
+                                <Label Content="Phone Number:" Grid.Column="0" Grid.Row="7" />
+                                <TextBlock x:Name="phoneNumberTextBlock" Grid.Column="1" Grid.Row="7" Text="{Binding Path=PhoneNumber}" />
+                                <Label Content="Private Name:" Grid.Column="0" Grid.Row="8" />
+                                <TextBlock x:Name="privateNameTextBlock" Grid.Column="1" Grid.Row="8" Text="{Binding Path=PrivateName}" />
                             </Grid>
-                            <Button Content="add hosting unit" Click="AddHostingUnitButton_Click" HorizontalAlignment="Left" Margin="372,472,0,0" VerticalAlignment="Top" Width="128" RenderTransformOrigin="0.013,0.5" Height="19" />
+                            <Button Content="add hosting unit" Click="AddHostingUnitButton_Click" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="351,53,351,50" Height="32" Width="120"/>
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UpdateTab" Header="Details" IsEnabled="False">
@@ -147,62 +148,62 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <TextBlock x:Name="errorMessageDetailsHost" Grid.Column="0" Grid.Row="0" Text="" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <Grid DataContext="{StaticResource hostViewSource}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="390" Margin="74,21,73,14" Width="264">
+                            <Grid DataContext="{StaticResource hostViewSource}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <Label Content="Host Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="detailsHostKeyTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" Text="{Binding Path=HostKey}" VerticalAlignment="Center"/>
+                                <Label Content="Host Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" Height="31"/>
+                                <TextBlock x:Name="detailsHostKeyTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" Text="{Binding Path=HostKey}" VerticalAlignment="Center" Height="31"/>
                                 <Label Content="Private Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-                                <TextBox x:Name="detailsPrivateNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding Path=PrivateName, Mode=TwoWay, UpdateSourceTrigger=LostFocus, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                                <TextBox x:Name="detailsPrivateNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="1" Text="{Binding Path=PrivateName, Mode=TwoWay, UpdateSourceTrigger=LostFocus, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
                                 <Label Content="Family Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-                                <TextBox x:Name="detailsFamilyNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding Path=FamilyName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
+                                <TextBox x:Name="detailsFamilyNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="2" Text="{Binding Path=FamilyName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" />
                                 <Label Content="Email:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-                                <TextBox x:Name="detailsEmailTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding Path=Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
+                                <TextBox x:Name="detailsEmailTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="3" Text="{Binding Path=Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" />
                                 <Label Content="Phone Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
-                                <TextBox x:Name="detailsPhoneNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="4" Text="{Binding Path=PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
+                                <TextBox x:Name="detailsPhoneNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="4" Text="{Binding Path=PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" />
 
                                 <Label Content="Balance:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="detailsBalanceTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="5" Text="{Binding Path=Balance, Mode=TwoWay}" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="detailsBalanceTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="5" Text="{Binding Path=Balance, Mode=TwoWay}" VerticalAlignment="Center" Height="31"/>
                                 <Label Content="Bank Account Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
-                                <TextBox x:Name="detailsBankAccountNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="6" Text="{Binding Path=BankAccountNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
+                                <TextBox x:Name="detailsBankAccountNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="6" Text="{Binding Path=BankAccountNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
 
                                 <Label Content="Bank Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="detailsBankNumberTextBlock" Grid.Column="1" Margin="0" Grid.Row="7" Text="{Binding Path=BankNumber, Mode=TwoWay}" Width="113" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="detailsBankNumberTextBlock" Grid.Column="1" Margin="0" Grid.Row="7" Text="{Binding Path=BankNumber, Mode=TwoWay}" Width="113" VerticalAlignment="Center" Height="31"/>
                                 <Label Content="Branch Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>
-                                <TextBox x:Name="detailsBranchNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="8" Text="{Binding Path=BranchNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
+                                <TextBox x:Name="detailsBranchNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="8" Text="{Binding Path=BranchNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
                                 <Label Content="Bank Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="9" VerticalAlignment="Center"/>
-                                <TextBox x:Name="detailsBankNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="9" Text="{Binding Path=BankName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
+                                <TextBox x:Name="detailsBankNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="9" Text="{Binding Path=BankName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
                                 <Label Content="Branch City:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="10" VerticalAlignment="Center"/>
-                                <TextBox x:Name="detailsBranchCityTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="10" Text="{Binding Path=BranchCity, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
+                                <TextBox x:Name="detailsBranchCityTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="10" Text="{Binding Path=BranchCity, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
                                 <Label Content="Branch Address:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="11" VerticalAlignment="Center"/>
-                                <TextBox x:Name="detailsBranchAddressTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="11" Text="{Binding Path=BranchAddress, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
+                                <TextBox x:Name="detailsBranchAddressTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="11" Text="{Binding Path=BranchAddress, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
 
                                 <Label Content="Collection Clearance:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="12" VerticalAlignment="Center"/>
                                 <CheckBox x:Name="detailsCollectionClearanceCheckBox" Content="" Grid.Column="1" HorizontalAlignment="Left" IsChecked="{Binding Path=CollectionClearance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Margin="3" Grid.Row="12" VerticalAlignment="Center"/>
                             </Grid>
-                            <Button  Grid.Column="0" Grid.Row="2" Content="Update Changes" Width="162" Height="22" Click="UpdateHostButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="123,11,126,-3"/>
+                            <Button  Grid.Column="0" Grid.Row="2" Content="Update Changes" Click="UpdateHostButton_Click" Margin="124,5,111,-10" Height="31"/>
 
                             <TextBlock x:Name="errorMessageDetailsHostingUnit" Grid.Column="1" Grid.Row="0" Text="" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2" Margin="0,0,0,-19" >
-                                <Button Content="Update Changes" Width="162" Height="22" Click="UpdateHostingUnitButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30,0,0,0"/>
-                                <Button Content="Delete Hosting Unit" Click="DeleteHostingUnitButton_Click" Width="162" Height="22" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30,14,0,14"/>
+                            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2" >
+                                <Button Content="Update Changes" Width="162" Height="31" Click="UpdateHostingUnitButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30,0,0,0"/>
+                                <Button Content="Delete Hosting Unit" Click="DeleteHostingUnitButton_Click" Width="162" Height="31" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30,14,0,14"/>
                             </StackPanel>
                             <Grid Grid.Column="1" Grid.Row="1">
                                 <Grid.RowDefinitions>
@@ -227,13 +228,13 @@
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
                                     <Label Content="Hosting Unit Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-                                    <TextBlock x:Name="hostingUnitKeyTextBlockDetails" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" Text="{Binding HostingUnitKey}" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="hostingUnitKeyTextBlockDetails" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" Text="{Binding HostingUnitKey}" VerticalAlignment="Center" Height="31"/>
                                     <Label Content="Hosting Unit Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-                                    <TextBox x:Name="hostingUnitNameTextBoxDetails" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding HostingUnitName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                                    <TextBox x:Name="hostingUnitNameTextBoxDetails" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="1" Text="{Binding HostingUnitName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
                                     <Label Content="Area:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-                                    <TextBlock x:Name="areaTextBoxDetails" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding Area, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                                    <TextBlock x:Name="areaTextBoxDetails" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="2" Text="{Binding Area, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
                                     <Label Content="type:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-                                    <TextBlock x:Name="typeTextBoxDetails" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding type, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                                    <TextBlock x:Name="typeTextBoxDetails" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="3" Text="{Binding type, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
                                 </Grid>
                             </Grid>
 
@@ -241,32 +242,21 @@
                     </TabItem>
                     <TabItem x:Name="OrderTub" Header="Order"  Margin="0" IsEnabled="False" >
                         <TabControl Name="OrerTubControl" RenderTransformOrigin="0.5,0.5" SelectedIndex="{Binding Mode=OneWay}" >
-                            <TabItem x:Name="ListOfOrdersTub" Header="List Of Orders"  Margin="0" >
-                                <!--
+                            <TabItem x:Name="ListOfOrdersTub" Header="New Order"  Margin="0" >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <DataGrid x:Name="hostingUnitsDataGrid" Grid.Column="0" >
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Header="name" Binding="{Binding HostingUnitName}"/>
-                                            <DataGridTextColumn Header="type" Binding="{Binding type}"/>
-                                            <DataGridTextColumn Header="Area" Binding="{Binding Area}"/>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                </Grid>
--->
-                                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
                                         <RowDefinition Height="10*"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <DataGrid x:Name="hostingUnitDataGrid" IsReadOnly="True" Grid.Column="0" Grid.Row="0" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="Auto" ItemsSource="{Binding}" Margin="10" RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto">
+
+                                    <TextBlock x:Name="newOrderErrorMessage" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontFamily="Agency FB" />
+
+                                    <DataGrid x:Name="hostingUnitDataGrid" IsReadOnly="True" Grid.Column="0" Grid.Row="1" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="Auto" ItemsSource="{Binding}" Margin="10" RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto" VerticalAlignment="Center">
                                         <DataGrid.Columns>
                                             <DataGridTemplateColumn x:Name="hostingUnitKeyColumn" Header="Hosting Unit Key" Width="SizeToHeader">
                                                 <DataGridTemplateColumn.CellTemplate>
@@ -299,8 +289,7 @@
 
                                         </DataGrid.Columns>
                                     </DataGrid>
-
-                                    <DataGrid x:Name="guestRequestDataGrid" IsReadOnly="True" Grid.Column="1" Grid.Row="0" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="Auto" ItemsSource="{Binding Source={StaticResource guestRequestViewSource}}" Margin="10" RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto">
+                                    <DataGrid x:Name="guestRequestDataGrid" IsReadOnly="True" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="Auto" ItemsSource="{Binding Source={StaticResource guestRequestViewSource}}" Margin="10" RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto" VerticalAlignment="Center">
                                         <DataGrid.Columns>
                                             <DataGridTemplateColumn x:Name="guestRequestKeyColumn" Header="Guest Request Key" Width="SizeToHeader">
                                                 <DataGridTemplateColumn.CellTemplate>
@@ -354,13 +343,72 @@
                                         </DataGrid.Columns>
                                     </DataGrid>
 
-                                    <Button Content="Create Order" Click="CreateOrderButton_Click" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Button Content="Create Order" Click="CreateOrderButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2"/>
                                 </Grid>
                             </TabItem>
-                            <TabItem x:Name="ListOfclientsTub" Header="List Of clients" >
-                                <StackPanel>
-
-                                </StackPanel>
+                            <TabItem x:Name="ListOfclientsTub" Header="Orders List" >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="91*"/>
+                                        <RowDefinition Height="260*"/>
+                                        <RowDefinition Height="225*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock x:Name="OrderListErrorMessage" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20" Height="31"/>
+                                    <DataGrid x:Name="ordersDataGrid" Grid.Row="1" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="200" ItemsSource="{Binding Source={StaticResource orderViewSource}}" Margin="174,19,174,41" RowDetailsVisibilityMode="VisibleWhenSelected" Width="464" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <DataGrid.Columns>
+                                            <DataGridTemplateColumn x:Name="orderKeyColumn" Header="Order Key" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding OrderKey}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="guestRequestKeyColumn1" Header="Guest Request Key" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding GuestRequestKey}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="hostingUnitKeyColumn1" Header="Hosting Unit Key" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding HostingUnitKey}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="statusColumn" Header="Status" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Status}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="createDateColumn" Header="Create Date" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <DatePicker SelectedDate="{Binding CreateDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn x:Name="orderDateColumn" Header="Order Date" Width="SizeToHeader">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <DatePicker SelectedDate="{Binding OrderDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                    <Grid Grid.Row="2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Grid.Column="0" Content="Send Email"   Click="SendEmail_OrderList_Button_Click" HorizontalAlignment="Center" VerticalAlignment="Top" Height="31" Margin="0,50,0,0" />
+                                        <Button Grid.Column="1" Content="Approved Buy" Click="Approved_OrderList_Button_Click" HorizontalAlignment="Center" VerticalAlignment="Top" Height="31" Margin="0,50,0,0" />
+                                    </Grid>
+                                </Grid>
                             </TabItem>
 
                         </TabControl>

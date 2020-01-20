@@ -35,9 +35,7 @@ namespace BL
             if (units.Count() != 0)
                 throw new ArgumentException("BE.HostingUnit.HostingUnitKey already exists");
 
-            if (!(InCalendar(gRequest.RegistrationDate) && InCalendar(gRequest.EntryDate) &&
-                InCalendar(gRequest.ReleaseDate) && Ischronological(gRequest.EntryDate, gRequest.ReleaseDate)))
-                throw new ArgumentException("dates are not in this year / not chronological! try again!");
+            CheckDates(gRequest.EntryDate, gRequest.ReleaseDate);
 
             if (gRequest.PrivateName == null || gRequest.FamilyName == null)
                 throw new ArgumentException("please enter data in all fields");
@@ -102,12 +100,37 @@ namespace BL
             List<HostingUnit> units = AccordingTo(delegate (BE.HostingUnit unit) { return unit.HostingUnitKey == hostingUnit.HostingUnitKey; });
             if (units.Count() == 0)
                 throw new ArgumentException("please select an hosting unit");
+
             _dal.UpdateHostingUnit(hostingUnit.clone());
         }
         #endregion
 
         #region Order functions signature
-        public void AddOrder(BE.Order newOrder)
+        public void ApprovedOrder(BE.Order order)
+        {
+            // get matching BE.GuestRequest and BE.HostingUnit to order
+            BE.Configuration.Term<BE.GuestRequest> gruestRequestTerm = gReq => gReq.GuestRequestKey == order.GuestRequestKey;
+            BE.Configuration.Term<BE.HostingUnit> hostingUnitTerm = u => u.HostingUnitKey == order.HostingUnitKey;
+
+            BE.GuestRequest gR;
+            BE.HostingUnit unit;
+            try
+            {
+                gR = AccordingTo(gruestRequestTerm).Single();
+                unit = AccordingTo(hostingUnitTerm).Single();
+            }
+            catch
+            {
+                throw new ArgumentException("more than one GuestRequest or HostingUnit to this Order!!!");
+            }
+
+            // try to add GuestRequest dates to HostingUnit calender and make it busy
+            UpdateCalendar(unit, gR.EntryDate, gR.ReleaseDate);
+            // update fit statuses
+            SelectInvitation(order);
+        }
+
+        public void CreateOrder(BE.Order newOrder)
         {
             // check if there is allready order with this keys
             List<BE.Order> ordersList = AccordingTo(delegate (BE.Order order) {
@@ -147,10 +170,13 @@ namespace BL
 
         public void UpdateOrder(BE.Order order, BE.Enums.Status newStat)
         {
-            if (!IsOrderClose(order.clone()))
-                _dal.UpdateOrder(order.clone(), newStat);
-            else
-                throw new ArgumentOutOfRangeException("can't change close order!");
+            if (order == null)
+                throw new ArgumentException("please select an order first!");
+
+            if (IsOrderClose(order.clone()))
+                throw new ArgumentException("can't change close order!");
+            
+            _dal.UpdateOrder(order.clone(), newStat);
         }
         #endregion
 
@@ -236,8 +262,7 @@ namespace BL
 
         public bool Ischronological(DateTime entryDate, DateTime releaseDate)
         {
-            int days = (releaseDate - entryDate).Days;
-            return days >= 1;
+            return entryDate < releaseDate;
         }
 
         public bool IsCollectionClearance(BE.Host host)
@@ -247,11 +272,22 @@ namespace BL
 
         public bool IsDateArmor(BE.HostingUnit hostingUnit, DateTime entryDate, DateTime releaseDate)
         {
-            if (!Ischronological(entryDate, releaseDate))
+            try
+            {
+                CheckDates(entryDate, releaseDate);
+            }
+            catch
+            {
                 return false;
-            int count = Count2Diary(entryDate, releaseDate);
-            return IsDateArmor(hostingUnit, entryDate, count);
+            }
 
+            BE.HostingUnit newUnit = hostingUnit.clone();
+            for (DateTime date = entryDate; date < releaseDate; date = date.AddDays(1))
+                //month + 1, in the diary we Holding first month for backwards calendar
+                if (newUnit.Diary[date.Month, date.Day - 1])
+                    return false;
+
+            return true;
         }
 
         public bool IsOrderClose(BE.Order order) => order.Status >= BE.Enums.Status.CloseByClient;
@@ -310,30 +346,10 @@ namespace BL
 
         public void UpdateCalendar(BE.HostingUnit hostingUnit, DateTime entryDate, DateTime releaseDate)
         {
+            hostingUnit = UpdateDairy(hostingUnit.clone(), entryDate, releaseDate);
 
-            if (IsDateArmor(hostingUnit, entryDate, releaseDate))
-            {
-                int month = entryDate.Month - 1,
-                    day = entryDate.Day - 1;
-                bool[,] diary = hostingUnit.Diary;
-                int count = Count2Diary(entryDate, releaseDate);
-                for (int i = 0; i < count; i++, ++day)
-                {
-                    if (day == BE.Configuration._days) // check if we in end of month
-                    {
-                        // past to next month
-                        day = 0;
-                        month++;
-                        if (month == BE.Configuration._month) // check if we in end of year
-                            month = 0;
-                    }
-                    diary[month, day] = true;
-                }
-                hostingUnit.Diary = diary; // update the data structer
-                _dal.UpdateHostingUnit(hostingUnit);
-            }
-            else
-                throw new Exception("Dates already taken in this hosting unit");
+            // if succeeded update hosting unit
+            UpdateHostingUnit(hostingUnit.clone());
         }
 
         public void SelectInvitation(BE.Order order)
@@ -366,6 +382,9 @@ namespace BL
             // ...and close them too
             foreach (BE.Order matchOrder in orders)
                 _dal.UpdateOrder(matchOrder, BE.Enums.Status.CloseByApp);
+
+            // update status of matching guest request to approved too
+            _dal.UpdateGuestRequest(request.clone(), Enums.Status.Approved);
         }
 
         public bool IsPossibleToDelete(BE.HostingUnit hostingUnit)
@@ -411,8 +430,9 @@ namespace BL
 
         public List<BE.HostingUnit> ListOptionsFree(DateTime entryDate, int daysNumber)
         {
+            DateTime releaseDate = entryDate.AddDays(daysNumber);
             List<BE.HostingUnit> free = (from unit in _dal.GetAllHostingUnits()
-                                         where IsDateArmor(unit, entryDate, daysNumber)
+                                         where IsDateArmor(unit, entryDate, releaseDate)
                                          select unit).ToList();
             return free;
         }
@@ -520,53 +540,48 @@ namespace BL
         //////////////////////////////////////////////////////////
         // our additional functions:
 
-        public bool InCalendar(DateTime time)
+        /// <summary>
+        /// return true if time in this year
+        /// </summary>
+        public bool InCalendar(DateTime time) => time < DateTime.Today.AddMonths(BE.Configuration._month - 1);
+
+        /// <summary>
+        /// try to make the diary of hostingUnit busy between entryDate to releaseDate
+        /// </summary>
+        /// <returns>return update the hostingUnit</returns>
+        private BE.HostingUnit UpdateDairy(BE.HostingUnit hostingUnit, DateTime entryDate, DateTime releaseDate)
         {
-            DateTime now = DateTime.Now;
-            return (time - now).Days < BE.Configuration._daysInYear;
+            BE.HostingUnit newUnit = hostingUnit.clone();
+            // check if dates free
+            if (!IsDateArmor(newUnit, entryDate, releaseDate))
+                throw new ArgumentException("Date already taken");
+
+            // update diary
+            for (DateTime date = entryDate; date < releaseDate; date = date.AddDays(1))
+                newUnit.Diary[date.Month, date.Day - 1] = true;
+
+            return newUnit;
         }
 
         /// <summary>
-        /// check if dates available to order
+        /// check if guestRequest dates are legal
         /// </summary>
-        private bool IsDateArmor(BE.HostingUnit hostingUnit, DateTime entryDate, int count)
-        {
-            // get day and month, value between 0 and 30.
-            int month = entryDate.Month - 1, day = entryDate.Day - 1;
-            bool[,] diary = hostingUnit.Diary;
-
-            if (diary[month, day] == false)
-            {
-                // in release day - diary[release day] = false
-                // don't even check release day 'cause it doesn't matter
-                for (int i = 0; i < count; ++i, ++day)
-                {
-                    if (day == BE.Configuration._days) // check if we in end of month
-                    {
-                        // past to next month
-                        day = 0;
-                        month++;
-                        if (month == BE.Configuration._month) // check if we in end of year
-                            month = 0;
-                    }
-                    // check for exists busy day 
-                    if (diary[month, day] == true)
-                        return false;
-                }
-                return true;
-            }
-            return false;
-        }
+        private void CheckGuestRequestDates(BE.GuestRequest guestRequest) => CheckDates(guestRequest.EntryDate, guestRequest.ReleaseDate);
 
         /// <summary>
-        /// this function return the amount of days between the given dates,
-        /// BUT in format That in every month there is 31 days
+        /// check if given dates are legal
+        /// if illegal - throw ArgumentException with fit message
         /// </summary>
-        static private int Count2Diary(DateTime entryDate, DateTime releaseDate)
+        private void CheckDates(DateTime entryDate, DateTime releaseDate)
         {
-            // return (month*31 + day) - (month*31 + day)
-            return (releaseDate.Month * BE.Configuration._days + releaseDate.Day) -
-                (entryDate.Month * BE.Configuration._days + entryDate.Day);
+            if (!InCalendar(entryDate) || !InCalendar(releaseDate))
+                throw new ArgumentException("Release Date or Entry Date is not in this year!");
+
+            if (!Ischronological(entryDate, releaseDate))
+                throw new ArgumentException("Dates are not chronological!");
+
+            if (entryDate < DateTime.Today || releaseDate < DateTime.Today)
+                throw new ArgumentException("Release Date or Entry Date not valid, date already passed");
         }
     }
 }

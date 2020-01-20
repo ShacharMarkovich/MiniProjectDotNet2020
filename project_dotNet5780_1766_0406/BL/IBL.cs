@@ -40,9 +40,13 @@ namespace BL
 
         #region Order functions signature
         /// <summary>
-        /// this function add the new BE.Order to data source
+        /// this function try to approved this order
         /// </summary>
-        void AddOrder(BE.Order newOrder);
+        void ApprovedOrder(BE.Order newOrder);
+        /// <summary>
+        /// this function create the new BE.Order to data source
+        /// </summary>
+        void CreateOrder(BE.Order newOrder);
         /// <summary>
         /// update the given BE.Order to the new BE.Enums.Status
         /// </summary>
@@ -107,7 +111,8 @@ namespace BL
 
         /// <summary>
         /// update status of given order to approved,
-        /// and close all other open orders of the matching guest request
+        /// close all other open orders of the matching guest request,
+        /// and update status of matching guest request to approved too
         /// </summary>
         void SelectInvitation(BE.Order order);
         

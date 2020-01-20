@@ -63,14 +63,5 @@ namespace BE
             get => _diary;
         }
 
-        public override string ToString()
-        {
-            string str = "Hosting Unit Key:\t" + _hostingUnitKey;
-            str += "\nUnit name:\t" + _hostingUnitName;
-            str += "\nOwner:\n" + _owner.ToString();
-            str += "\nUnit Area:\t" + _area;
-            str += "\nDiary busy ranges:\n" + _diary.toString();
-            return str;
-        }
     }
 }

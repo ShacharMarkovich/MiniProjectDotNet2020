@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace PL
 {
     using BE;
+
     class Program
     {
         public static BL.IBL _bl = BL.FactoryBL.Instance;
@@ -17,7 +18,6 @@ namespace PL
             Console.ReadKey();
             Console.Clear();
         }
-
         static void Main(string[] args)
         {
             DateTime entryDate = new DateTime(2020, 4, 5),
@@ -107,10 +107,10 @@ namespace PL
             Console.WriteLine($"host.Balance after taking fee: {unit2.Single().Owner.Balance}");
             Clear();
 
-            Console.WriteLine($"hostingUnit.diary before update:\n{hostingUnit.Diary.toString()}");
+            //Console.WriteLine($"hostingUnit.diary before update:\n{hostingUnit.Diary.toString()}");
             _bl.UpdateCalendar(hostingUnit, entryDate, releaseDate);
-            unit2 = _bl.AccordingTo(unit => hostingUnit.HostingUnitKey == unit.HostingUnitKey);
-            Console.WriteLine($"hostingUnit.diary after update:\n{unit2.Single().Diary.toString()}");
+            //unit2 = _bl.AccordingTo(unit => hostingUnit.HostingUnitKey == unit.HostingUnitKey);
+            //Console.WriteLine($"hostingUnit.diary after update:\n{unit2.Single().Diary.toString()}");
             Clear();
 
 

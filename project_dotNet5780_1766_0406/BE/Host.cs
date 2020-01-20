@@ -85,16 +85,5 @@ namespace BE
             get => _collectionClearance;
         }
 
-        public override string ToString()
-        {
-            return "\nHost Key:\t" + _hostKey +
-                "\nPrivate Name:\t" + _privateName +
-                "\nFamily Name:\t" + _familyName +
-                "\nPhone Number:\t" + _phoneNumber +
-                "\nEmail:\t" + _email +
-                "\nBank Branch Details:\n" + _bankBranchDetails.ToString() +
-                "\nBank Account Number:\t" + _bankAccountNumber +
-                "\nHas Collection Clearance: " + _collectionClearance;
-        }
     }
 }
