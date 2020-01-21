@@ -108,6 +108,11 @@ namespace BL
         #region Order functions signature
         public void ApprovedOrder(BE.Order order)
         {
+            if (order == null)
+                throw new ArgumentException("Please select an order first");
+            if (order.Status != Enums.Status.MailSent)
+                throw new ArgumentException("Enail must be sent first!");
+            
             // get matching BE.GuestRequest and BE.HostingUnit to order
             BE.Configuration.Term<BE.GuestRequest> gruestRequestTerm = gReq => gReq.GuestRequestKey == order.GuestRequestKey;
             BE.Configuration.Term<BE.HostingUnit> hostingUnitTerm = u => u.HostingUnitKey == order.HostingUnitKey;
@@ -379,9 +384,11 @@ namespace BL
             IEnumerable<BE.Order> orders = from matchOrder in _dal.GetAllOrders()
                                            where matchOrder.GuestRequestKey == request.GuestRequestKey
                                            select matchOrder;
+
             // ...and close them too
             foreach (BE.Order matchOrder in orders)
                 _dal.UpdateOrder(matchOrder, BE.Enums.Status.CloseByApp);
+            _dal.UpdateOrder(order, BE.Enums.Status.Approved);
 
             // update status of matching guest request to approved too
             _dal.UpdateGuestRequest(request.clone(), Enums.Status.Approved);

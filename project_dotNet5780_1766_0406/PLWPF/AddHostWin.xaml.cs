@@ -456,8 +456,9 @@ namespace PLWPF
                 return; // finish event
             }
 
-            ClearHostingUnitDetails();
             //
+            ClearHostingUnitDetails();
+            ClearAddHostingUnit();
             SetOrdersDataContext();
 
             // update hostin unit comboBox in this Tab
@@ -490,17 +491,19 @@ namespace PLWPF
                 return; // finish event
             }
 
-            // show fit message
-            errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Green);
-            errorMessageDetailsHostingUnit.Text = "Hosting unit successfully removed";
-
             // clear this section
             ClearHostingUnitDetails();
+            ClearAddHostingUnit();
+
             //
             SetOrdersDataContext();
 
             // update hosting units comboBox
             SetUnitComboBox(hostingUnitDetails, delegate(BE.HostingUnit unit) { return unit.Owner.HostKey == _host.HostKey; });
+
+            // show fit message
+            errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Green);
+            errorMessageDetailsHostingUnit.Text = "Hosting unit successfully removed";
         }
 
         /// <summary>

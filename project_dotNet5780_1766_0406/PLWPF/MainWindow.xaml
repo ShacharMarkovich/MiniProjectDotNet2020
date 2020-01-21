@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLWPF"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.MainWindow"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+        mc:Ignorable="d" ResizeMode="NoResize"
+        Title="MainWindow" Height="300" Width="500" Loaded="Window_Loaded">
         
     <Window.Resources>
         <LinearGradientBrush x:Key="ButtonsBrush" EndPoint="0,1" StartPoint="0,0">
@@ -16,17 +16,13 @@
             <GradientStop Color="#FF19347A" Offset="1"/>
         </LinearGradientBrush>
     </Window.Resources>
+
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
         <Button Content="Add Host" FontFamily="Agency FB" FontSize="36"
                 VerticalAlignment="Center" Width="216" Background ="{StaticResource ButtonsBrush}"
                 HorizontalAlignment="Center" Click="AddHostButton_Click"/>
