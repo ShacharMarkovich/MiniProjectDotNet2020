@@ -9,6 +9,6 @@ namespace DAL
     public class FactoryDAL
     {
         public static IDal Instance
-        { get => Xml_DAL.Instance; }
+        { get => Dal_imp.Instance; }
     }
 }

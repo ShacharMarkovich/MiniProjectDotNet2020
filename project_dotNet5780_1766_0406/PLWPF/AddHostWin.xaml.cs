@@ -568,7 +568,23 @@ namespace PLWPF
             }
 
             OrderListErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
-            OrderListErrorMessage.Text = "Email Sent Successfully!";
+            try
+            {
+                _bl.SendEmail(order);
+                OrderListErrorMessage.Text = "Email Sent Successfully!";
+            }
+            catch (ArgumentException ex)
+            {
+                OrderListErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                OrderListErrorMessage.Text = "Email not Successfully!";
+            }
+
+
+
+
+
+
+
 
             //TODO: send real email
             //TODO: reload data context

@@ -132,7 +132,7 @@ namespace BL
         /// send mail from host to given email
         /// TODO: realy send the mail
         /// </summary>
-        void SendEmail(BE.Host host/*FROM*/, string gReqEmail/*TO*/);
+        void SendEmail(BE.Order order);
 
 
         //////////////////////////////////////////////////////////

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Net.Mail;
 
 namespace BL
 {
@@ -112,13 +113,22 @@ namespace BL
                 throw new ArgumentException("Please select an order first");
             if (order.Status != Enums.Status.MailSent)
                 throw new ArgumentException("Enail must be sent first!");
-            
+
+            GuestRequest gR;
+            HostingUnit unit;
+            GetUnitNgRFromOrder(order, out gR, out unit);
+
+            // try to add GuestRequest dates to HostingUnit calender and make it busy
+            UpdateCalendar(unit, gR.EntryDate, gR.ReleaseDate);
+            // update fit statuses
+            SelectInvitation(order);
+        }
+
+        private void GetUnitNgRFromOrder(Order order, out GuestRequest gR, out HostingUnit unit)
+        {
             // get matching BE.GuestRequest and BE.HostingUnit to order
             BE.Configuration.Term<BE.GuestRequest> gruestRequestTerm = gReq => gReq.GuestRequestKey == order.GuestRequestKey;
             BE.Configuration.Term<BE.HostingUnit> hostingUnitTerm = u => u.HostingUnitKey == order.HostingUnitKey;
-
-            BE.GuestRequest gR;
-            BE.HostingUnit unit;
             try
             {
                 gR = AccordingTo(gruestRequestTerm).Single();
@@ -128,11 +138,6 @@ namespace BL
             {
                 throw new ArgumentException("more than one GuestRequest or HostingUnit to this Order!!!");
             }
-
-            // try to add GuestRequest dates to HostingUnit calender and make it busy
-            UpdateCalendar(unit, gR.EntryDate, gR.ReleaseDate);
-            // update fit statuses
-            SelectInvitation(order);
         }
 
         public void CreateOrder(BE.Order newOrder)
@@ -424,13 +429,30 @@ namespace BL
             return true;
         }
 
-        public void SendEmail(BE.Host host/*FROM*/, string gReqEmail/*TO*/)
+        public void SendEmail(Order order)
         {
-            // TODO: realy send the mail
-            if (IsCollectionClearance(host))
-                Console.WriteLine("{0} is sending email to {1}....", host.Email, gReqEmail);
+            //   Order;GuestRequest gR;
+            HostingUnit hosting_unit;
+            GuestRequest guest_Req;
+            GetUnitNgRFromOrder(order, out guest_Req, out hosting_unit);
+            if (IsCollectionClearance(hosting_unit.Owner))
+            {
+                //MailMessage
+               MailMessage mail = new MailMessage();
+              mail.To.Add(guest_Req.Email);
+                mail.From = new MailAddress(hosting_unit.Owner.Email);
+              mail.Subject = "Booking a hosting unit";
+              mail.Body = "Hello,/n We were pleased to see that you were interested in booking a accommodation unit./n We would love to be at your service";
+              mail.IsBodyHtml = true;
+              SmtpClient smtp = new SmtpClient();
+              smtp.Host = "smtp.gmail.com";
+              smtp.Port = 25;
+              smtp.Credentials = new System.Net.NetworkCredential("dotnet2020.liorandshachar@gmail.com",
+              "Ll123123");
+              smtp.EnableSsl = true;
+            }
             else
-                throw new Exception("host not has a CollectionClearance!");
+                throw new ArgumentException("host not has a CollectionClearance!");
         }
 
         //////////////////////////////////////////////////////////
