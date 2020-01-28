@@ -485,6 +485,15 @@ namespace BL
 
         public List<BE.GuestRequest> AccordingTo(BE.Configuration.Term<BE.GuestRequest> term)
         {
+            try
+            {
+                _dal.GetAllRequests();
+            }
+            catch
+            {
+                return new List<GuestRequest>();
+            }
+
             IEnumerable<BE.GuestRequest> gReqs = from gReq in _dal.GetAllRequests()
                                                  where term(gReq)
                                                  select gReq;
@@ -544,6 +553,46 @@ namespace BL
             return hostingUnits.ToList();
         }
 
+        public List<IGrouping<string, BE.BankBranch>> GetAllBranchesGroupByBank()
+        {
+            return (from atm in _dal.GetAllBranches()
+                    group atm by atm.BankName).ToList();
+        }
+
+        public List<IGrouping<string, BE.BankBranch>> GetAllBranchesGroupByCity()
+        {
+            return (from atm in _dal.GetAllBranches()
+                    group atm by atm.BranchCity).ToList();
+        }
+
+        public List<string> GetAllBankNames()
+        {
+            return (from atm in _dal.GetAllBranches()
+                    select atm.BankName).Distinct().ToList();
+        }
+
+        public List<BE.BankBranch> GetAllBank(string bankName)
+        {
+            return (from atm in _dal.GetAllBranches()
+                    where atm.BankName.CompareTo(bankName) == 0
+                    select atm).Distinct().ToList();
+        }
+
+        public List<IGrouping<string, IGrouping<string, BE.BankBranch>>> GetAllBranchesGroupByBankAndCity()
+        {
+            List<IGrouping<string, IGrouping<string, BE.BankBranch>>> queryNestedGroups =
+                (from atm in _dal.GetAllBranches().Distinct()
+                 orderby atm.BankName, atm.BranchCity, atm.BankNumber// optional for sort list
+                 group atm by atm.BankName into g  // group by bank name
+                 from newGroup2 in (from atm2 in g   // foreach bank name grouping now group by city
+                                    group atm2 by atm2.BranchCity)
+                 group newGroup2 by g.Key).ToList();
+
+            return queryNestedGroups;
+        }
+
+
+
         //////////////////////////////////////////////////////////
         // our additional functions:
 
@@ -589,6 +638,26 @@ namespace BL
 
             if (entryDate < DateTime.Today || releaseDate < DateTime.Today)
                 throw new ArgumentException("Release Date or Entry Date not valid, date already passed");
+        }
+
+        public List<BankBranch> GetAllBanks(string bankName)
+        {
+            return _dal.GetAllBranches().Where(bank => bank.BankName== bankName).ToList();
+        }
+
+        public List<IGrouping<string, BankBranch>> GetAllBankBranchGroupByBank()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<IGrouping<string, BankBranch>> GetAllBankBranchGroupByCity()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<IGrouping<string, IGrouping<string, BankBranch>>> GetAllBankBranchGroupByBankAndCity()
+        {
+            throw new NotImplementedException();
         }
     }
 }

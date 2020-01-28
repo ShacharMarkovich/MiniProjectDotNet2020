@@ -42,11 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="XmlFilesClasses\BankXml.cs" />
     <Compile Include="Cloning.cs" />
+    <Compile Include="XmlFilesClasses\ConfigurationXml.cs" />
     <Compile Include="Dal_imp.cs" />
     <Compile Include="FactoryDAL.cs" />
+    <Compile Include="XmlFilesClasses\GuestRequestXml.cs" />
+    <Compile Include="XmlFilesClasses\HostingUnitXml.cs" />
+    <Compile Include="XmlFilesClasses\HostXml.cs" />
     <Compile Include="Idal.cs" />
+    <Compile Include="XmlFilesClasses\OrderXml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Xml_DAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BE\BE.csproj">

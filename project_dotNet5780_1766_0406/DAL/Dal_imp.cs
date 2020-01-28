@@ -85,6 +85,7 @@ namespace DAL
                 key => key.HostKey == host.HostKey)] = host;
         }
 
+        public List<BE.BankBranch> GetAllBankBranch() => DS.DataSource._bankBranchList;
 
         public List<BE.GuestRequest> GetAllRequests()
         {

@@ -18,7 +18,6 @@ namespace BE
             return time.ToString("d", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR").DateTimeFormat);
         }
 
-
         /// <summary>
         /// delegate to a term that work on BE.GuestRequest and return true
         /// if gReq meets the condition
@@ -29,15 +28,15 @@ namespace BE
 
         public const int _days = 31;
         public const int _month = 12;
-        public const int _daysInYear = 365;
+        public const int _daysInYear = 31 * 12;
 
         public const double Fee = 10;
 
-        private const double _firstKey = 9999999;
-        public static double GuestRequestKey = _firstKey;
-        public static double BankNumber = _firstKey;
-        public static double HostKey = _firstKey;
-        public static double HostingUnitKey = _firstKey;
-        public static double OrderKey = _firstKey;
+        public const double _firstKey = 9999999;
+        public static double GuestRequestKey;
+        public static double BankNumber;
+        public static double HostKey;
+        public static double HostingUnitKey;
+        public static double OrderKey;
     }
 }

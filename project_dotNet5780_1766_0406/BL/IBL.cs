@@ -197,6 +197,17 @@ namespace BL
         /// </summary>
         List<IGrouping<BE.Enums.Area, BE.HostingUnit>> GroupHostingUnitByArea();
 
+        List<IGrouping<string, BE.BankBranch>> GetAllBankBranchGroupByBank();
+
+        List<IGrouping<string, BE.BankBranch>> GetAllBankBranchGroupByCity();
+
+        List<string> GetAllBankNames();
+
+        List<BE.BankBranch> GetAllBanks(string bankName);
+
+        List<IGrouping<string, IGrouping<string, BE.BankBranch>>> GetAllBankBranchGroupByBankAndCity();
+
+
         //////////////////////////////////////////////////////////
         // our additional functions:
 

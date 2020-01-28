@@ -29,61 +29,20 @@ namespace BE
             }
         }
 
-        private string _privateName;
-        public string PrivateName
-        {
-            set => _privateName = value;
-            get => _privateName;
-        }
+        public string PrivateName { get; set; }
 
-        private string _familyName;
-        public string FamilyName
-        {
-            set => _familyName = value;
-            get => _familyName;
-        }
+        public string FamilyName { get; set; }
 
-        private string _phoneNumber;
-        public string PhoneNumber
-        {
-            set => _phoneNumber = value;
-            get => _phoneNumber;
-        }
+        public string PhoneNumber { get; set; }
 
-        private string _email;
-        public string Email
-        {
-            set => _email = value;
-            get => _email;
-        }
+        public string Email { get; set; }
 
-        private BankBranch _bankBranchDetails;
-        public BankBranch BankBranchDetails
-        {
-            set => _bankBranchDetails = value;
-            get => _bankBranchDetails;
-        }
+        public BankBranch BankBranchDetails { get; set; }
 
-        private double _bankAccountNumber;
-        public double BankAccountNumber
-        {
-            set => _bankAccountNumber = value;
-            get => _bankAccountNumber;
-        }
+        public double BankAccountNumber { get; set; }
 
-        private double _balance;
-        public double Balance
-        {
-            set => _balance = value;
-            get => _balance;
-        }
+        public double Balance { get; set; }
 
-        private bool _collectionClearance;
-        public bool CollectionClearance
-        {
-            set => _collectionClearance = value;
-            get => _collectionClearance;
-        }
-
+        public bool CollectionClearance { get; set; }
     }
 }

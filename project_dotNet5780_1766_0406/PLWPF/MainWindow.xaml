@@ -16,17 +16,16 @@
             <GradientStop Color="#FF19347A" Offset="1"/>
         </LinearGradientBrush>
     </Window.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button Content="Add Host" FontFamily="Agency FB" FontSize="36"
+        <Button Content="Host Area" FontFamily="Agency FB" FontSize="36"
                 VerticalAlignment="Center" Width="216" Background ="{StaticResource ButtonsBrush}"
                 HorizontalAlignment="Center" Click="AddHostButton_Click"/>
-        <Button Content="Add Guest Request" FontFamily="Agency FB" FontSize="36"
+        <Button Content="Guest Request Area" FontFamily="Agency FB" FontSize="36"
                 VerticalAlignment="Center" Width="244" Background ="{StaticResource ButtonsBrush}"
                 HorizontalAlignment="Center" Click="AddGuestRequestButton_Click" Grid.Row="1"/>
 

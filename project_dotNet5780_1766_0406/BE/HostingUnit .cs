@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace BE
 {
@@ -11,7 +12,9 @@ namespace BE
         // the following bool property is in order to make the next key
         // only once possible to change, like 'readonly' but not in c'tor.
         // we make it because we need to create new instances of this class manually
+        [XmlIgnore]
         private bool _hostingUnitKey_setAlready = false;
+        [XmlIgnore]
         private double _hostingUnitKey;
         public double HostingUnitKey
         {
@@ -28,40 +31,49 @@ namespace BE
             }
         }
 
-        private Host _owner;
-        public Host Owner
-        {
-            set => _owner = value;
-            get => _owner;
-        }
+        public Host Owner { get; set; }
 
-        private Enums.Area _area;
-        public Enums.Area Area
-        {
-            set => _area = value;
-            get => _area;
-        }
+        public Enums.Area Area { get; set; }
 
-        private Enums.UnitType _type { get; set; }
-        public Enums.UnitType type
-        {
-            set => _type = value;
-            get => _type;
-        }
+        public Enums.UnitType type { get; set; }
 
-        private string _hostingUnitName;
-        public string HostingUnitName
-        {
-            set => _hostingUnitName = value;
-            get => _hostingUnitName;
-        }
+        public string HostingUnitName { get; set; }
 
-        private bool[,] _diary;
-        public bool[,] Diary
+        [XmlArray("Diary")]
+        public string XmlDiary
         {
-            set => _diary = value;
-            get => _diary;
+            get
+            {
+                if (Diary == null)
+                    return null;
+
+                int sizeA = Diary.GetLength(0);
+                int sizeB = Diary.GetLength(1);
+
+                string result = sizeA + "," + sizeB;
+                for (int i = 0; i < sizeA; i++)
+                    for (int j = 0; j < sizeB; j++)
+                        result += "," + Diary[i, j].ToString();
+
+                return result;
+            }
+            set
+            {
+                if (value != null && value.Length > 0)
+                {
+                    string[] values = value.Split(',');
+                    int sizeA = int.Parse(values[0]);
+                    int sizeB = int.Parse(values[1]);
+                    Diary = new bool[sizeA, sizeB];
+                    int index = 2;
+                    for (int i = 0; i < sizeA; i++)
+                        for (int j = 0; j < sizeB; j++)
+                            Diary[i, j] = bool.Parse(values[index++]);
+                }
+            }
         }
+        [XmlIgnore]
+        public bool[,] Diary { get; set; }
 
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace BE
 {
@@ -11,7 +12,9 @@ namespace BE
         // the following bool property is in order to make the next key
         // only once possible to change, like 'readonly' but not in c'tor.
         // we make it because we need to create new instances of this class manually
+        [XmlIgnore]
         private bool _bankNumber_setAlready = false;
+        [XmlIgnore]
         private double _bankNumber;
         public double BankNumber
         {
@@ -28,34 +31,12 @@ namespace BE
             }
         }
 
-        private string _bankName;
-        public string BankName
-        {
-            set => _bankName = value;
-            get => _bankName;
-        }
+        public string BankName { get; set; }
 
-        private int _branchNumber;
-        public int BranchNumber
-        {
-            set => _branchNumber = value;
-            get => _branchNumber;
-        }
+        public int BranchNumber { get; set; }
 
-        private string _branchAddress;
-        public string BranchAddress
-        {
-            set => _branchAddress = value;
-            get => _branchAddress;
-        }
+        public string BranchAddress { get; set; }
 
-        private string _branchCity;
-        public double bankNumber;
-
-        public string BranchCity
-        {
-            set => _branchCity = value;
-            get => _branchCity;
-        }
+        public string BranchCity { get; set; }
     }
 }
