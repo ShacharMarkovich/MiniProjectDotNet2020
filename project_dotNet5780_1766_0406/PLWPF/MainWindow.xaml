@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:PLWPF"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.MainWindow"
         mc:Ignorable="d" ResizeMode="NoResize"
+        Closed="Window_Closed"
         Title="MainWindow" Height="300" Width="500" Loaded="Window_Loaded">
         
     <Window.Resources>

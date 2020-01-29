@@ -26,8 +26,7 @@ namespace DAL
             }
             catch (Exception)
             {
-                string xmlServerPath = @"http://www.jct.ac.il/~coshri/atm.xml";
-                wc.DownloadFile(xmlServerPath, xmlLocalPath);
+                wc.DownloadFile(_xmlServerPath, xmlLocalPath);
             }
             finally
             {

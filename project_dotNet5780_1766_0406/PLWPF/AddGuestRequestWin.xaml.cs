@@ -87,6 +87,7 @@ namespace PLWPF
                 // show fit comment
                 errorMessage.Foreground = new SolidColorBrush(Colors.Red);
                 errorMessage.Text = exp.Message;
+                errorMessage.Fade();
                 return;
             }
             catch (Exception exp)
@@ -94,12 +95,14 @@ namespace PLWPF
                 // show fit comment
                 errorMessage.Foreground = new SolidColorBrush(Colors.Red);
                 errorMessage.Text = exp.Message;
+                errorMessage.Fade();
                 return;
             }
 
             // show fit comment
             errorMessage.Foreground = new SolidColorBrush(Colors.Green);
             errorMessage.Text = "Guest Request Add successfully!";
+            errorMessage.Fade();
 
             // prepare to get more new BE.GuestRequest
             _guestRequest = new BE.GuestRequest

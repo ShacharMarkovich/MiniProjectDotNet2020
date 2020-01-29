@@ -71,7 +71,7 @@ namespace DAL
             }
             catch
             {
-                throw new Exception("File upload problem");
+                throw new ArgumentException("Configuration Xml File upload problem");
             }
 
             List<XElement> conf = _configurationRoot.Elements().ToList();
@@ -99,6 +99,7 @@ namespace DAL
             _configurationRoot.SetElementValue("HostKey", BE.Configuration.HostKey);
             _configurationRoot.SetElementValue("HostingUnitKey", BE.Configuration.HostingUnitKey);
             _configurationRoot.SetElementValue("OrderKey", BE.Configuration.OrderKey);
+            _configurationRoot.Save(_configurationPath);
         }
     }
 }

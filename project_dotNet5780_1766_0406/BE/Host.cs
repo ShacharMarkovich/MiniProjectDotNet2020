@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace BE
 {
@@ -12,7 +13,9 @@ namespace BE
         // the following bool property is in order to make the next key
         // only once possible to change, like 'readonly' but not in c'tor.
         // we make it because we need to create new instances of this class manually
+        [XmlIgnore]
         private bool _hostKey_setAlready = false;
+        [XmlIgnore]
         private double _hostKey;
         public double HostKey
         {
@@ -37,8 +40,16 @@ namespace BE
 
         public string Email { get; set; }
 
+        [XmlIgnore]
         public BankBranch BankBranchDetails { get; set; }
-
+        public string Bankbranch
+        {
+            get => BankBranchDetails.BankNumber.ToString();
+            set
+            {
+                
+            }
+        }
         public double BankAccountNumber { get; set; }
 
         public double Balance { get; set; }

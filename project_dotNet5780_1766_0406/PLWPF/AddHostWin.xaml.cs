@@ -204,13 +204,10 @@ namespace PLWPF
             ordersDataGrid.ItemsSource = _bl.AccordingTo(delegate (BE.Order order)
             // run through all orders
             {
-                ///if (_bl.IsOrderClose(order)) // show only open orders
-                ///    return false;
-
-                // run through all  _host hosting units,
+                // run through all  _host's hosting units,
                 // ans foreach open order - check if this order belongs to one of _host hosting units
-                /// if not found return –1.
-                int index = hostingUnits.FindIndex(unit => unit.HostingUnitKey == order.GuestRequestKey);
+                // if not found return –1.
+                int index = hostingUnits.FindIndex(unit => unit.HostingUnitKey == order.HostingUnitKey);
                 if (index == -1)
                     return false;
                 return true;
@@ -261,8 +258,6 @@ namespace PLWPF
             };
             SetHostingUnitDetailsDataContext();
         }
-
-
         #endregion
 
         #region Buttons Click events
@@ -281,12 +276,14 @@ namespace PLWPF
                 // show fit comment
                 SignUpErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
                 SignUpErrorMessage.Text = exp.Message;
+                SignUpErrorMessage.Fade();
                 return;
             }
 
             // show fit comment
             SignUpErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
             SignUpErrorMessage.Text = "Host Add successfully!";
+            SignUpErrorMessage.Fade();
 
             // prepare to get more new BE.Host
             ClearSignUp();
@@ -305,12 +302,14 @@ namespace PLWPF
             {
                 loginErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
                 loginErrorMessage.Text = "Please Select a Host in order to contine";
+                loginErrorMessage.Fade();
                 return;
             }
 
             // show fit comment
             loginErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
             loginErrorMessage.Text = "Login successfully";
+            loginErrorMessage.Fade();
 
             // get selected hostkey:
 
@@ -372,6 +371,7 @@ namespace PLWPF
         {
             try
             {
+                _hostingUnit.Diary = new bool[BE.Configuration._month, BE.Configuration._days];
                 _bl.AddHostingUnit(_hostingUnit);
             }
             catch (ArgumentException exp)
@@ -379,6 +379,7 @@ namespace PLWPF
                 // show fit comment
                 AddHostingUnitErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
                 AddHostingUnitErrorMessage.Text = exp.Message;
+                AddHostingUnitErrorMessage.Fade();
                 return;
             }
             catch (Exception exp)
@@ -386,12 +387,14 @@ namespace PLWPF
                 // show fit comment
                 AddHostingUnitErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
                 AddHostingUnitErrorMessage.Text = exp.Message;
+                AddHostingUnitErrorMessage.Fade();
                 return;
             }
 
             // show fit comment
             AddHostingUnitErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
             AddHostingUnitErrorMessage.Text = "Add hosting unit successfully!";
+            AddHostingUnitErrorMessage.Fade();
 
             // prepare to get more new BE.HostingUnit
             ClearAddHostingUnit();
@@ -418,10 +421,12 @@ namespace PLWPF
             {
                 errorMessageDetailsHost.Foreground = new SolidColorBrush(Colors.Red);
                 errorMessageDetailsHost.Text = exp.Message;
+                errorMessageDetailsHost.Fade();
                 return;
             }
             errorMessageDetailsHost.Foreground = new SolidColorBrush(Colors.Green);
             errorMessageDetailsHost.Text = "Update successfully";
+            errorMessageDetailsHost.Fade();
 
             // update comboBox in Login Tab
             SetHostsComboBox(hostsComboBox);
@@ -445,14 +450,14 @@ namespace PLWPF
             {
                 errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
                 errorMessageDetailsHostingUnit.Text = exp.Message;
-
+                errorMessageDetailsHostingUnit.Fade();
                 return; // finish event
             }
             catch (ArgumentException exp)
             {
                 errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
                 errorMessageDetailsHostingUnit.Text = exp.Message;
-
+                errorMessageDetailsHostingUnit.Fade();
                 return; // finish event
             }
 
@@ -467,6 +472,7 @@ namespace PLWPF
             // show fit message
             errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Green);
             errorMessageDetailsHostingUnit.Text = "Hosting Unit was update successfully";
+            errorMessageDetailsHostingUnit.Fade();
 
             if (hostingUnitDetails.Items.Count == 1)
                 hostingUnitDetails.SelectedIndex = -1; // update selection to none
@@ -487,7 +493,7 @@ namespace PLWPF
                 // show fit message
                 errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
                 errorMessageDetailsHostingUnit.Text = exp.Message;
-
+                errorMessageDetailsHostingUnit.Fade();
                 return; // finish event
             }
 
@@ -499,11 +505,12 @@ namespace PLWPF
             SetOrdersDataContext();
 
             // update hosting units comboBox
-            SetUnitComboBox(hostingUnitDetails, delegate(BE.HostingUnit unit) { return unit.Owner.HostKey == _host.HostKey; });
+            SetUnitComboBox(hostingUnitDetails, delegate (BE.HostingUnit unit) { return unit.Owner.HostKey == _host.HostKey; });
 
             // show fit message
             errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Green);
             errorMessageDetailsHostingUnit.Text = "Hosting unit successfully removed";
+            errorMessageDetailsHostingUnit.Fade();
         }
 
         /// <summary>
@@ -519,6 +526,7 @@ namespace PLWPF
             {
                 newOrderErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
                 newOrderErrorMessage.Text = "hosting unit or guest request not selected!";
+                newOrderErrorMessage.Fade();
                 return;
             }
 
@@ -540,11 +548,13 @@ namespace PLWPF
             {
                 newOrderErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
                 newOrderErrorMessage.Text = exp.Message;
+                newOrderErrorMessage.Fade();
                 return;
             }
 
             newOrderErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
             newOrderErrorMessage.Text = "Order create successfully";
+            newOrderErrorMessage.Fade();
 
             //maybe TODO: more things...?
             SetOrdersDataContext();
@@ -559,39 +569,23 @@ namespace PLWPF
             try
             {
                 _bl.UpdateOrder(order, BE.Enums.Status.MailSent);
+                _bl.SendEmail(order);
             }
             catch (ArgumentException exp)
             {
                 OrderListErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
                 OrderListErrorMessage.Text = exp.Message;
+                OrderListErrorMessage.Fade();
                 return;
             }
 
             OrderListErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
-            try
-            {
-                _bl.SendEmail(order);
-                OrderListErrorMessage.Text = "Email Sent Successfully!";
-            }
-            catch (ArgumentException ex)
-            {
-                OrderListErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
-                OrderListErrorMessage.Text = "Email not Successfully!";
-            }
-
-
-
-
-
-
-
+            OrderListErrorMessage.Text = "Email Sent Successfully!";
+            OrderListErrorMessage.Fade();
 
             //TODO: send real email
-            //TODO: reload data context
-
             SetOrdersDataContext();
         }
-
         private void Approved_OrderList_Button_Click(object sender, RoutedEventArgs e)
         {
             BE.Order order = ordersDataGrid.SelectedItem as BE.Order;
@@ -603,11 +597,13 @@ namespace PLWPF
             {
                 OrderListErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
                 OrderListErrorMessage.Text = exp.Message;
+                OrderListErrorMessage.Fade();
                 return;
             }
 
             OrderListErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
             OrderListErrorMessage.Text = "Order Approved Successfully!";
+            OrderListErrorMessage.Fade();
 
 
             SetOrdersDataContext();
@@ -633,6 +629,7 @@ namespace PLWPF
                 // show fit message,
                 errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
                 errorMessageDetailsHostingUnit.Text = "please choose a hosting unit first";
+                errorMessageDetailsHostingUnit.Fade();
                 return; // and finish evet
 
             }
@@ -650,6 +647,7 @@ namespace PLWPF
             {
                 errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
                 errorMessageDetailsHostingUnit.Text = "please choose a hosting unit first";
+                errorMessageDetailsHostingUnit.Fade();
                 return;
             }
 

@@ -42,6 +42,8 @@ namespace DAL
             });
         }
 
+        public void UpdateConfig() { }
+
         public void AddHostingUnit(BE.HostingUnit newHostingUnit)
         {
             DS.DataSource._hostingUnitsList.Add(newHostingUnit);

@@ -48,5 +48,9 @@ namespace PLWPF
             new AddHostWin().ShowDialog();
         }
 
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            _bl.UpdateConfig();
+        }
     }
 }

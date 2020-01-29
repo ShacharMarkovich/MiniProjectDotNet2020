@@ -56,61 +56,35 @@ namespace DAL
             _guestRequestXml.SaveListToXML(list);
         }
 
+        public void UpdateConfig() => _configXml.UpdateConfig();
+
 
         public void AddHost(BE.Host newHost) => _hostXml.AddHost(newHost.clone());
 
         public void UpdateHost(BE.Host host) => _hostXml.UpdateHost(host.clone());
 
 
-        public void AddHostingUnit(BE.HostingUnit newHostingUnit)
-        {
-            List<BE.HostingUnit> list = _hostingUnitXml.LoadListFromXML();
-            list.Add(newHostingUnit);
-            _hostingUnitXml.SaveListToXML(list);
-        }
+        public void AddHostingUnit(BE.HostingUnit newHostingUnit) => _hostingUnitXml.AddHostingUnit(newHostingUnit.clone());
 
-        public void UpdateHostingUnit(BE.HostingUnit hostingUnit)
-        {
-            List<BE.HostingUnit> list = _hostingUnitXml.LoadListFromXML();
-            list[list.FindIndex(key => key.HostingUnitKey == hostingUnit.HostingUnitKey)] = hostingUnit.clone();
-            _hostingUnitXml.SaveListToXML(list);
-        }
+        public void UpdateHostingUnit(BE.HostingUnit hostingUnit) => _hostingUnitXml.UpdateHostingUnit(hostingUnit.clone());
 
         public void DeleteHostingUnit(BE.HostingUnit hostingUnit)
         {
-            List<BE.HostingUnit> list = _hostingUnitXml.LoadListFromXML();
-            BE.HostingUnit unit2Del = list.Find(unit => unit.HostingUnitKey == hostingUnit.HostingUnitKey);
-            if (list.Remove(unit2Del) == false)
+            if (!_hostingUnitXml.DeleteHostingUnit(hostingUnit.clone()))
                 throw new ArgumentException("delete hosting unit from Data Source didn't succeed!");
-            _hostingUnitXml.SaveListToXML(list);
         }
 
 
-        public void AddOrder(BE.Order newOrder)
-        {
-            List<BE.Order> list = _orderXml.LoadListFromXML();
-            list.Add(newOrder.clone());
-            _orderXml.SaveListToXML(list);
-        }
+        public void AddOrder(BE.Order newOrder) => _orderXml.AddOrder(newOrder.clone());
 
-        public void UpdateOrder(BE.Order order, BE.Enums.Status newStat)
-        {
-            List<BE.Order> list = _orderXml.LoadListFromXML();
-            list.ForEach(delegate (BE.Order innerOrder)
-            {
-                if (innerOrder.OrderKey == order.OrderKey)
-                    innerOrder.Status = newStat;
-            });
-
-            _orderXml.SaveListToXML(list);
-        }
+        public void UpdateOrder(BE.Order order, BE.Enums.Status newStat) => _orderXml.UpdateOrder(order, newStat);
 
 
-        public List<BE.HostingUnit> GetAllHostingUnits() => _hostingUnitXml.LoadListFromXML();
+        public List<BE.HostingUnit> GetAllHostingUnits() => _hostingUnitXml.GetAllHostingUnit();
 
         public List<BE.Host> GetAllHosts() => _hostXml.GetAllHost();
 
-        public List<BE.Order> GetAllOrders() => _orderXml.LoadListFromXML();
+        public List<BE.Order> GetAllOrders() => _orderXml.GetAllOrders();
 
         public List<BE.GuestRequest> GetAllRequests() => _guestRequestXml.LoadListFromXML();
 

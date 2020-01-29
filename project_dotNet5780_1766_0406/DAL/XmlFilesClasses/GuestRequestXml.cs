@@ -58,21 +58,22 @@ namespace DAL
             }
             catch
             {
-                throw new Exception("File upload problem");
+                throw new ArgumentException("GuestRequest Xml File upload problem");
             }
         }
 
         public void SaveListToXML(List<BE.GuestRequest> list)
         {
-            FileStream file = new FileStream(_guestRequestPath, FileMode.OpenOrCreate);
+            FileStream file = new FileStream(_guestRequestPath, FileMode.Create);
             XmlSerializer xmlSerializer = new XmlSerializer(list.GetType());
             xmlSerializer.Serialize(file, list);
             file.Close();
         }
         public List<BE.GuestRequest> LoadListFromXML()
         {
-            FileStream file = new FileStream(_guestRequestPath, FileMode.OpenOrCreate);
+            FileStream file = new FileStream(_guestRequestPath, FileMode.Open);
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<BE.GuestRequest>));
+            //List<BE.GuestRequest> list = new List<BE.GuestRequest>();
             List<BE.GuestRequest> list = (List<BE.GuestRequest>)xmlSerializer.Deserialize(file);
             file.Close();
             return list;

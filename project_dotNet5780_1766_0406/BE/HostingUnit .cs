@@ -39,13 +39,12 @@ namespace BE
 
         public string HostingUnitName { get; set; }
 
-        [XmlArray("Diary")]
         public string XmlDiary
         {
             get
             {
                 if (Diary == null)
-                    return null;
+                    return "";
 
                 int sizeA = Diary.GetLength(0);
                 int sizeB = Diary.GetLength(1);

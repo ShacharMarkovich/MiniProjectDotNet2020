@@ -215,5 +215,9 @@ namespace BL
         /// return true if time is max 11 months ahead from now
         /// </summary>
         bool InCalendar(DateTime time);
+
+        void UpdateConfig();
+
+
     }
 }

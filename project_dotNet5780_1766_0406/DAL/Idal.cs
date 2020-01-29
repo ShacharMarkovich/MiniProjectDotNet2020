@@ -82,5 +82,8 @@ namespace DAL
         /// this function get an exusts BE.Host in DataSource and update it details
         /// </summary>
         void UpdateHost(BE.Host host);
+
+
+        void UpdateConfig();
     }
 }

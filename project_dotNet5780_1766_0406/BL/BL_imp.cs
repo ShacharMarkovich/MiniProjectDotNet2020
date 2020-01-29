@@ -34,7 +34,7 @@ namespace BL
         {
             List<GuestRequest> units = AccordingTo(delegate (BE.GuestRequest unit) { return unit.GuestRequestKey == gRequest.GuestRequestKey; });
             if (units.Count() != 0)
-                throw new ArgumentException("BE.HostingUnit.HostingUnitKey already exists");
+                throw new ArgumentException("GuestRequestKey already exists");
 
             CheckDates(gRequest.EntryDate, gRequest.ReleaseDate);
 
@@ -68,6 +68,8 @@ namespace BL
             else
                 throw new ArgumentOutOfRangeException("can't change close Guest Request!");
         }
+
+        public void UpdateConfig() => _dal.UpdateConfig();
         #endregion
 
         #region HostingUnit functions signature
@@ -111,20 +113,23 @@ namespace BL
         {
             if (order == null)
                 throw new ArgumentException("Please select an order first");
+            if(IsOrderClose(order))
+                throw new ArgumentException("can't change close order!");
             if (order.Status != Enums.Status.MailSent)
                 throw new ArgumentException("Enail must be sent first!");
 
             GuestRequest gR;
             HostingUnit unit;
-            GetUnitNgRFromOrder(order, out gR, out unit);
+            GetMatchGuestRequestAndHostingUnit(order, out gR, out unit);
 
             // try to add GuestRequest dates to HostingUnit calender and make it busy
             UpdateCalendar(unit, gR.EntryDate, gR.ReleaseDate);
+
             // update fit statuses
             SelectInvitation(order);
         }
 
-        private void GetUnitNgRFromOrder(Order order, out GuestRequest gR, out HostingUnit unit)
+        private void GetMatchGuestRequestAndHostingUnit(BE.Order order, out BE.GuestRequest gR, out BE.HostingUnit unit)
         {
             // get matching BE.GuestRequest and BE.HostingUnit to order
             BE.Configuration.Term<BE.GuestRequest> gruestRequestTerm = gReq => gReq.GuestRequestKey == order.GuestRequestKey;
@@ -173,7 +178,7 @@ namespace BL
 
             // check if hosting unit calendar is free between those dates
             if (!IsDateArmor(matchUnit, matchRG.EntryDate, matchRG.ReleaseDate))
-                throw new ArgumentOutOfRangeException($"dates between {matchRG.EntryDate.toString()} to {matchRG.EntryDate.toString()} are not available to order");
+                throw new ArgumentException($"dates between {matchRG.EntryDate.toString()} to {matchRG.ReleaseDate.toString()} are not available to order");
 
             _dal.AddOrder(newOrder.clone());
         }
@@ -407,10 +412,7 @@ namespace BL
                                               where (order.HostingUnitKey == hostingUnit.HostingUnitKey && !IsOrderClose(order))
                                               select order;
 
-            List<Order> list = belongsTo.ToList();
-            int v = list.Count();
-            var s = v == 0;
-            return s;
+            return belongsTo.Count() == 0;
         }
 
         public bool IsCanCancalCollectionClearance(BE.Host host)
@@ -431,25 +433,24 @@ namespace BL
 
         public void SendEmail(Order order)
         {
-            //   Order;GuestRequest gR;
-            HostingUnit hosting_unit;
-            GuestRequest guest_Req;
-            GetUnitNgRFromOrder(order, out guest_Req, out hosting_unit);
-            if (IsCollectionClearance(hosting_unit.Owner))
+            BE.HostingUnit hostingUnit;
+            BE.GuestRequest guestRequest;
+            GetMatchGuestRequestAndHostingUnit(order, out guestRequest, out hostingUnit);
+
+            if (IsCollectionClearance(hostingUnit.Owner))
             {
                 //MailMessage
-               MailMessage mail = new MailMessage();
-              mail.To.Add(guest_Req.Email);
-                mail.From = new MailAddress(hosting_unit.Owner.Email);
-              mail.Subject = "Booking a hosting unit";
-              mail.Body = "Hello,/n We were pleased to see that you were interested in booking a accommodation unit./n We would love to be at your service";
-              mail.IsBodyHtml = true;
-              SmtpClient smtp = new SmtpClient();
-              smtp.Host = "smtp.gmail.com";
-              smtp.Port = 25;
-              smtp.Credentials = new System.Net.NetworkCredential("dotnet2020.liorandshachar@gmail.com",
-              "Ll123123");
-              smtp.EnableSsl = true;
+                MailMessage mail = new MailMessage();
+                mail.To.Add(guestRequest.Email);
+                mail.From = new MailAddress(hostingUnit.Owner.Email);
+                mail.Subject = "Booking a hosting unit";
+                mail.Body = "Hello,/n We were pleased to see that you were interested in booking a accommodation unit./n We would love to be at your service";
+                mail.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 25;
+                smtp.Credentials = new System.Net.NetworkCredential("dotnet2020.liorandshachar@gmail.com","Ll123123");
+                smtp.EnableSsl = true;
             }
             else
                 throw new ArgumentException("host not has a CollectionClearance!");
