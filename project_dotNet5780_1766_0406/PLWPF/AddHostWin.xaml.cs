@@ -35,6 +35,7 @@ namespace PLWPF
         }
 
         #region class proprties
+        const int maxBanks = 100;
         public BL.IBL _bl = BL.FactoryBL.Instance;
         public BE.Host _host;
         public BE.HostingUnit _hostingUnit;
@@ -74,14 +75,14 @@ namespace PLWPF
             SetSignUpDataContext();
             SetHostsComboBox(hostsComboBox);
 
+            SetBanksComboBox(banksComboBox);
+            SetBanksComboBox(detailsBanksComboBox);
+
             // make the comboBox contains the fit enum's opptions
             typeComboBox.ItemsSource = Enum.GetValues(typeof(BE.Enums.UnitType));
             typeComboBox.SelectedIndex = 0;
             areaComboBox.ItemsSource = Enum.GetValues(typeof(BE.Enums.Area));
             areaComboBox.SelectedIndex = 0;
-
-
-            
         }
 
         /// <summary>
@@ -115,6 +116,16 @@ namespace PLWPF
             hostsComboBox_.ItemsSource = hostsNames;
         }
 
+        private void SetBanksComboBox(ComboBox banksComboBox_)
+        {
+            List<string> stringBanks = _bl.GetAllBanksAsDetailsString();
+            if(stringBanks.Count > maxBanks)
+                stringBanks = stringBanks.Take(maxBanks).ToList();
+
+            // display
+            banksComboBox_.ItemsSource = stringBanks;
+        }
+
         #region Initialize DataContext functions
 
         /// <summary>
@@ -132,12 +143,6 @@ namespace PLWPF
             balanceTextBlock.DataContext = _host;
             bankAccountNumberTextBox.DataContext = _host;
             collectionClearanceCheckBox.DataContext = _host;
-
-            bankNumberTextBlock.DataContext = _host.BankBranchDetails;
-            bankNameTextBox.DataContext = _host.BankBranchDetails;
-            branchNumberTextBox.DataContext = _host.BankBranchDetails;
-            branchAddressTextBox.DataContext = _host.BankBranchDetails;
-            branchCityTextBox.DataContext = _host.BankBranchDetails;
         }
 
         /// <summary>
@@ -173,12 +178,6 @@ namespace PLWPF
             detailsBalanceTextBlock.DataContext = _host;
             detailsBankAccountNumberTextBox.DataContext = _host;
             detailsCollectionClearanceCheckBox.DataContext = _host;
-
-            detailsBankNumberTextBlock.DataContext = _host.BankBranchDetails;
-            detailsBankNameTextBox.DataContext = _host.BankBranchDetails;
-            detailsBranchNumberTextBox.DataContext = _host.BankBranchDetails;
-            detailsBranchAddressTextBox.DataContext = _host.BankBranchDetails;
-            detailsBranchCityTextBox.DataContext = _host.BankBranchDetails;
         }
 
         /// <summary>
@@ -213,7 +212,6 @@ namespace PLWPF
                 return true;
             });
         }
-
 
         /// <summary>
         /// create new _hostingUnit and show it on AddHostingUnit Tab
@@ -260,35 +258,61 @@ namespace PLWPF
         }
         #endregion
 
-        #region Buttons Click events
+        private bool BankCheckSelectedItem(ComboBox bankComboBox_, TextBlock errorMessage_)
+        {
+            // check if any bank was selected
+            if (bankComboBox_.SelectedIndex == -1)
+            {
+                // show fit message,
+                errorMessage_.Foreground = new SolidColorBrush(Colors.Red);
+                errorMessage_.Text = "please choose a bank";
+                errorMessage_.Fade();
+                return false; // and finish evet
+            }
+            
+            // check if any bank was selected
+            string bankDetails = bankComboBox_.SelectedItem as string;
+            double selectedBankNumber = double.Parse(bankDetails.Split(' ')[0]);
+            double selectedBranchNumber = double.Parse(bankDetails.Split(' ')[1]);
+            List<BE.BankBranch> banksList = _bl.AccordingTo(banks => banks.BankNumber == selectedBankNumber &&
+                                                                     banks.BranchNumber == selectedBranchNumber);
+            BE.BankBranch bank = banksList.First();
+            _host.BankBranchDetails = bank;
+            return true;
+        }
 
+        #region Buttons Click events
         /// <summary>
         /// try to add _host to dataBase when user click to add his new host
         /// </summary>
         private void AddHostButton_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                _bl.AddHost(_host);
-            }
-            catch (ArgumentException exp)
-            {
+            if (BankCheckSelectedItem(banksComboBox, SignUpErrorMessage)) {
+                try
+                {
+                    _bl.AddHost(_host);
+                }
+                catch (ArgumentException exp)
+                {
+                    // show fit comment
+                    SignUpErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                    SignUpErrorMessage.Text = exp.Message;
+                    SignUpErrorMessage.Fade();
+                    return;
+                }
+
+                // prepare to get more new BE.Host
+                ClearSignUp();
+                SetHostsComboBox(hostsComboBox);
+                detailsBanksComboBox.SelectedIndex = banksComboBox.SelectedIndex;
+                banksComboBox.SelectedIndex = -1;
+                //SetBanksComboBox(banksComboBox);
+
                 // show fit comment
-                SignUpErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
-                SignUpErrorMessage.Text = exp.Message;
+                SignUpErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
+                SignUpErrorMessage.Text = "Host Add successfully!";
                 SignUpErrorMessage.Fade();
-                return;
             }
-
-            // show fit comment
-            SignUpErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
-            SignUpErrorMessage.Text = "Host Add successfully!";
-            SignUpErrorMessage.Fade();
-
-            // prepare to get more new BE.Host
-            ClearSignUp();
-
-            SetHostsComboBox(hostsComboBox);
         }
 
         /// <summary>
@@ -320,7 +344,7 @@ namespace PLWPF
             // and no update _host to selected host
             _host = (from host in _bl.GetAllHosts()
                      where host.HostKey == hostKey
-                     select host).Single();
+                     select host).First();
 
             // prepare to contain new BE.HostingUnit
             _hostingUnit = new BE.HostingUnit
@@ -335,6 +359,9 @@ namespace PLWPF
             SetHostDetailsDataContext();
             SetHostingUnitDetailsDataContext();
             SetOrdersDataContext();
+
+            // //set no selected bank
+            // detailsBanksComboBox.SelectedIndex = -1;
 
             SetHostsComboBox(hostingUnitDetails);
             SetUnitComboBox(hostingUnitDetails, delegate (BE.HostingUnit u) { return u.Owner.HostKey == _host.HostKey; });
@@ -412,23 +439,25 @@ namespace PLWPF
         /// </summary>
         private void UpdateHostButton_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                _bl.UpdateHost(_host);
-            }
-            catch (ArgumentException exp)
-            {
-                errorMessageDetailsHost.Foreground = new SolidColorBrush(Colors.Red);
-                errorMessageDetailsHost.Text = exp.Message;
+            if (BankCheckSelectedItem(detailsBanksComboBox, errorMessageDetailsHost)) {
+                try
+                {
+                    _bl.UpdateHost(_host);
+                }
+                catch (ArgumentException exp)
+                {
+                    errorMessageDetailsHost.Foreground = new SolidColorBrush(Colors.Red);
+                    errorMessageDetailsHost.Text = exp.Message;
+                    errorMessageDetailsHost.Fade();
+                    return;
+                }
+                errorMessageDetailsHost.Foreground = new SolidColorBrush(Colors.Green);
+                errorMessageDetailsHost.Text = "Update successfully";
                 errorMessageDetailsHost.Fade();
-                return;
-            }
-            errorMessageDetailsHost.Foreground = new SolidColorBrush(Colors.Green);
-            errorMessageDetailsHost.Text = "Update successfully";
-            errorMessageDetailsHost.Fade();
 
-            // update comboBox in Login Tab
-            SetHostsComboBox(hostsComboBox);
+                // update comboBox in Login Tab
+                SetHostsComboBox(hostsComboBox);
+            }
         }
 
         /// <summary>
@@ -585,6 +614,7 @@ namespace PLWPF
             //TODO: send real email
             SetOrdersDataContext();
         }
+
         private void Approved_OrderList_Button_Click(object sender, RoutedEventArgs e)
         {
             BE.Order order = ordersDataGrid.SelectedItem as BE.Order;
@@ -663,14 +693,13 @@ namespace PLWPF
                 throw new ArgumentOutOfRangeException("More than one hosting unit with same key");
 
             // show the selected hoting unit on screen
-            _hostingUnit = hostingUnitlst.Single();
+            _hostingUnit = hostingUnitlst.First();
             SetHostingUnitDetailsDataContext();
 
             List<CalendarDateRange> dates = DiaryToRangeOfDatetime(_hostingUnit.Diary);
             for (int i = 0; i < dates.Count(); i++)
                 hostingUnitDiary.BlackoutDates.Add(dates[i]);
         }
-
 
         public static List<CalendarDateRange> DiaryToRangeOfDatetime(bool[,] Diary)
         {
@@ -718,6 +747,11 @@ namespace PLWPF
                     }
 
             return blackoutDates;
+        }
+
+        private void BanksComboBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string bankString = (e.OriginalSource as TextBox).Text;
         }
     }
 }

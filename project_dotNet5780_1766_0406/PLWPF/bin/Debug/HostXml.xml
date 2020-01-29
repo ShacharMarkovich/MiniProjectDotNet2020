@@ -17,4 +17,21 @@
     <Balance>100</Balance>
     <CollectionClearance>true</CollectionClearance>
   </Host>
+  <Host>
+    <HostKey>10000011</HostKey>
+    <PrivateName>j</PrivateName>
+    <FamilyName>j</FamilyName>
+    <PhoneNumber>8</PhoneNumber>
+    <Email>j@d.d</Email>
+    <BankBranchDetails>
+      <BankNumber>11</BankNumber>
+      <BankName>בנק דיסקונט לישראל בע"מ</BankName>
+      <BranchNumber>55</BranchNumber>
+      <BranchAddress>הרצל 87</BranchAddress>
+      <BranchCity>ראשון לציון</BranchCity>
+    </BankBranchDetails>
+    <BankAccountNumber>80</BankAccountNumber>
+    <Balance>100</Balance>
+    <CollectionClearance>true</CollectionClearance>
+  </Host>
 </Hosts>

@@ -151,6 +151,10 @@ namespace BL
         /// </summary>
         List<BE.Order> AtLeastnDays(int daysNumber);
 
+        /// <summary>
+        /// returns a list of all bank branches that match a specific condition.
+        /// </summary>
+        List<BE.BankBranch> AccordingTo(BE.Configuration.Term<BE.BankBranch> term);
 
         /// <summary>
         /// returns a list of all Orders that match a specific condition.
@@ -201,9 +205,13 @@ namespace BL
 
         List<IGrouping<string, BE.BankBranch>> GetAllBankBranchGroupByCity();
 
+        List<BE.BankBranch> GetAllBanks();
+
         List<string> GetAllBankNames();
 
-        List<BE.BankBranch> GetAllBanks(string bankName);
+        List<string> GetAllBanksAsDetailsString();
+        
+        List<BE.BankBranch> GetAllBanksToName(string bankName);
 
         List<IGrouping<string, IGrouping<string, BE.BankBranch>>> GetAllBankBranchGroupByBankAndCity();
 

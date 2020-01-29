@@ -16,6 +16,8 @@ namespace DAL
         private HostingUnitXml _hostingUnitXml;
         private OrderXml _orderXml;
 
+        private readonly List<BE.BankBranch> _banksDetails;
+
         #region singleton
         private static IDal _instance = null;
 
@@ -35,6 +37,7 @@ namespace DAL
             _hostXml = HostXml.Instance;
             _orderXml = OrderXml.Instance;
             _hostingUnitXml = HostingUnitXml.Instance;
+            _banksDetails = BankXml.GetAllBankBranch().Distinct().ToList();
         }
     #endregion
 
@@ -88,6 +91,6 @@ namespace DAL
 
         public List<BE.GuestRequest> GetAllRequests() => _guestRequestXml.LoadListFromXML();
 
-        public List<BE.BankBranch> GetAllBranches() => BankXml.GetAllBankBranch().ToList();
+        public List<BE.BankBranch> GetAllBranches() => _banksDetails;
     }
 }

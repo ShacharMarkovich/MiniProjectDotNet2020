@@ -136,8 +136,8 @@ namespace BL
             BE.Configuration.Term<BE.HostingUnit> hostingUnitTerm = u => u.HostingUnitKey == order.HostingUnitKey;
             try
             {
-                gR = AccordingTo(gruestRequestTerm).Single();
-                unit = AccordingTo(hostingUnitTerm).Single();
+                gR = AccordingTo(gruestRequestTerm).First();
+                unit = AccordingTo(hostingUnitTerm).First();
             }
             catch
             {
@@ -165,8 +165,8 @@ namespace BL
             if (requestsCount == 0 || unitsCount == 0)
                 throw new ArgumentException("unfamiliar GuestRequest or HostingUnit with those keys!please try again!");
 
-            BE.GuestRequest matchRG = guestRequestList.Single();
-            BE.HostingUnit matchUnit = hostingUnitList.Single();
+            BE.GuestRequest matchRG = guestRequestList.First();
+            BE.HostingUnit matchUnit = hostingUnitList.First();
             if (IsGuestRequestClose(matchRG))
                 throw new ArgumentException("can't make order to close GuestRequest!");
 
@@ -320,7 +320,7 @@ namespace BL
             BE.GuestRequest gReq = null;
             try
             {
-                gReq = req.Single();
+                gReq = req.First();
             }
             // handle exceptions
             catch (ArgumentNullException exc)
@@ -343,7 +343,7 @@ namespace BL
             BE.HostingUnit unit = null;
             try
             {
-                unit = units.Single();
+                unit = units.First();
             }
             // handle exceptions
             catch (ArgumentNullException exc)
@@ -377,7 +377,7 @@ namespace BL
                 // find the much guest request to the given order...
                 request = (from gReq in allReq
                            where gReq.GuestRequestKey == order.GuestRequestKey
-                           select gReq).Single();
+                           select gReq).First();
                 // /// and update his status
                 _dal.UpdateGuestRequest(request, BE.Enums.Status.Approved);
             }
@@ -496,11 +496,20 @@ namespace BL
             return enumerator.ToList();
         }
 
+        public List<BE.BankBranch> AccordingTo(BE.Configuration.Term<BE.BankBranch> term)
+        {
+            IEnumerable<BE.BankBranch> banks = from bank in _dal.GetAllBranches()
+                                           where term(bank)
+                                           select bank.clone();
+            return banks.ToList();
+
+        }
+
         public List<BE.Order> AccordingTo(BE.Configuration.Term<BE.Order> term)
         {
             IEnumerable<BE.Order> orders = from order in _dal.GetAllOrders()
                                                 where term(order)
-                                                select order;
+                                                select order.clone();
             return orders.ToList();
         }
 
@@ -508,7 +517,7 @@ namespace BL
         {
             IEnumerable<BE.HostingUnit> units = from unit in _dal.GetAllHostingUnits()
                                                 where term(unit)
-                                                select unit;
+                                                select unit.clone();
 
             return units.ToList();
         }
@@ -526,7 +535,7 @@ namespace BL
 
             IEnumerable<BE.GuestRequest> gReqs = from gReq in _dal.GetAllRequests()
                                                  where term(gReq)
-                                                 select gReq;
+                                                 select gReq.clone();
 
             return gReqs.ToList();
         }
@@ -598,20 +607,27 @@ namespace BL
         public List<string> GetAllBankNames()
         {
             return (from atm in _dal.GetAllBranches()
-                    select atm.BankName).Distinct().ToList();
+                    select atm.BankName).ToList();
         }
+
+        public List<string> GetAllBanksAsDetailsString()
+        {
+            return (from bank in _dal.GetAllBranches()
+                    select $"{bank.BankNumber} {bank.BranchNumber} {bank.BankName} {bank.BranchCity} {bank.BranchAddress}").Distinct().ToList();
+        }
+        
 
         public List<BE.BankBranch> GetAllBank(string bankName)
         {
             return (from atm in _dal.GetAllBranches()
                     where atm.BankName.CompareTo(bankName) == 0
-                    select atm).Distinct().ToList();
+                    select atm).ToList();
         }
 
         public List<IGrouping<string, IGrouping<string, BE.BankBranch>>> GetAllBranchesGroupByBankAndCity()
         {
             List<IGrouping<string, IGrouping<string, BE.BankBranch>>> queryNestedGroups =
-                (from atm in _dal.GetAllBranches().Distinct()
+                (from atm in _dal.GetAllBranches()
                  orderby atm.BankName, atm.BranchCity, atm.BankNumber// optional for sort list
                  group atm by atm.BankName into g  // group by bank name
                  from newGroup2 in (from atm2 in g   // foreach bank name grouping now group by city
@@ -670,10 +686,12 @@ namespace BL
                 throw new ArgumentException("Release Date or Entry Date not valid, date already passed");
         }
 
-        public List<BankBranch> GetAllBanks(string bankName)
+        public List<BankBranch> GetAllBanksToName(string bankName)
         {
             return _dal.GetAllBranches().Where(bank => bank.BankName== bankName).ToList();
         }
+
+        public List<BE.BankBranch> GetAllBanks() => _dal.GetAllBranches();
 
         public List<IGrouping<string, BankBranch>> GetAllBankBranchGroupByBank()
         {

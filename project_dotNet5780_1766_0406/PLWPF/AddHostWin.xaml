@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:PLWPF"
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.AddHostWin"
-        mc:Ignorable="d"
-        Title="Host Windows" Height="700" Width="850" Loaded="Window_Loaded"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Title="Trivago - host Section" Height="700" Width="850" Loaded="Window_Loaded"
         ResizeMode="NoResize">
 
     <Window.Resources>
@@ -39,7 +39,7 @@
             <TabItem x:Name="SignupTab" Header ="Create new host" Height="22" VerticalAlignment="Bottom">
                 <StackPanel>
                     <TextBlock x:Name="SignUpErrorMessage" Text="" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"  />
-                    <Grid DataContext="{StaticResource hostViewSource}" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center">
+                    <Grid DataContext="{StaticResource hostViewSource}" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Center" Height="400" Width="345">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
@@ -54,40 +54,26 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Label Content="Host Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" Height="31"/>
                         <TextBlock x:Name="hostKeyTextBlock" Grid.Column="1" HorizontalAlignment="Left"  Height="31" Margin="3" Grid.Row="0" Text="{Binding Path=HostKey}" VerticalAlignment="Center"/>
                         <Label Content="Private Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" Height="31" VerticalAlignment="Center"/>
-                        <TextBox x:Name="privateNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="1" Text="{Binding Path=PrivateName, Mode=TwoWay, UpdateSourceTrigger=LostFocus, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <TextBox x:Name="privateNameTextBox" Grid.Column="1" Height="30" Margin="0,4,-74,4" Grid.Row="1" Text="{Binding Path=PrivateName, Mode=TwoWay, UpdateSourceTrigger=LostFocus, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="201"/>
                         <Label Content="Family Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center" Height="31"/>
-                        <TextBox x:Name="familyNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="2" Text="{Binding Path=FamilyName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
+                        <TextBox x:Name="familyNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3,3,-73,3" Grid.Row="2" Text="{Binding Path=FamilyName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="198"/>
                         <Label Content="Email:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-                        <TextBox x:Name="emailTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="3" Text="{Binding Path=Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
+                        <TextBox x:Name="emailTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3,3,-72,3" Grid.Row="3" Text="{Binding Path=Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="198"/>
                         <Label Content="Phone Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
-                        <TextBox x:Name="phoneNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="4" Text="{Binding Path=PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
+                        <TextBox x:Name="phoneNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3,3,-71,3" Grid.Row="4" Text="{Binding Path=PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="198"/>
 
                         <Label Content="Balance:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
                         <TextBlock x:Name="balanceTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="5" Text="{Binding Path=Balance, Mode=TwoWay}" VerticalAlignment="Center"/>
                         <Label Content="Bank Account Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
-                        <TextBox x:Name="bankAccountNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="6" Text="{Binding Path=BankAccountNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
-
-                        <Label Content="Bank Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="bankNumberTextBlock" Grid.Column="1" Margin="0" Grid.Row="7" Text="{Binding Path=BankNumber, Mode=TwoWay}" Width="113" VerticalAlignment="Center"/>
-                        <Label Content="Branch Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>
-                        <TextBox x:Name="branchNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="8" Text="{Binding Path=BranchNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
-                        <Label Content="Bank Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="9" VerticalAlignment="Center"/>
-                        <TextBox x:Name="bankNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="9" Text="{Binding Path=BankName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
-                        <Label Content="Branch City:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="10" VerticalAlignment="Center"/>
-                        <TextBox x:Name="branchCityTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="10" Text="{Binding Path=BranchCity, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
-                        <Label Content="Branch Address:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="11" VerticalAlignment="Center"/>
-                        <TextBox x:Name="branchAddressTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="11" Text="{Binding Path=BranchAddress, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
-
-                        <Label Content="Collection Clearance:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="12" VerticalAlignment="Center"/>
-                        <CheckBox x:Name="collectionClearanceCheckBox" Content="" Grid.Column="1" HorizontalAlignment="Left" IsChecked="{Binding Path=CollectionClearance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Margin="3" Grid.Row="12" VerticalAlignment="Center"/>
+                        <TextBox x:Name="bankAccountNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3,3,-70,3" Grid.Row="6" Text="{Binding Path=BankAccountNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="198"/>
+                        <Label Content="Select Your Bank:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
+                        <ComboBox x:Name="banksComboBox" IsEditable="false" Grid.Column="1" Grid.Row="7" VerticalAlignment="Center" Background="{StaticResource ButtonsBrush}" Margin="9,5,-69,5" TextBoxBase.TextChanged="BanksComboBox_TextChanged"/>
+                        <Label Content="Collection Clearance:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>
+                        <CheckBox x:Name="collectionClearanceCheckBox" Content="" Grid.Column="1" HorizontalAlignment="Left" IsChecked="{Binding Path=CollectionClearance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>
                     </Grid>
                     <Button Content="Add Host" Background ="{StaticResource ButtonsBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="AddHostButton_Click" Margin="0,10,0,0"/>
                 </StackPanel>
@@ -165,10 +151,10 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <TextBlock x:Name="errorMessageDetailsHost" Grid.Column="0" Grid.Row="0" Text="" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <Grid DataContext="{StaticResource hostViewSource}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Grid DataContext="{StaticResource hostViewSource}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="355" Margin="40,12,32,90" Width="340" RenderTransformOrigin="0.412,0.5">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="27*"/>
+                                    <ColumnDefinition Width="41*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
@@ -180,40 +166,26 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <Label Content="Host Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" Height="31"/>
-                                <TextBlock x:Name="detailsHostKeyTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" Text="{Binding Path=HostKey}" VerticalAlignment="Center" Height="31"/>
-                                <Label Content="Private Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-                                <TextBox x:Name="detailsPrivateNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="1" Text="{Binding Path=PrivateName, Mode=TwoWay, UpdateSourceTrigger=LostFocus, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
-                                <Label Content="Family Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-                                <TextBox x:Name="detailsFamilyNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="2" Text="{Binding Path=FamilyName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" />
-                                <Label Content="Email:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-                                <TextBox x:Name="detailsEmailTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="3" Text="{Binding Path=Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" />
-                                <Label Content="Phone Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
-                                <TextBox x:Name="detailsPhoneNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="4" Text="{Binding Path=PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" />
+                                <Label Content="Host Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,-2,0,26" Grid.Row="0" VerticalAlignment="Center" Height="32" Grid.RowSpan="2" Width="61"/>
+                                <TextBlock x:Name="detailsHostKeyTextBlock" Grid.Column="1" HorizontalAlignment="Center" Margin="0,5" Grid.Row="0" Text="{Binding Path=HostKey}" Height="32" Width="192"/>
+                                <Label Content="Private Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="1" VerticalAlignment="Center" Height="31" Width="85"/>
+                                <TextBox x:Name="detailsPrivateNameTextBox" Grid.Column="1" Margin="0,5" Grid.Row="1" Text="{Binding Path=PrivateName, Mode=TwoWay, UpdateSourceTrigger=LostFocus, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Width="200" HorizontalAlignment="Center" />
+                                <Label Content="Family Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,4,0,3" Grid.Row="2" VerticalAlignment="Center" Height="31" Width="83"/>
+                                <TextBox x:Name="detailsFamilyNameTextBox" Grid.Column="1" HorizontalAlignment="Center" Margin="0,5" Grid.Row="2" Text="{Binding Path=FamilyName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" Width="197" />
+                                <Label Content="Email:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="3" VerticalAlignment="Center" Height="31" Width="43"/>
+                                <TextBox x:Name="detailsEmailTextBox" Grid.Column="1" HorizontalAlignment="Center" Margin="0,5" Grid.Row="3" Text="{Binding Path=Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" Width="195" />
+                                <Label Content="Phone Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,3,0,4" Grid.Row="4" VerticalAlignment="Center" Height="31" Width="93"/>
+                                <TextBox x:Name="detailsPhoneNumberTextBox" Grid.Column="1" HorizontalAlignment="Center" Margin="0,5" Grid.Row="4" Text="{Binding Path=PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" Width="195" />
 
-                                <Label Content="Balance:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="detailsBalanceTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="5" Text="{Binding Path=Balance, Mode=TwoWay}" VerticalAlignment="Center" Height="31"/>
-                                <Label Content="Bank Account Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
-                                <TextBox x:Name="detailsBankAccountNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="6" Text="{Binding Path=BankAccountNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
-
-                                <Label Content="Bank Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="detailsBankNumberTextBlock" Grid.Column="1" Margin="0" Grid.Row="7" Text="{Binding Path=BankNumber, Mode=TwoWay}" Width="113" VerticalAlignment="Center" Height="31"/>
-                                <Label Content="Branch Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>
-                                <TextBox x:Name="detailsBranchNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="8" Text="{Binding Path=BranchNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
-                                <Label Content="Bank Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="9" VerticalAlignment="Center"/>
-                                <TextBox x:Name="detailsBankNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="9" Text="{Binding Path=BankName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
-                                <Label Content="Branch City:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="10" VerticalAlignment="Center"/>
-                                <TextBox x:Name="detailsBranchCityTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="10" Text="{Binding Path=BranchCity, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
-                                <Label Content="Branch Address:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="11" VerticalAlignment="Center"/>
-                                <TextBox x:Name="detailsBranchAddressTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="11" Text="{Binding Path=BranchAddress, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="120"/>
-
-                                <Label Content="Collection Clearance:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="12" VerticalAlignment="Center"/>
-                                <CheckBox x:Name="detailsCollectionClearanceCheckBox" Content="" Grid.Column="1" HorizontalAlignment="Left" IsChecked="{Binding Path=CollectionClearance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Margin="3" Grid.Row="12" VerticalAlignment="Center"/>
+                                <Label Content="Balance:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="5" VerticalAlignment="Center" Height="31" Width="55"/>
+                                <TextBlock x:Name="detailsBalanceTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3,27,0,27" Grid.Row="4" Text="{Binding Path=Balance, Mode=TwoWay}" VerticalAlignment="Center" Height="32" Grid.RowSpan="3" Width="7"/>
+                                <Label Content="Bank Account Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,4,0,3" Grid.Row="6" VerticalAlignment="Center" Height="31" Width="132"/>
+                                <TextBox x:Name="detailsBankAccountNumberTextBox" Grid.Column="1" HorizontalAlignment="Center" Height="31" Margin="4" Grid.Row="6" Text="{Binding Path=BankAccountNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" Width="197"/>
+                                <Label Content="Select Your Bank:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="7" VerticalAlignment="Center" Height="31" Width="104"/>
+                                <ComboBox x:Name="detailsBanksComboBox" Grid.Column="1" Margin="6,5,4,4" Grid.Row="7" Background="{StaticResource ButtonsBrush}" Height="31.3" HorizontalAlignment="Center" Width="195" MinHeight="31"/>
+                                <Label Content="Collection Clearance:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,3,0,4" Grid.Row="12" VerticalAlignment="Center" Height="31" Width="121"/>
+                                <CheckBox x:Name="detailsCollectionClearanceCheckBox" Content="" Grid.Column="1" HorizontalAlignment="Left" IsChecked="{Binding Path=CollectionClearance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Margin="23,14,0,11" Grid.Row="8" VerticalAlignment="Center" Height="14" Width="17"/>
                             </Grid>
                             <Button  Grid.Column="0" Grid.Row="2" Content="Update Changes" Click="UpdateHostButton_Click" Background ="{StaticResource ButtonsBrush}" Margin="124,5,111,-10" Height="31"/>
 
@@ -399,9 +371,7 @@
                             </TabItem>
 
                         </TabControl>
-
                     </TabItem>
-
                 </TabControl>
             </TabItem>
         </TabControl>

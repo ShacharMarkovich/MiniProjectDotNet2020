@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLWPF"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.AddGuestRequestWin"
-        mc:Ignorable="d" ResizeMode="NoResize"
-        Title="Add Guest Request" Height="700" Width="400" Loaded="Window_Loaded">
+        mc:Ignorable="d" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        Title="Trivago - Guest Request Section" Height="700" Width="400" Loaded="Window_Loaded">
     <Window.Resources>
         <CollectionViewSource x:Key="guestRequestViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:GuestRequest}, CreateList=True}"/>
         <LinearGradientBrush x:Key="ButtonsBrush" EndPoint="0,1" StartPoint="0,0">

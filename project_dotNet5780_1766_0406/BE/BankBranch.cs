@@ -38,5 +38,23 @@ namespace BE
         public string BranchAddress { get; set; }
 
         public string BranchCity { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            BankBranch other = obj as BankBranch;
+
+            if (BankNumber != other.BankNumber)
+                return false;
+            if (BranchNumber != other.BranchNumber)
+                return false;
+            if (BankName != other.BankName)
+                return false;
+            if (BranchAddress != other.BranchAddress)
+                return false;
+            if (BranchCity != other.BranchCity)
+                return false;
+        
+            return true;
+        }
     }
 }

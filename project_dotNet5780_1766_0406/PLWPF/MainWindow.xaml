@@ -5,11 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLWPF"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.MainWindow"
-        mc:Ignorable="d" ResizeMode="NoResize"
+        mc:Ignorable="d" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         Closed="Window_Closed"
-        Title="MainWindow" Height="300" Width="500" Loaded="Window_Loaded">
-        
+        Title="Trivago" Height="300" Width="500" Loaded="Window_Loaded">
+
     <Window.Resources>
+        <LinearGradientBrush x:Key="BackgroundBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Black" Offset="0"/>
+            <GradientStop Color="#FF00E8FF" Offset="1"/>
+        </LinearGradientBrush>
         <LinearGradientBrush x:Key="ButtonsBrush" EndPoint="0,1" StartPoint="0,0">
             <GradientStop Color="#FFF3F3F3" Offset="0"/>
             <GradientStop Color="#FFEBEBEB" Offset="0.5"/>
@@ -17,7 +21,7 @@
             <GradientStop Color="#FF19347A" Offset="1"/>
         </LinearGradientBrush>
     </Window.Resources>
-    <Grid>
+    <Grid Background="{StaticResource BackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
