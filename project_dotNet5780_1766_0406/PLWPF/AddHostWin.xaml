@@ -22,13 +22,13 @@
             <GradientStop Color="#FF19347A" Offset="1"/>
         </LinearGradientBrush>
         <LinearGradientBrush x:Key="BackgroundBrush" EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="Wheat" Offset="0"/>
-                <GradientStop Color="Beige" Offset="0.2"/>
-                <GradientStop Color="BlanchedAlmond" Offset="0.4"/>
-                <GradientStop Color="Orange" Offset="0.6"/>
-                <GradientStop Color="YellowGreen" Offset="0.8"/>
-                <GradientStop Color="ForestGreen" Offset="1"/>
-            </LinearGradientBrush>
+            <GradientStop Color="Wheat" Offset="0"/>
+            <GradientStop Color="Beige" Offset="0.2"/>
+            <GradientStop Color="BlanchedAlmond" Offset="0.4"/>
+            <GradientStop Color="Orange" Offset="0.6"/>
+            <GradientStop Color="YellowGreen" Offset="0.8"/>
+            <GradientStop Color="ForestGreen" Offset="1"/>
+        </LinearGradientBrush>
 
 
 
@@ -224,8 +224,9 @@
                             </StackPanel>
                             <Grid Grid.Column="1" Grid.Row="1">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="47*"/>
-                                    <RowDefinition Height="379*"/>
+                                    <RowDefinition Height="51*"/>
+                                    <RowDefinition Height="236*"/>
+                                    <RowDefinition Height="182*"/>
                                 </Grid.RowDefinitions>
                                 <StackPanel Orientation="Horizontal" Grid.Row="0">
                                     <TextBlock  Visibility="Hidden" Text="TextBlock"/>
@@ -233,7 +234,7 @@
                                     <ComboBox Visibility="Hidden" Width="20"/>
                                     <ComboBox x:Name="hostingUnitDetails" Background ="{StaticResource ButtonsBrush}" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" SelectionChanged="HostingUnitDetails_SelectionChanged" Margin="0,12,0,13"/>
                                 </StackPanel>
-                                <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="148" Margin="83,45,83,49" Width="246">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="Auto"/>
@@ -253,6 +254,7 @@
                                     <Label Content="type:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
                                     <TextBlock x:Name="typeTextBoxDetails" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="3" Text="{Binding type, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
                                 </Grid>
+                                <Calendar x:Name="hostingUnitDiary" Grid.Row="2"/>
                             </Grid>
 
                         </Grid>

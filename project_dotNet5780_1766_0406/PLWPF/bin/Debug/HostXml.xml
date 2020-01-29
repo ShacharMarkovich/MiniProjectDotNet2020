@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Hosts>
+  <Host>
+    <HostKey>10000000</HostKey>
+    <PrivateName>sk</PrivateName>
+    <FamilyName>k</FamilyName>
+    <PhoneNumber>15</PhoneNumber>
+    <Email>shachar.markovich@gmail.com</Email>
+    <BankBranchDetails>
+      <BankNumber>10000000</BankNumber>
+      <BankName>j</BankName>
+      <BranchNumber>50</BranchNumber>
+      <BranchAddress>j</BranchAddress>
+      <BranchCity>j</BranchCity>
+    </BankBranchDetails>
+    <BankAccountNumber>50</BankAccountNumber>
+    <Balance>100</Balance>
+    <CollectionClearance>true</CollectionClearance>
+  </Host>
+</Hosts>

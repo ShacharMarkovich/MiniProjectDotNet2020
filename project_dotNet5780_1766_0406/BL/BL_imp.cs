@@ -433,24 +433,31 @@ namespace BL
 
         public void SendEmail(Order order)
         {
+            // get match guest request and hosting unit to given order
             BE.HostingUnit hostingUnit;
             BE.GuestRequest guestRequest;
             GetMatchGuestRequestAndHostingUnit(order, out guestRequest, out hostingUnit);
 
             if (IsCollectionClearance(hostingUnit.Owner))
             {
-                //MailMessage
                 MailMessage mail = new MailMessage();
-                mail.To.Add(guestRequest.Email);
                 mail.From = new MailAddress(hostingUnit.Owner.Email);
-                mail.Subject = "Booking a hosting unit";
-                mail.Body = "Hello,/n We were pleased to see that you were interested in booking a accommodation unit./n We would love to be at your service";
+                mail.To.Add(guestRequest.Email);
+                mail.Subject = "Interesting in Order our hosting unit";
+                mail.Body = $"Hello {guestRequest.PrivateName} {guestRequest.FamilyName}," +
+                    $"\r\nWe were pleased to see that you were interested in order a hosting unit." +
+                    $"\r\nIn order to complete your invitation, here is the email of the owner of the hosting unit that is right for you!" +
+                    $"\r\nTalk with him and close the details." +
+                    $"\r\nThe details:\nName:\t\t{hostingUnit.Owner.PrivateName} {hostingUnit.Owner.FamilyName}\nEmail:\t\t{hostingUnit.Owner.Email}" +
+                    $"\r\n\nWe would love to be at your service.";
                 mail.IsBodyHtml = true;
+
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = "smtp.gmail.com";
                 smtp.Port = 25;
                 smtp.Credentials = new System.Net.NetworkCredential("dotnet2020.liorandshachar@gmail.com","Ll123123");
                 smtp.EnableSsl = true;
+                smtp.Send(mail);
             }
             else
                 throw new ArgumentException("host not has a CollectionClearance!");

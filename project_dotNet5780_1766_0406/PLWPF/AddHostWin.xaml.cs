@@ -398,7 +398,6 @@ namespace PLWPF
 
             // prepare to get more new BE.HostingUnit
             ClearAddHostingUnit();
-
             //
             SetOrdersDataContext();
 
@@ -652,7 +651,8 @@ namespace PLWPF
             }
 
             // and no update _hosting unit to selected hosting unit
-            List<BE.HostingUnit> hostingUnitlst = _bl.AccordingTo(delegate (BE.HostingUnit unit) {
+            List<BE.HostingUnit> hostingUnitlst = _bl.AccordingTo(delegate (BE.HostingUnit unit)
+            {
                 return unit.HostingUnitKey == hostingUnitKey;
             });
 
@@ -665,6 +665,10 @@ namespace PLWPF
             // show the selected hoting unit on screen
             _hostingUnit = hostingUnitlst.Single();
             SetHostingUnitDetailsDataContext();
+
+            List<CalendarDateRange> dates = DiaryToRangeOfDatetime(_hostingUnit.Diary);
+            for (int i = 0; i < dates.Count(); i++)
+                hostingUnitDiary.BlackoutDates.Add(dates[i]);
         }
 
 
