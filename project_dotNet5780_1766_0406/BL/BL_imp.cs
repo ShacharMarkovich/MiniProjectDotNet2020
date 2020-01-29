@@ -129,7 +129,7 @@ namespace BL
             SelectInvitation(order);
         }
 
-        private void GetMatchGuestRequestAndHostingUnit(BE.Order order, out BE.GuestRequest gR, out BE.HostingUnit unit)
+        public void GetMatchGuestRequestAndHostingUnit(BE.Order order, out BE.GuestRequest gR, out BE.HostingUnit unit)
         {
             // get matching BE.GuestRequest and BE.HostingUnit to order
             BE.Configuration.Term<BE.GuestRequest> gruestRequestTerm = gReq => gReq.GuestRequestKey == order.GuestRequestKey;
@@ -455,7 +455,7 @@ namespace BL
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = "smtp.gmail.com";
                 smtp.Port = 25;
-                smtp.Credentials = new System.Net.NetworkCredential("dotnet2020.liorandshachar@gmail.com","Ll123123");
+                smtp.Credentials = new System.Net.NetworkCredential("dotnet2020.liorandshachar@gmail.com", "Ll123123");
                 smtp.EnableSsl = true;
                 smtp.Send(mail);
             }
@@ -639,12 +639,13 @@ namespace BL
         {
             BE.HostingUnit newUnit = hostingUnit.clone();
             // check if dates free
-            if (!IsDateArmor(newUnit, entryDate, releaseDate))
-                throw new ArgumentException("Date already taken");
+            //121212
+         //   if (!IsDateArmor(newUnit, entryDate, releaseDate))
+           //     throw new ArgumentException("Date already taken");
 
             // update diary
-            for (DateTime date = entryDate; date < releaseDate; date = date.AddDays(1))
-                newUnit.Diary[date.Month, date.Day - 1] = true;
+            for (DateTime date = entryDate; (releaseDate- date).Days > 1; date = date.AddDays(1))
+                newUnit.Diary[date.Month-1, date.Day - 1] = true;
 
             return newUnit;
         }

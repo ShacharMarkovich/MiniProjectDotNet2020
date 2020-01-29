@@ -84,6 +84,9 @@ namespace DAL
 
             orderElement.Element("Status").Value = newStat.ToString();
 
+            //if (newStat == BE.Enums.Status.MailSent)
+            //    orderElement.Element("OrderDate").Value = DateTime.Now.ToString();
+
             _ordersRoot.Save(_ordersPath);
         }
 

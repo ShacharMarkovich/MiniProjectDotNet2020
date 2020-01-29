@@ -263,6 +263,11 @@
                         <TabControl Name="OrerTubControl" RenderTransformOrigin="0.5,0.5" SelectedIndex="{Binding Mode=OneWay}" >
                             <TabItem x:Name="ListOfOrdersTub" Header="Create New Order"  Margin="0" >
                                 <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="64*"/>
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="344*"/>
+                                    </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="36*"/>
                                         <RowDefinition Height="220*"/>
@@ -270,8 +275,8 @@
                                         <RowDefinition Height="87*"/>
                                     </Grid.RowDefinitions>
 
-                                    <TextBlock x:Name="newOrderErrorMessage" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Margin="0" Width="407" FontSize="18" TextAlignment="Center" />
-                                    <StackPanel Orientation="Horizontal" Grid.Row="1">
+                                    <TextBlock x:Name="newOrderErrorMessage" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Margin="72,3,210,3" Width="406" FontSize="18" TextAlignment="Center" Grid.Column="2" />
+                                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3">
                                         <TextBlock Text="     Select Hosting Unit: " VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" TextAlignment="Center" />
                                         <TextBlock Text="Select Guest Request" Visibility="Hidden"/>
                                         <DataGrid x:Name="hostingUnitDataGrid" IsReadOnly="True" Grid.Row="1" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="Auto" ItemsSource="{Binding}" Margin="10" RowDetailsVisibilityMode="VisibleWhenSelected" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -300,7 +305,7 @@
                                             </DataGrid.Columns>
                                         </DataGrid>
                                     </StackPanel>
-                                    <StackPanel  Orientation="Horizontal" Grid.Row="2">
+                                    <StackPanel  Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="3">
                                         <TextBlock Text="     Select Guest Request: " VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" TextAlignment="Center" />
                                         <TextBlock Text="Select Guest Request: " Visibility="Hidden"/>
                                         <DataGrid x:Name="guestRequestDataGrid" IsReadOnly="True" Grid.Row="2" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="Auto" ItemsSource="{Binding Source={StaticResource guestRequestViewSource}}" Margin="10" RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -344,7 +349,7 @@
                                         </DataGrid>
                                     </StackPanel>
 
-                                    <Button Content="Create Order" Click="CreateOrderButton_Click" Background ="{StaticResource ButtonsBrush}" Grid.Row="3" Height="31" Margin="0" Width="86"/>
+                                    <Button Content="Create Order" Click="CreateOrderButton_Click" Background ="{StaticResource ButtonsBrush}" Grid.Row="3" Height="31" Margin="232,29,370,28" Width="86" Grid.Column="2"/>
                                 </Grid>
                             </TabItem>
                             <TabItem x:Name="ListOfclientsTub" Header="Handle Orders" >

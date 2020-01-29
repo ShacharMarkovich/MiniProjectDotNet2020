@@ -2,18 +2,35 @@
 <Hosts>
   <Host>
     <HostKey>10000000</HostKey>
-    <PrivateName>sk</PrivateName>
-    <FamilyName>k</FamilyName>
-    <PhoneNumber>15</PhoneNumber>
-    <Email>shachar.markovich@gmail.com</Email>
+    <PrivateName>j</PrivateName>
+    <FamilyName>j</FamilyName>
+    <PhoneNumber>2</PhoneNumber>
+    <Email>j@d.d</Email>
     <BankBranchDetails>
       <BankNumber>10000000</BankNumber>
-      <BankName>j</BankName>
-      <BranchNumber>50</BranchNumber>
-      <BranchAddress>j</BranchAddress>
-      <BranchCity>j</BranchCity>
+      <BankName>7</BankName>
+      <BranchNumber>70</BranchNumber>
+      <BranchAddress>7</BranchAddress>
+      <BranchCity>7</BranchCity>
     </BankBranchDetails>
-    <BankAccountNumber>50</BankAccountNumber>
+    <BankAccountNumber>70</BankAccountNumber>
+    <Balance>100</Balance>
+    <CollectionClearance>true</CollectionClearance>
+  </Host>
+  <Host>
+    <HostKey>10000004</HostKey>
+    <PrivateName>nhgbfdvsc</PrivateName>
+    <FamilyName>hgjhjk</FamilyName>
+    <PhoneNumber>56</PhoneNumber>
+    <Email>lior05328@gmail.com</Email>
+    <BankBranchDetails>
+      <BankNumber>10000004</BankNumber>
+      <BankName>fhgj</BankName>
+      <BranchNumber>780</BranchNumber>
+      <BranchAddress>hjjk</BranchAddress>
+      <BranchCity>fhgjk</BranchCity>
+    </BankBranchDetails>
+    <BankAccountNumber>670</BankAccountNumber>
     <Balance>100</Balance>
     <CollectionClearance>true</CollectionClearance>
   </Host>
