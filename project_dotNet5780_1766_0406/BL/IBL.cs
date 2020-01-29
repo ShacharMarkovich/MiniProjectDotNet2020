@@ -226,6 +226,9 @@ namespace BL
 
         void UpdateConfig();
 
+        void GetMatchGuestRequestAndHostingUnit(BE.Order order, out BE.GuestRequest gR, out BE.HostingUnit unit);
 
+        bool IsBanksLoad();
+        void Join();
     }
 }

@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Configurations>
-  <GuestRequestKey>10000003</GuestRequestKey>
-  <BankNumber>10000014</BankNumber>
-  <HostingUnitKey>10000021</HostingUnitKey>
-  <HostKey>10000014</HostKey>
-  <OrderKey>10000002</OrderKey>
+  <GuestRequestKey>100006</GuestRequestKey>
+  <BankNumber>100018</BankNumber>
+  <HostingUnitKey>100019</HostingUnitKey>
+  <HostKey>100018</HostKey>
+  <OrderKey>100006</OrderKey>
 </Configurations>

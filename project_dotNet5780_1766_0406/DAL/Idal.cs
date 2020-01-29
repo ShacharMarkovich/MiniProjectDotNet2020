@@ -85,5 +85,8 @@ namespace DAL
 
 
         void UpdateConfig();
+
+        bool IsEnd();
+        void Join();
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -45,6 +46,9 @@ namespace PLWPF
         }
         private void AddHostButton_Click(object sender, RoutedEventArgs e)
         {
+            if (!_bl.IsBanksLoad())
+                _bl.Join();
+
             new AddHostWin().ShowDialog();
         }
 

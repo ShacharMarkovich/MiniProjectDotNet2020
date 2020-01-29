@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using BE;
 
 namespace DAL
 {
@@ -44,6 +45,8 @@ namespace DAL
         {
             _ordersRoot = new XElement("Orders");
             _ordersRoot.Save(_ordersPath);
+            //init empty list
+            SaveListToXML(new List<BE.Order>());
         }
 
         /// <summary>
@@ -62,55 +65,20 @@ namespace DAL
         }
 
 
-        public void AddOrder(BE.Order order)
+        public void SaveListToXML(List<BE.Order> list)
         {
-            XElement OrderKey = new XElement("OrderKey", order.OrderKey);
-            XElement HostingUnitKey = new XElement("HostingUnitKey", order.HostingUnitKey);
-            XElement GuestRequestKey = new XElement("GuestRequestKey", order.GuestRequestKey);
-            XElement CreateDate = new XElement("CreateDate", order.CreateDate);
-            XElement OrderDate = new XElement("OrderDate", order.OrderDate);
-            XElement Status = new XElement("Status", order.Status);
-
-            _ordersRoot.Add(new XElement("Order", OrderKey, HostingUnitKey,
-                GuestRequestKey, CreateDate, OrderDate, Status));
-            _ordersRoot.Save(_ordersPath);
+            FileStream file = new FileStream(_ordersPath, FileMode.Create);
+            XmlSerializer xmlSerializer = new XmlSerializer(list.GetType());
+            xmlSerializer.Serialize(file, list);
+            file.Close();
         }
-
-        public void UpdateOrder(BE.Order order, BE.Enums.Status newStat)
+        public List<BE.Order> LoadListFromXML()
         {
-            XElement orderElement = (from or in _ordersRoot.Elements()
-                                    where double.Parse(or.Element("OrderKey").Value) == order.OrderKey
-                                    select or).FirstOrDefault();
-
-            orderElement.Element("Status").Value = newStat.ToString();
-
-            _ordersRoot.Save(_ordersPath);
-        }
-
-        public List<BE.Order> GetAllOrders()
-        {
-            List<BE.Order> orders;
-            try
-            {
-                orders = (from order in _ordersRoot.Elements()
-                         select new BE.Order()
-                         {
-                             OrderKey = double.Parse(order.Element("OrderKey").Value),
-                             GuestRequestKey = double.Parse(order.Element("GuestRequestKey").Value),
-                             HostingUnitKey = double.Parse(order.Element("HostingUnitKey").Value),
-#pragma warning disable CS0618 // Type or member is obsolete
-                             CreateDate = XmlConvert.ToDateTime(order.Element("CreateDate").Value),
-                             OrderDate = XmlConvert.ToDateTime(order.Element("OrderDate").Value),
-#pragma warning restore CS0618 // Type or member is obsolete
-                             Status = (BE.Enums.Status)Enum.Parse(typeof(BE.Enums.Status),order.Element("Status").Value)
-                         }
-                         ).ToList();
-            }
-            catch
-            {
-                orders = null;
-            }
-            return orders;
+            FileStream file = new FileStream(_ordersPath, FileMode.Open);
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<BE.Order>));
+            List<BE.Order> list = (List<BE.Order>)xmlSerializer.Deserialize(file);
+            file.Close();
+            return list;
         }
     }
 }

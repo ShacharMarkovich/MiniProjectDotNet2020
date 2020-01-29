@@ -548,7 +548,6 @@ namespace PLWPF
         {
             BE.HostingUnit unit = hostingUnitDataGrid.SelectedItem as BE.HostingUnit;
             BE.GuestRequest guestRequest = guestRequestDataGrid.SelectedItem as BE.GuestRequest;
-
             // check if both unit and guestRequest  was selected
             if (unit == null || guestRequest == null)
             {
@@ -571,6 +570,10 @@ namespace PLWPF
             try
             {
                 _bl.CreateOrder(order);
+                ///ggggggggg
+                _bl.GetMatchGuestRequestAndHostingUnit(order, out guestRequest,out unit);
+                if (!_bl.IsDateArmor(unit, guestRequest.EntryDate, guestRequest.ReleaseDate ))
+                    throw new ArgumentException("Date already taken");
             }
             catch (ArgumentException exp)
             {
@@ -618,6 +621,7 @@ namespace PLWPF
         private void Approved_OrderList_Button_Click(object sender, RoutedEventArgs e)
         {
             BE.Order order = ordersDataGrid.SelectedItem as BE.Order;
+         ///1111
             try
             {
                 _bl.ApprovedOrder(order);

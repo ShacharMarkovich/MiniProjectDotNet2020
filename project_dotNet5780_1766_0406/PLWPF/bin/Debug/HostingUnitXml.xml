@@ -1,75 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <HostingUnits>
   <HostingUnit>
-    <HostingUnitKey>10000001</HostingUnitKey>
-    <HostingUnitName>JCT</HostingUnitName>
+    <HostingUnitKey>100007</HostingUnitKey>
+    <HostingUnitName>asdasd</HostingUnitName>
     <Owner>
-      <HostKey>10000000</HostKey>
-      <PrivateName>sk</PrivateName>
-      <FamilyName>k</FamilyName>
-      <PhoneNumber>15</PhoneNumber>
-      <Email>shachar.markovich@gmail.com</Email>
+      <HostKey>100006</HostKey>
+      <PrivateName>sm</PrivateName>
+      <FamilyName>as</FamilyName>
+      <PhoneNumber>9</PhoneNumber>
+      <Email>shchar.markovich@gmail.com</Email>
       <BankBranchDetails>
-        <BankNumber>10000000</BankNumber>
-        <BankName>j</BankName>
-        <BranchNumber>50</BranchNumber>
-        <BranchAddress>j</BranchAddress>
-        <BranchCity>j</BranchCity>
+        <BankNumber>13</BankNumber>
+        <BankName>בנק אגוד לישראל בע"מ</BankName>
+        <BranchNumber>62</BranchNumber>
+        <BranchAddress>ז'בוטינסקי 1</BranchAddress>
+        <BranchCity>רמת גן</BranchCity>
       </BankBranchDetails>
-      <BankAccountNumber>50</BankAccountNumber>
+      <BankAccountNumber>90</BankAccountNumber>
       <Balance>100</Balance>
       <CollectionClearance>true</CollectionClearance>
     </Owner>
     <type>Zimmer</type>
     <Area>Jerusalem</Area>
-    <Diary>12,31,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,False,False,True,True,True,True,True,True,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False</Diary>
-  </HostingUnit>
-  <HostingUnit>
-    <HostingUnitKey>10000002</HostingUnitKey>
-    <HostingUnitName>not JCT</HostingUnitName>
-    <Owner>
-      <HostKey>10000000</HostKey>
-      <PrivateName>sk</PrivateName>
-      <FamilyName>k</FamilyName>
-      <PhoneNumber>15</PhoneNumber>
-      <Email>shachar.markovich@gmail.com</Email>
-      <BankBranchDetails>
-        <BankNumber>10000000</BankNumber>
-        <BankName>j</BankName>
-        <BranchNumber>50</BranchNumber>
-        <BranchAddress>j</BranchAddress>
-        <BranchCity>j</BranchCity>
-      </BankBranchDetails>
-      <BankAccountNumber>50</BankAccountNumber>
-      <Balance>100</Balance>
-      <CollectionClearance>true</CollectionClearance>
-    </Owner>
-    <type>Zimmer</type>
-    <Area>Jerusalem</Area>
-    <Diary>12,31,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False</Diary>
-  </HostingUnit>
-  <HostingUnit>
-    <HostingUnitKey>10000005</HostingUnitKey>
-    <HostingUnitName>dddddd</HostingUnitName>
-    <Owner>
-      <HostKey>10000000</HostKey>
-      <PrivateName>sk</PrivateName>
-      <FamilyName>k</FamilyName>
-      <PhoneNumber>15</PhoneNumber>
-      <Email>shachar.markovich@gmail.com</Email>
-      <BankBranchDetails>
-        <BankNumber>10000000</BankNumber>
-        <BankName>j</BankName>
-        <BranchNumber>50</BranchNumber>
-        <BranchAddress>j</BranchAddress>
-        <BranchCity>j</BranchCity>
-      </BankBranchDetails>
-      <BankAccountNumber>50</BankAccountNumber>
-      <Balance>100</Balance>
-      <CollectionClearance>true</CollectionClearance>
-    </Owner>
-    <type>Zimmer</type>
-    <Area>Jerusalem</Area>
-    <Diary>12,31,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False</Diary>
+    <Diary>12,31,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,True,True,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False</Diary>
   </HostingUnit>
 </HostingUnits>

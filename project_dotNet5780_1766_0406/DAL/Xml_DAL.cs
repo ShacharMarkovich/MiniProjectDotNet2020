@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Threading;
 
 namespace DAL
 {
@@ -16,11 +17,12 @@ namespace DAL
         private HostingUnitXml _hostingUnitXml;
         private OrderXml _orderXml;
 
-        private readonly List<BE.BankBranch> _banksDetails;
+        private Thread _bankThread;
+        public bool _isEnd { get; set; }
+        private List<BE.BankBranch> _banksDetails;
 
         #region singleton
         private static IDal _instance = null;
-
         internal static IDal Instance
         {
             get
@@ -37,11 +39,24 @@ namespace DAL
             _hostXml = HostXml.Instance;
             _orderXml = OrderXml.Instance;
             _hostingUnitXml = HostingUnitXml.Instance;
-            _banksDetails = BankXml.GetAllBankBranch().Distinct().ToList();
-        }
-    #endregion
 
-    public void AddGuestRequest(BE.GuestRequest guestRequest)
+            _isEnd = false;
+            _bankThread = new Thread(GetBanks);
+            _bankThread.Start();
+        }
+
+        public void Join() => _bankThread.Join();
+
+        public bool IsEnd() => _isEnd;
+
+        private void GetBanks()
+        {
+            _banksDetails = BankXml.GetAllBankBranch().Distinct().ToList();
+            _isEnd = true;
+        }
+        #endregion
+
+        public void AddGuestRequest(BE.GuestRequest guestRequest)
         {
             List<BE.GuestRequest> list = _guestRequestXml.LoadListFromXML();
             list.Add(guestRequest.clone());
@@ -78,19 +93,36 @@ namespace DAL
         }
 
 
-        public void AddOrder(BE.Order newOrder) => _orderXml.AddOrder(newOrder.clone());
+        public void AddOrder(BE.Order newOrder)
+        {
+            List<BE.Order> list =_orderXml.LoadListFromXML();
+            list.Add(newOrder);
+            _orderXml.SaveListToXML(list);
+        }
 
-        public void UpdateOrder(BE.Order order, BE.Enums.Status newStat) => _orderXml.UpdateOrder(order, newStat);
+        public void UpdateOrder(BE.Order order2Update, BE.Enums.Status newStat)
+        {
+            List<BE.Order> list = _orderXml.LoadListFromXML();
+            list.ForEach(delegate (BE.Order order)
+            {
+                if (order.OrderKey == order2Update.OrderKey)
+                    order.Status = newStat;
+                if (newStat == BE.Enums.Status.MailSent)
+                    order.OrderDate = DateTime.Today;
+            });
+            _orderXml.SaveListToXML(list);
+        }
 
 
         public List<BE.HostingUnit> GetAllHostingUnits() => _hostingUnitXml.GetAllHostingUnit();
 
         public List<BE.Host> GetAllHosts() => _hostXml.GetAllHost();
 
-        public List<BE.Order> GetAllOrders() => _orderXml.GetAllOrders();
+        public List<BE.Order> GetAllOrders() => _orderXml.LoadListFromXML();
 
         public List<BE.GuestRequest> GetAllRequests() => _guestRequestXml.LoadListFromXML();
 
         public List<BE.BankBranch> GetAllBranches() => _banksDetails;
+
     }
 }

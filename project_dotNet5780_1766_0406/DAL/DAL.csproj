@@ -45,7 +45,6 @@
     <Compile Include="XmlFilesClasses\BankXml.cs" />
     <Compile Include="Cloning.cs" />
     <Compile Include="XmlFilesClasses\ConfigurationXml.cs" />
-    <Compile Include="Dal_imp.cs" />
     <Compile Include="FactoryDAL.cs" />
     <Compile Include="XmlFilesClasses\GuestRequestXml.cs" />
     <Compile Include="XmlFilesClasses\HostingUnitXml.cs" />
@@ -59,10 +58,6 @@
     <ProjectReference Include="..\BE\BE.csproj">
       <Project>{4582572c-411e-4d25-aa42-89d830eb71dd}</Project>
       <Name>BE</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DS\DS.csproj">
-      <Project>{21c07339-dadd-4de5-b741-fa1fa86a6e15}</Project>
-      <Name>DS</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
