@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PLWPF"
+        xmlns:local="clr-namespace:PLWPF" Icon="Backgrounds/ico3.ico"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.AddGuestRequestWin"
-        mc:Ignorable="d" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        Title="Trivago - Guest Request Section" Height="700" Width="400" Loaded="Window_Loaded">
+        mc:Ignorable="d" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen"
+        Title="Trivago - Guest Request Section" Height="500" Width="600" Loaded="Window_Loaded">
     <Window.Resources>
         <CollectionViewSource x:Key="guestRequestViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:GuestRequest}, CreateList=True}"/>
         <LinearGradientBrush x:Key="ButtonsBrush" EndPoint="0,1" StartPoint="0,0">
@@ -23,83 +23,67 @@
             <GradientStop Color="YellowGreen" Offset="0.8"/>
             <GradientStop Color="ForestGreen" Offset="1"/>
         </LinearGradientBrush>
+        <LinearGradientBrush x:Key="BackgroundBrush2" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Black" Offset="0"/>
+            <GradientStop Color="#FF00E8FF" Offset="1"/>
+        </LinearGradientBrush>
     </Window.Resources>
-    <Grid  Background ="{StaticResource BackgroundBrush}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="65*"/>
-            <ColumnDefinition Width="327*"/>
-        </Grid.ColumnDefinitions>
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Backgrounds/1.jpg"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20*"/>
-            <RowDefinition Height="293*"/>
-            <RowDefinition Height="22*"/>
+            <RowDefinition Height="45*"/>
+            <RowDefinition Height="383*"/>
         </Grid.RowDefinitions>
         <TextBlock x:Name="errorMessage" Text=""
-                   Foreground="Red" FontFamily="Agency FB" FontSize="18" 
-                   Grid.Column="1" Grid.Row="0" 
+                   Foreground="Red" FontFamily="Agency FB" FontSize="18" Grid.Row="0" 
                    RenderTransformOrigin="1.207,-2.333" Margin="38,5" TextDecorations="{x:Null}" TextAlignment="Center"  />
-
-        <Grid x:Name="grid1" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" DataContext="{StaticResource guestRequestViewSource}" Margin="23,0,28,0" Width="276" >
+        <Grid x:Name="grid1" DataContext="{StaticResource guestRequestViewSource}" Margin="0" Grid.Row="1" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="142*"/>
+                <ColumnDefinition Width="142*"/>
+                <ColumnDefinition Width="103*"/>
+                <ColumnDefinition Width="181*"/>
             </Grid.ColumnDefinitions>
-
-            <Label Content="Guest Request Key:" FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0"/>
-            <TextBlock x:Name="guestRequestKeyTextBlock" FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Text="{Binding Path=GuestRequestKey}" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="1" IsEnabled="False"/>
-
-            <Label FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Registration Date:"/>
-            <DatePicker x:Name="registrationDateDatePicker" FontSize="18" VerticalAlignment="Center" SelectedDate="{Binding Path=RegistrationDate, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="3" HorizontalAlignment="Left" Grid.Column="1" RenderTransformOrigin="0.5,0.5" IsEnabled="False"/>
-            <Label FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Entry Date:"/>
-            <DatePicker x:Name="entryDateDatePicker" FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" SelectedDate="{Binding Path=EntryDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="1"/>
-            <Label FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Release Date:"/>
-            <DatePicker x:Name="releaseDateDatePicker" FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" SelectedDate="{Binding Path=ReleaseDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="1"/>
-
-            <Label FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="4" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Private Name:"/>
-            <TextBox x:Name="privateNameTextBox" FontFamily="Agency FB" FontSize="18" Width="120" VerticalAlignment="Center" Text="{Binding Path=PrivateName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-            <Label FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Family Name:"/>
-            <TextBox x:Name="familyNameTextBox" FontFamily="Agency FB" FontSize="18"  Width="120" VerticalAlignment="Center" Text="{Binding Path=FamilyName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-            <Label FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="6" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Email:"/>
-            <TextBox x:Name="emailTextBox" FontFamily="Agency FB" FontSize="18"  Width="120" VerticalAlignment="Center" Text="{Binding Path=Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="6" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-
-            <Label FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="7" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Area:"/>
-            <ComboBox x:Name="areaComboBox" FontFamily="Agency FB" FontSize="18" Width="120" VerticalAlignment="Center" Grid.Row="7" Margin="3" ItemsSource="{Binding Path=Area}" Height="Auto" HorizontalAlignment="Left" Grid.Column="1"/>
-            <Label FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="9" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Type:"/>
-            <ComboBox x:Name="typeComboBox" FontFamily="Agency FB" FontSize="18" Width="120" VerticalAlignment="Center" Grid.Row="9" Margin="3" ItemsSource="{Binding Path=type}" Height="Auto" HorizontalAlignment="Left" Grid.Column="1"/>
-
-            <Label FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="10" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Adults:"/>
-            <TextBox x:Name="adultsTextBox" FontFamily="Agency FB" FontSize="18" Width="120" VerticalAlignment="Center" Text="{Binding Path=Adults, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="10" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-            <Label FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="11" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Children:"/>
-            <TextBox x:Name="childrenTextBox" FontFamily="Agency FB" FontSize="18" Width="120" VerticalAlignment="Center" Text="{Binding Path=Children, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="11" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-
-            <Label FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="12" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Garden:"/>
-            <CheckBox x:Name="gardenCheckBox" FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="12" Margin="3" IsChecked="{Binding Path=Garden, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="12"/>
-            <Label FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="13" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Jecuzzi:"/>
-            <CheckBox x:Name="jecuzziCheckBox" FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="13" Margin="3" IsChecked="{Binding Path=Jecuzzi, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="13"/>
-            <Label FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="14" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Pool:"/>
-            <CheckBox x:Name="poolCheckBox" FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="14" Margin="3" IsChecked="{Binding Path=Pool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="14" />
-            <Label FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="15" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Children Attractions:"/>
-            <CheckBox x:Name="childrenAttractionsCheckBox" FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="15" Margin="3" IsChecked="{Binding Path=ChildrenAttractions, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="15"/>
+            <Label FontFamily="Agency FB" Opacity="0.8" Background="AliceBlue" FontSize="18" VerticalAlignment="Center" Margin="3,8,0,7" HorizontalAlignment="Left" Grid.Column="0" Content="Entry Date:" Height="30" Width="72"/>
+            <DatePicker x:Name="entryDateDatePicker" FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" SelectedDate="{Binding Path=EntryDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="14,13,14,12" HorizontalAlignment="Center" Width="120" Height="35" MinHeight="35" Grid.Column="1"/>
+            <Label FontFamily="Agency FB" Opacity="0.8" Background="AliceBlue" FontSize="18" VerticalAlignment="Center" Margin="3,8,0,7" HorizontalAlignment="Left" Grid.Column="2" Content="Release Date:" Height="30" Width="87"/>
+            <DatePicker x:Name="releaseDateDatePicker" FontFamily="Agency FB" FontSize="18" SelectedDate="{Binding Path=ReleaseDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="10,12,24,12" Grid.Column="3" Width="155" Height="36" MinHeight="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Label FontFamily="Agency FB" Opacity="0.8" Background="AliceBlue" FontSize="18" VerticalAlignment="Center" Grid.Row="1" Margin="3,18,0,12" HorizontalAlignment="Left" Grid.Column="0" Content="Private Name:" Height="30" Width="89"/>
+            <TextBox x:Name="privateNameTextBox" FontFamily="Agency FB" FontSize="18" Text="{Binding Path=PrivateName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="0" Height="35" MinHeight="35" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Grid.Column="1"/>
+            <Label FontFamily="Agency FB" Opacity="0.8" Background="AliceBlue" FontSize="18" VerticalAlignment="Center" Grid.Row="1" Margin="3,0,0,0" HorizontalAlignment="Left" Grid.Column="2" Content="Family Name:" Height="30" Width="84"/>
+            <TextBox x:Name="familyNameTextBox" FontFamily="Agency FB" FontSize="18" Text="{Binding Path=FamilyName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="9,12,30,12" Height="36" Grid.Column="3" MinHeight="35" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150"/>
+            <Label FontFamily="Agency FB" Opacity="0.8" Background="AliceBlue" FontSize="18" VerticalAlignment="Center" Grid.Row="2" Margin="3,19,0,19" HorizontalAlignment="Left" Grid.Column="0" Content="Area:" Height="30" Width="40"/>
+            <ComboBox x:Name="areaComboBox" Background="{StaticResource ButtonsBrush}" FontFamily="Agency FB" FontSize="18" Width="120" VerticalAlignment="Center" Grid.Row="2" Margin="0" Height="35" HorizontalAlignment="Center" Grid.Column="1" MinHeight="35"/>
+            <Label Content="Adults:"      Opacity="0.8" Background="AliceBlue"   FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="2" Margin="3,17,0,19" HorizontalAlignment="Left" Grid.Column="2" Height="32" Width="48"/>
+            <TextBox x:Name="adultsTextBox" FontFamily="Agency FB" FontSize="18" Width="153" VerticalAlignment="Center" Text="{Binding Path=Adults, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="10,14,26,10" Height="36" HorizontalAlignment="Center" Grid.Column="3" MinHeight="35"/>
+            <Label FontFamily="Agency FB" Opacity="0.8" Background="AliceBlue" FontSize="18" VerticalAlignment="Center" Grid.Row="3" Margin="3,13,0,13" HorizontalAlignment="Left" Grid.Column="0" Content="Type:" Height="32" Width="39"/>
+            <ComboBox x:Name="typeComboBox" Background="{StaticResource ButtonsBrush}" FontFamily="Agency FB" FontSize="18" Width="120" VerticalAlignment="Center" Grid.Row="3" Margin="0" Height="35" HorizontalAlignment="Center" Grid.Column="1" MinHeight="35"/>
+            <Label FontFamily="Agency FB" Opacity="0.8" Background="AliceBlue" FontSize="18" VerticalAlignment="Center" Grid.Row="3" Margin="3,13,0,13" HorizontalAlignment="Left" Grid.Column="2" Content="Children:" Height="32" Width="60"/>
+            <TextBox x:Name="childrenTextBox" FontFamily="Agency FB" FontSize="18" Width="155" VerticalAlignment="Center" Text="{Binding Path=Children, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="3" Margin="10,12,24,12" Height="36" HorizontalAlignment="Center" Grid.Column="3" MinHeight="35"/>
+            <Label FontFamily="Agency FB" Opacity="0.8" Background="AliceBlue" FontSize="18" VerticalAlignment="Center" Grid.Row="4" Margin="3,19,0,19" HorizontalAlignment="Left" Grid.Column="0" Content="Email:" Height="30" Width="43"/>
+            <TextBox x:Name="emailTextBox" FontFamily="Agency FB" FontSize="18"  Width="120" VerticalAlignment="Center" Text="{Binding Path=Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4" Margin="14,16,14,10" Height="35" HorizontalAlignment="Center" Grid.Column="1" MinHeight="35"/>
+            <Label FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Opacity="0.8" Background="AliceBlue" Grid.Row="4" Margin="3,19,0,17" HorizontalAlignment="Left" Grid.Column="2" Content="Garden:" Height="32" Width="54"/>
+            <CheckBox x:Name="gardenCheckBox" FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="4" Margin="8,26,0,23" IsChecked="{Binding Path=Garden, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="3" Height="12" Width="13"/>
+            <Label FontFamily="Agency FB" Opacity="0.8" Background="AliceBlue" FontSize="18" VerticalAlignment="Center" Grid.Row="5" Margin="3,14,0,8" HorizontalAlignment="Left" Grid.Column="0" Content="Jecuzzi:" Height="30" Width="55"/>
+            <CheckBox x:Name="jecuzziCheckBox" FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Opacity="0.8" Background="AliceBlue" Grid.Row="5" Margin="8,22,0,16" IsChecked="{Binding Path=Jecuzzi, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Height="14" Width="13"/>
+            <Label FontFamily="Agency FB" Opacity="0.8" Background="AliceBlue" FontSize="18" VerticalAlignment="Center" Grid.Row="5" Margin="3,14,0,8" HorizontalAlignment="Left" Grid.Column="2" Content="Pool:" Height="30" Width="37"/>
+            <CheckBox x:Name="poolCheckBox" FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="5" Margin="8,22,0,16" IsChecked="{Binding Path=Pool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Height="14" Width="13" Grid.Column="3" />
+            <Label FontFamily="Agency FB" Opacity="0.8" Background="AliceBlue" FontSize="18" VerticalAlignment="Center" Grid.Row="6" Margin="3,11,0,12" HorizontalAlignment="Left" Grid.Column="0" Content="Children Attractions:" Height="30" Width="127"/>
+            <CheckBox x:Name="childrenAttractionsCheckBox" FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="6" Margin="8,19,0,20" IsChecked="{Binding Path=ChildrenAttractions, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Height="14" Width="13"/>
+            <Button Grid.Row="6" Content="Add Guest Request" Margin="63,9,102,10" Background ="{StaticResource ButtonsBrush}"
+            FontFamily="Agency FB" FontSize="15" FontWeight="Bold" Click="Button_Click" VerticalAlignment="Center" HorizontalAlignment="Center" Width="182" Height="34" Grid.Column="2" Grid.ColumnSpan="2" />
         </Grid>
-        <Button Grid.Column="1" Grid.Row="2" Content="Add Guest Request" Margin="113,10,97,10" Background ="{StaticResource ButtonsBrush}"
-            FontFamily="Agency FB" FontSize="15" FontWeight="Bold" Click="Button_Click" VerticalAlignment="Center" HorizontalAlignment="Center" Width="117" />
     </Grid>
 </Window>

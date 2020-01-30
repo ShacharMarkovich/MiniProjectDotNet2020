@@ -10,6 +10,8 @@ namespace BL
 {
     using DAL;
     using BE;
+    using System.Windows.Controls;
+
     class BL_imp : IBL
     {
         #region singleton
@@ -148,7 +150,8 @@ namespace BL
         public void CreateOrder(BE.Order newOrder)
         {
             // check if there is allready order with this keys
-            List<BE.Order> ordersList = AccordingTo(delegate (BE.Order order) {
+            List<BE.Order> ordersList = AccordingTo(delegate (BE.Order order)
+            {
                 return order.GuestRequestKey == newOrder.GuestRequestKey &&
                 order.HostingUnitKey == newOrder.HostingUnitKey;
             });
@@ -156,7 +159,7 @@ namespace BL
             if (ordersList.Count() != 0)
                 throw new ArgumentException("order allready exists for this GuestRequest in this HostingUnit");
 
-                List<BE.GuestRequest> guestRequestList = AccordingTo(delegate (BE.GuestRequest gReq) { return gReq.GuestRequestKey == newOrder.GuestRequestKey; });
+            List<BE.GuestRequest> guestRequestList = AccordingTo(delegate (BE.GuestRequest gReq) { return gReq.GuestRequestKey == newOrder.GuestRequestKey; });
             List<HostingUnit> hostingUnitList = AccordingTo(delegate (BE.HostingUnit unit) { return unit.HostingUnitKey == newOrder.HostingUnitKey; });
 
             int requestsCount = guestRequestList.Count;
@@ -297,9 +300,9 @@ namespace BL
             }
 
             BE.HostingUnit newUnit = hostingUnit.clone();
-            for (DateTime date = entryDate; date < releaseDate; date = date.AddDays(1))
-                //month + 1, in the diary we Holding first month for backwards calendar
-                if (newUnit.Diary[date.Month, date.Day - 1])
+            foreach (CalendarDateRange range in newUnit.DatesRange)
+                if (!((entryDate< range.Start && releaseDate < range.Start) || 
+                    (entryDate > range.Start && releaseDate > range.Start)))
                     return false;
 
             return true;
@@ -378,7 +381,8 @@ namespace BL
                 request = (from gReq in allReq
                            where gReq.GuestRequestKey == order.GuestRequestKey
                            select gReq).First();
-                // /// and update his status
+
+                // ...and update status of matching guest request to approved too
                 _dal.UpdateGuestRequest(request, BE.Enums.Status.Approved);
             }
             catch (ArgumentNullException)
@@ -399,9 +403,6 @@ namespace BL
             foreach (BE.Order matchOrder in orders)
                 _dal.UpdateOrder(matchOrder, BE.Enums.Status.CloseByApp);
             _dal.UpdateOrder(order, BE.Enums.Status.Approved);
-
-            // update status of matching guest request to approved too
-            _dal.UpdateGuestRequest(request.clone(), Enums.Status.Approved);
         }
 
         public bool IsPossibleToDelete(BE.HostingUnit hostingUnit)
@@ -654,14 +655,9 @@ namespace BL
         private BE.HostingUnit UpdateDairy(BE.HostingUnit hostingUnit, DateTime entryDate, DateTime releaseDate)
         {
             BE.HostingUnit newUnit = hostingUnit.clone();
-            // check if dates free
-            //121212
-         //   if (!IsDateArmor(newUnit, entryDate, releaseDate))
-           //     throw new ArgumentException("Date already taken");
 
             // update diary
-            for (DateTime date = entryDate; (releaseDate- date).Days > 1; date = date.AddDays(1))
-                newUnit.Diary[date.Month-1, date.Day - 1] = true;
+            newUnit.DatesRange.Add(new CalendarDateRange(entryDate, releaseDate));
 
             return newUnit;
         }
@@ -687,10 +683,7 @@ namespace BL
                 throw new ArgumentException("Release Date or Entry Date not valid, date already passed");
         }
 
-        public List<BankBranch> GetAllBanksToName(string bankName)
-        {
-            return _dal.GetAllBranches().Where(bank => bank.BankName== bankName).ToList();
-        }
+        public List<BankBranch> GetAllBanksByName(string bankName) => _dal.GetAllBranches().Where(bank => bank.BankName == bankName).ToList();
 
         public List<BE.BankBranch> GetAllBanks() => _dal.GetAllBranches();
 

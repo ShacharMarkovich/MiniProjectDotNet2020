@@ -34,7 +34,6 @@ namespace BE
 
         public const double _firstKey = 9999999;
         public static double GuestRequestKey;
-        public static double BankNumber;
         public static double HostKey;
         public static double HostingUnitKey;
         public static double OrderKey;

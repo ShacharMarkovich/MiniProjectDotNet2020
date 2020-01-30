@@ -1,27 +1,80 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<HostingUnits>
+<?xml version="1.0"?>
+<ArrayOfHostingUnit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <HostingUnit>
-    <HostingUnitKey>100007</HostingUnitKey>
-    <HostingUnitName>asdasd</HostingUnitName>
+    <HostingUnitKey>10000002</HostingUnitKey>
     <Owner>
-      <HostKey>100006</HostKey>
-      <PrivateName>sm</PrivateName>
-      <FamilyName>as</FamilyName>
-      <PhoneNumber>9</PhoneNumber>
-      <Email>shchar.markovich@gmail.com</Email>
+      <HostKey>10000001</HostKey>
+      <PrivateName>s</PrivateName>
+      <FamilyName>s</FamilyName>
+      <PhoneNumber>2</PhoneNumber>
+      <Email>s@s.s</Email>
       <BankBranchDetails>
         <BankNumber>13</BankNumber>
         <BankName>בנק אגוד לישראל בע"מ</BankName>
-        <BranchNumber>62</BranchNumber>
-        <BranchAddress>ז'בוטינסקי 1</BranchAddress>
-        <BranchCity>רמת גן</BranchCity>
+        <BranchNumber>71</BranchNumber>
+        <BranchAddress>שדרות ירושלים 12</BranchAddress>
+        <BranchCity>אשדוד</BranchCity>
       </BankBranchDetails>
-      <BankAccountNumber>90</BankAccountNumber>
+      <BankAccountNumber>20</BankAccountNumber>
       <Balance>100</Balance>
       <CollectionClearance>true</CollectionClearance>
     </Owner>
-    <type>Zimmer</type>
     <Area>Jerusalem</Area>
-    <Diary>12,31,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,True,True,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False</Diary>
+    <type>Zimmer</type>
+    <HostingUnitName>d</HostingUnitName>
+    <DatesRange />
   </HostingUnit>
-</HostingUnits>
+  <HostingUnit>
+    <HostingUnitKey>10000003</HostingUnitKey>
+    <Owner>
+      <HostKey>10000001</HostKey>
+      <PrivateName>s</PrivateName>
+      <FamilyName>s</FamilyName>
+      <PhoneNumber>2</PhoneNumber>
+      <Email>s@s.s</Email>
+      <BankBranchDetails>
+        <BankNumber>13</BankNumber>
+        <BankName>בנק אגוד לישראל בע"מ</BankName>
+        <BranchNumber>71</BranchNumber>
+        <BranchAddress>שדרות ירושלים 12</BranchAddress>
+        <BranchCity>אשדוד</BranchCity>
+      </BankBranchDetails>
+      <BankAccountNumber>20</BankAccountNumber>
+      <Balance>100</Balance>
+      <CollectionClearance>true</CollectionClearance>
+    </Owner>
+    <Area>North</Area>
+    <type>Hotel</type>
+    <HostingUnitName>dddd</HostingUnitName>
+    <DatesRange>
+      <CalendarDateRange>
+        <End>2020-02-06T00:00:00</End>
+        <Start>2020-01-30T03:24:45.0793762+02:00</Start>
+      </CalendarDateRange>
+    </DatesRange>
+  </HostingUnit>
+  <HostingUnit>
+    <HostingUnitKey>10000012</HostingUnitKey>
+    <Owner>
+      <HostKey>10000001</HostKey>
+      <PrivateName>s</PrivateName>
+      <FamilyName>s</FamilyName>
+      <PhoneNumber>2</PhoneNumber>
+      <Email>s@s.s</Email>
+      <BankBranchDetails>
+        <BankNumber>13</BankNumber>
+        <BankName>בנק אגוד לישראל בע"מ</BankName>
+        <BranchNumber>71</BranchNumber>
+        <BranchAddress>שדרות ירושלים 12</BranchAddress>
+        <BranchCity>אשדוד</BranchCity>
+      </BankBranchDetails>
+      <BankAccountNumber>20</BankAccountNumber>
+      <Balance>100</Balance>
+      <CollectionClearance>true</CollectionClearance>
+    </Owner>
+    <Area>Jerusalem</Area>
+    <type>Zimmer</type>
+    <HostingUnitName>ך</HostingUnitName>
+    <DatesRange />
+  </HostingUnit>
+</ArrayOfHostingUnit>

@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 
 namespace BE
 {
+    using System.Windows.Controls;
     public class HostingUnit
     {
         // the following bool property is in order to make the next key
@@ -39,7 +40,9 @@ namespace BE
 
         public string HostingUnitName { get; set; }
 
-        public string XmlDiary
+        public List<CalendarDateRange> DatesRange { get; set; }
+
+        /*public string XmlDiary
         {
             get
             {
@@ -72,7 +75,7 @@ namespace BE
             }
         }
         [XmlIgnore]
-        public bool[,] Diary { get; set; }
+        public bool[,] Diary { get; set; }*/
 
     }
 }

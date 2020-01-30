@@ -133,5 +133,25 @@
       <Name>BL</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Backgrounds\5.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Backgrounds\1.jpg" />
+    <Resource Include="Backgrounds\2.jpg" />
+    <Resource Include="Backgrounds\3.jpg" />
+    <Resource Include="Backgrounds\4.jpg" />
+    <Resource Include="Backgrounds\6.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Backgrounds\10.jpg" />
+    <Resource Include="Backgrounds\11.jpg" />
+    <Resource Include="Backgrounds\7.jpg" />
+    <Resource Include="Backgrounds\8.jpg" />
+    <Resource Include="Backgrounds\9.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Backgrounds\ico3.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

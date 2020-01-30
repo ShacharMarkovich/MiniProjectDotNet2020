@@ -40,16 +40,8 @@ namespace BE
 
         public string Email { get; set; }
 
-        [XmlIgnore]
         public BankBranch BankBranchDetails { get; set; }
-        public string Bankbranch
-        {
-            get => BankBranchDetails.BankNumber.ToString();
-            set
-            {
-                
-            }
-        }
+
         public double BankAccountNumber { get; set; }
 
         public double Balance { get; set; }

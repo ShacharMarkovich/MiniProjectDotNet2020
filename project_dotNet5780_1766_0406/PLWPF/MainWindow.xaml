@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLWPF"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.MainWindow"
-        mc:Ignorable="d" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        Closed="Window_Closed"
+        mc:Ignorable="d" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen"
+        Closed="Window_Closed" Icon="Backgrounds/ico3.ico"
         Title="Trivago" Height="300" Width="500" Loaded="Window_Loaded">
-
+    <Window.Background>
+        <ImageBrush ImageSource="Backgrounds/4.jpg"/>
+    </Window.Background>
     <Window.Resources>
         <LinearGradientBrush x:Key="BackgroundBrush" EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="Black" Offset="0"/>
@@ -21,17 +23,17 @@
             <GradientStop Color="#FF19347A" Offset="1"/>
         </LinearGradientBrush>
     </Window.Resources>
-    <Grid Background="{StaticResource BackgroundBrush}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Button x:Name="hostAreaButton" Content="Host Area" FontFamily="Agency FB" FontSize="36"
-                VerticalAlignment="Bottom" Width="216" Background ="{StaticResource ButtonsBrush}"
-                HorizontalAlignment="Center" Click="AddHostButton_Click"/>
+                VerticalAlignment="Center" Width="216" Background ="{StaticResource ButtonsBrush}"
+                HorizontalAlignment="Center" Click="AddHostButton_Click" MouseEnter="HostAreaButton_MouseEnter"/>
         <Button Content="Guest Request Area" FontFamily="Agency FB" FontSize="36"
-                VerticalAlignment="Top" Width="244" Background ="{StaticResource ButtonsBrush}"
+                VerticalAlignment="Center" Width="244" Background ="{StaticResource ButtonsBrush}"
                 HorizontalAlignment="Center" Click="AddGuestRequestButton_Click" Grid.Row="1"/>
 
 

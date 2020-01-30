@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Hosts>
   <Host>
-    <HostKey>100006</HostKey>
-    <PrivateName>sm</PrivateName>
-    <FamilyName>as</FamilyName>
-    <PhoneNumber>9</PhoneNumber>
-    <Email>shchar.markovich@gmail.com</Email>
+    <HostKey>10000001</HostKey>
+    <PrivateName>s</PrivateName>
+    <FamilyName>s</FamilyName>
+    <PhoneNumber>2</PhoneNumber>
+    <Email>s@s.s</Email>
     <BankBranchDetails>
       <BankNumber>13</BankNumber>
       <BankName>בנק אגוד לישראל בע"מ</BankName>
-      <BranchNumber>62</BranchNumber>
-      <BranchAddress>ז'בוטינסקי 1</BranchAddress>
-      <BranchCity>רמת גן</BranchCity>
+      <BranchNumber>71</BranchNumber>
+      <BranchAddress>שדרות ירושלים 12</BranchAddress>
+      <BranchCity>אשדוד</BranchCity>
     </BankBranchDetails>
-    <BankAccountNumber>90</BankAccountNumber>
+    <BankAccountNumber>20</BankAccountNumber>
     <Balance>100</Balance>
-    <CollectionClearance>true</CollectionClearance>
+    <CollectionClearance>True</CollectionClearance>
   </Host>
 </Hosts>

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using BE;
 
 namespace DAL
 {
@@ -43,6 +44,7 @@ namespace DAL
         {
             _hostingUnitsRoot = new XElement("HostingUnits");
             _hostingUnitsRoot.Save(_hostingUnitsPath);
+            SaveListToXML(new List<HostingUnit>());
         }
 
         /// <summary>
@@ -60,92 +62,21 @@ namespace DAL
             }
         }
 
-        /// <summary>
-        /// add host to xml file
-        /// </summary>
-        public void AddHostingUnit(BE.HostingUnit unit)
+        public void SaveListToXML(List<BE.HostingUnit> list)
         {
-            XElement hostingUnit = CreateHostingUnitXElem(unit);
-            _hostingUnitsRoot.Add(hostingUnit);
-            _hostingUnitsRoot.Save(_hostingUnitsPath);
+            FileStream file = new FileStream(_hostingUnitsPath, FileMode.Create);
+            XmlSerializer xmlSerializer = new XmlSerializer(list.GetType());
+            xmlSerializer.Serialize(file, list);
+            file.Close();
         }
 
-        public bool DeleteHostingUnit(BE.HostingUnit hostingUnit)
+        public List<BE.HostingUnit> LoadListFromXML()
         {
-            XElement hostingUnitElement;
-            try
-            {
-                hostingUnitElement = (from unit in _hostingUnitsRoot.Elements()
-                                  where double.Parse(unit.Element("HostingUnitKey").Value) == hostingUnit.HostingUnitKey
-                                      select unit).FirstOrDefault();
-                hostingUnitElement.Remove();
-                _hostingUnitsRoot.Save(_hostingUnitsPath);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// crate new XElement from given HostingUnit
-        /// </summary>
-        private static XElement CreateHostingUnitXElem(BE.HostingUnit unit)
-        {
-            XElement HostingUnitKey = new XElement("HostingUnitKey", unit.HostingUnitKey);
-            XElement HostingUnitName = new XElement("HostingUnitName", unit.HostingUnitName);
-            XElement Owner = HostXml.CreateHostXElem(unit.Owner, "Owner");
-            XElement type = new XElement("type", unit.type);
-            XElement Area = new XElement("Area", unit.Area);
-            XElement Diary = new XElement("Diary", unit.XmlDiary);
-            return new XElement("HostingUnit", HostingUnitKey, HostingUnitName, Owner, type, Area, Diary);
-        }
-
-        /// <summary>
-        /// update existshost to it new values
-        /// </summary>
-        public void UpdateHostingUnit(BE.HostingUnit unit)
-        {
-            // get hostingUnitElement which match to given unit key
-            XElement hostingUnitElement = _hostingUnitsRoot.Elements()
-                .Where(hostingUnit =>
-                double.Parse(hostingUnit.Element("HostingUnitKey").Value) == unit.HostingUnitKey)
-                .FirstOrDefault();
-
-            // update values in xmk file
-            // (only those properties can change, so only them update)
-            hostingUnitElement.Element("HostingUnitName").Value = unit.HostingUnitName;
-            hostingUnitElement.Element("Diary").Value = unit.XmlDiary;
-
-            _hostingUnitsRoot.Save(_hostingUnitsPath);
-        }
-
-        /// <summary>
-        /// return all hostingUnits as list
-        /// </summary>
-        public List<BE.HostingUnit> GetAllHostingUnit()
-        {
-            List<BE.HostingUnit> hostingUnits;
-            try
-            {
-                hostingUnits = (from hostingUnit in _hostingUnitsRoot.Elements()
-                                select new BE.HostingUnit()
-                                {
-                                    HostingUnitKey = double.Parse(hostingUnit.Element("HostingUnitKey").Value),
-                                    HostingUnitName = hostingUnit.Element("HostingUnitName").Value,
-                                    Owner = HostXml.XElement2Host(hostingUnit.Element("Owner")),
-                                    Area = (BE.Enums.Area)Enum.Parse(typeof(BE.Enums.Area), hostingUnit.Element("Area").Value),
-                                    type = (BE.Enums.UnitType)Enum.Parse(typeof(BE.Enums.UnitType), hostingUnit.Element("type").Value),
-                                    XmlDiary = hostingUnit.Element("Diary").Value,
-                                }).ToList();
-            }
-            catch
-            {
-                hostingUnits = null;
-            }
-
-            return hostingUnits;
+            FileStream file = new FileStream(_hostingUnitsPath, FileMode.Open);
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<BE.HostingUnit>));
+            List<BE.HostingUnit> list = (List<BE.HostingUnit>)xmlSerializer.Deserialize(file);
+            file.Close();
+            return list;
         }
     }
 }

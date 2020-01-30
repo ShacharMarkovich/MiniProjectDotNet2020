@@ -54,22 +54,20 @@ namespace PLWPF
             // do it just in case that the user will add new host.
             //      if he do it - update _host to his new properties
             //      else - the user login to exists host so we will update to the exists host properties
-            _host = new BE.Host()   
+            _host = new BE.Host()
             {
                 HostKey = ++BE.Configuration.HostKey,
                 Balance = 100,
                 // TODO: in part 3, change to real bank
                 BankBranchDetails = new BE.BankBranch()
-                {
-                    BankNumber = ++BE.Configuration.BankNumber,
-                }
             };
 
             // create temp BE.HostingUnit. because of the same reason as above
             _hostingUnit = new BE.HostingUnit
             {
                 HostingUnitKey = ++BE.Configuration.HostingUnitKey,
-                Owner = _host
+                Owner = _host,
+                DatesRange = new List<CalendarDateRange>()
             };
 
             SetSignUpDataContext();
@@ -119,7 +117,7 @@ namespace PLWPF
         private void SetBanksComboBox(ComboBox banksComboBox_)
         {
             List<string> stringBanks = _bl.GetAllBanksAsDetailsString();
-            if(stringBanks.Count > maxBanks)
+            if (stringBanks.Count > maxBanks)
                 stringBanks = stringBanks.Take(maxBanks).ToList();
 
             // display
@@ -134,13 +132,11 @@ namespace PLWPF
         /// </summary>
         private void SetSignUpDataContext()
         {
-            hostKeyTextBlock.DataContext = _host;
             privateNameTextBox.DataContext = _host;
             familyNameTextBox.DataContext = _host;
             emailTextBox.DataContext = _host;
             phoneNumberTextBox.DataContext = _host;
 
-            balanceTextBlock.DataContext = _host;
             bankAccountNumberTextBox.DataContext = _host;
             collectionClearanceCheckBox.DataContext = _host;
         }
@@ -151,13 +147,9 @@ namespace PLWPF
         /// </summary>
         private void SetAddHostingUnitDataContext()
         {
-            addhostKeyTextBlock.DataContext = _hostingUnit;
             familyNameTextBlock.DataContext = _hostingUnit.Owner;
             privateNameTextBlock.DataContext = _hostingUnit.Owner;
-            emailTextBlock.DataContext = _hostingUnit.Owner;
-            phoneNumberTextBlock.DataContext = _hostingUnit.Owner;
 
-            hostingUnitKeyTextBlock.DataContext = _hostingUnit;
             hostingUnitNameTextBox.DataContext = _hostingUnit;
             areaComboBox.DataContext = _hostingUnit;
             typeComboBox.DataContext = _hostingUnit;
@@ -169,7 +161,6 @@ namespace PLWPF
         /// </summary>
         private void SetHostDetailsDataContext()
         {
-            detailsHostKeyTextBlock.DataContext = _host;
             detailsPrivateNameTextBox.DataContext = _host;
             detailsFamilyNameTextBox.DataContext = _host;
             detailsEmailTextBox.DataContext = _host;
@@ -186,7 +177,6 @@ namespace PLWPF
         /// </summary>
         private void SetHostingUnitDetailsDataContext()
         {
-            hostingUnitKeyTextBlockDetails.DataContext = _hostingUnit;
             hostingUnitNameTextBoxDetails.DataContext = _hostingUnit;
             areaTextBoxDetails.DataContext = _hostingUnit;
             typeTextBoxDetails.DataContext = _hostingUnit;
@@ -221,7 +211,8 @@ namespace PLWPF
             _hostingUnit = new BE.HostingUnit()
             {
                 HostingUnitKey = ++BE.Configuration.HostingUnitKey,
-                Owner = _host
+                Owner = _host,
+                DatesRange = new List<CalendarDateRange>()
             };
             SetAddHostingUnitDataContext();
         }
@@ -236,9 +227,6 @@ namespace PLWPF
                 HostKey = ++BE.Configuration.HostKey,
                 Balance = 100,
                 BankBranchDetails = new BE.BankBranch()
-                {
-                    BankNumber = ++BE.Configuration.BankNumber,
-                }
             };
             SetSignUpDataContext();
         }
@@ -252,12 +240,18 @@ namespace PLWPF
             _hostingUnit = new BE.HostingUnit()
             {
                 HostingUnitKey = ++BE.Configuration.HostingUnitKey,
-                Owner = _host
+                Owner = _host,
+                DatesRange = new List<CalendarDateRange>()
             };
             SetHostingUnitDetailsDataContext();
         }
         #endregion
 
+        /// <summary>
+        /// check if any bank was selected
+        /// </summary>
+        /// <param name="bankComboBox_">banks ComboBox as string details</param>
+        /// <param name="errorMessage_">error TextBlock message</param>
         private bool BankCheckSelectedItem(ComboBox bankComboBox_, TextBlock errorMessage_)
         {
             // check if any bank was selected
@@ -266,11 +260,12 @@ namespace PLWPF
                 // show fit message,
                 errorMessage_.Foreground = new SolidColorBrush(Colors.Red);
                 errorMessage_.Text = "please choose a bank";
+                errorMessage_.FontSize = 25;
                 errorMessage_.Fade();
                 return false; // and finish evet
             }
-            
-            // check if any bank was selected
+
+            // update _host Bank Branch Details to selected item
             string bankDetails = bankComboBox_.SelectedItem as string;
             double selectedBankNumber = double.Parse(bankDetails.Split(' ')[0]);
             double selectedBranchNumber = double.Parse(bankDetails.Split(' ')[1]);
@@ -287,7 +282,8 @@ namespace PLWPF
         /// </summary>
         private void AddHostButton_Click(object sender, RoutedEventArgs e)
         {
-            if (BankCheckSelectedItem(banksComboBox, SignUpErrorMessage)) {
+            if (BankCheckSelectedItem(banksComboBox, SignUpErrorMessage))
+            {
                 try
                 {
                     _bl.AddHost(_host);
@@ -297,6 +293,7 @@ namespace PLWPF
                     // show fit comment
                     SignUpErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
                     SignUpErrorMessage.Text = exp.Message;
+                    SignUpErrorMessage.FontSize = 25;
                     SignUpErrorMessage.Fade();
                     return;
                 }
@@ -306,11 +303,11 @@ namespace PLWPF
                 SetHostsComboBox(hostsComboBox);
                 detailsBanksComboBox.SelectedIndex = banksComboBox.SelectedIndex;
                 banksComboBox.SelectedIndex = -1;
-                //SetBanksComboBox(banksComboBox);
 
                 // show fit comment
                 SignUpErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
                 SignUpErrorMessage.Text = "Host Add successfully!";
+                SignUpErrorMessage.FontSize = 25;
                 SignUpErrorMessage.Fade();
             }
         }
@@ -326,6 +323,7 @@ namespace PLWPF
             {
                 loginErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
                 loginErrorMessage.Text = "Please Select a Host in order to contine";
+                loginErrorMessage.FontSize = 25;
                 loginErrorMessage.Fade();
                 return;
             }
@@ -333,6 +331,7 @@ namespace PLWPF
             // show fit comment
             loginErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
             loginErrorMessage.Text = "Login successfully";
+            loginErrorMessage.FontSize = 25;
             loginErrorMessage.Fade();
 
             // get selected hostkey:
@@ -350,18 +349,17 @@ namespace PLWPF
             _hostingUnit = new BE.HostingUnit
             {
                 HostingUnitKey = ++BE.Configuration.HostingUnitKey,
-                Owner = _host
+                Owner = _host,
+                DatesRange = new List<CalendarDateRange>()
             };
 
             // update data context
             SetAddHostingUnitDataContext();
-            SetHostingUnitDetailsDataContext();
             SetHostDetailsDataContext();
             SetHostingUnitDetailsDataContext();
             SetOrdersDataContext();
 
-            // //set no selected bank
-            // detailsBanksComboBox.SelectedIndex = -1;
+            detailsBanksComboBox.SelectedItem = _host.BankBranchDetails.AsString();
 
             SetHostsComboBox(hostingUnitDetails);
             SetUnitComboBox(hostingUnitDetails, delegate (BE.HostingUnit u) { return u.Owner.HostKey == _host.HostKey; });
@@ -396,9 +394,10 @@ namespace PLWPF
         /// </summary>
         private void AddHostingUnitButton_Click(object sender, RoutedEventArgs e)
         {
+            _hostingUnit.Area = (BE.Enums.Area)areaComboBox.SelectedIndex;
+            _hostingUnit.type = (BE.Enums.UnitType)typeComboBox.SelectedIndex;
             try
             {
-                _hostingUnit.Diary = new bool[BE.Configuration._month, BE.Configuration._days];
                 _bl.AddHostingUnit(_hostingUnit);
             }
             catch (ArgumentException exp)
@@ -406,6 +405,7 @@ namespace PLWPF
                 // show fit comment
                 AddHostingUnitErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
                 AddHostingUnitErrorMessage.Text = exp.Message;
+                AddHostingUnitErrorMessage.FontSize = 25;
                 AddHostingUnitErrorMessage.Fade();
                 return;
             }
@@ -414,6 +414,7 @@ namespace PLWPF
                 // show fit comment
                 AddHostingUnitErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
                 AddHostingUnitErrorMessage.Text = exp.Message;
+                AddHostingUnitErrorMessage.FontSize = 25;
                 AddHostingUnitErrorMessage.Fade();
                 return;
             }
@@ -421,6 +422,7 @@ namespace PLWPF
             // show fit comment
             AddHostingUnitErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
             AddHostingUnitErrorMessage.Text = "Add hosting unit successfully!";
+            AddHostingUnitErrorMessage.FontSize = 25;
             AddHostingUnitErrorMessage.Fade();
 
             // prepare to get more new BE.HostingUnit
@@ -439,7 +441,8 @@ namespace PLWPF
         /// </summary>
         private void UpdateHostButton_Click(object sender, RoutedEventArgs e)
         {
-            if (BankCheckSelectedItem(detailsBanksComboBox, errorMessageDetailsHost)) {
+            if (BankCheckSelectedItem(detailsBanksComboBox, errorMessageDetailsHost))
+            {
                 try
                 {
                     _bl.UpdateHost(_host);
@@ -448,11 +451,13 @@ namespace PLWPF
                 {
                     errorMessageDetailsHost.Foreground = new SolidColorBrush(Colors.Red);
                     errorMessageDetailsHost.Text = exp.Message;
+                    errorMessageDetailsHost.FontSize = 25;
                     errorMessageDetailsHost.Fade();
                     return;
                 }
                 errorMessageDetailsHost.Foreground = new SolidColorBrush(Colors.Green);
                 errorMessageDetailsHost.Text = "Update successfully";
+                errorMessageDetailsHost.FontSize = 25;
                 errorMessageDetailsHost.Fade();
 
                 // update comboBox in Login Tab
@@ -478,6 +483,7 @@ namespace PLWPF
             {
                 errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
                 errorMessageDetailsHostingUnit.Text = exp.Message;
+                errorMessageDetailsHostingUnit.FontSize = 25;
                 errorMessageDetailsHostingUnit.Fade();
                 return; // finish event
             }
@@ -485,6 +491,7 @@ namespace PLWPF
             {
                 errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
                 errorMessageDetailsHostingUnit.Text = exp.Message;
+                errorMessageDetailsHostingUnit.FontSize = 25;
                 errorMessageDetailsHostingUnit.Fade();
                 return; // finish event
             }
@@ -494,12 +501,15 @@ namespace PLWPF
             ClearAddHostingUnit();
             SetOrdersDataContext();
 
+            hostingUnitDiary.BlackoutDates.Clear();
+
             // update hostin unit comboBox in this Tab
             SetUnitComboBox(hostingUnitDetails, delegate (BE.HostingUnit unit) { return unit.Owner.HostKey == _host.HostKey; });
 
             // show fit message
             errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Green);
             errorMessageDetailsHostingUnit.Text = "Hosting Unit was update successfully";
+            errorMessageDetailsHostingUnit.FontSize = 25;
             errorMessageDetailsHostingUnit.Fade();
 
             if (hostingUnitDetails.Items.Count == 1)
@@ -521,6 +531,7 @@ namespace PLWPF
                 // show fit message
                 errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
                 errorMessageDetailsHostingUnit.Text = exp.Message;
+                errorMessageDetailsHostingUnit.FontSize = 25;
                 errorMessageDetailsHostingUnit.Fade();
                 return; // finish event
             }
@@ -535,9 +546,12 @@ namespace PLWPF
             // update hosting units comboBox
             SetUnitComboBox(hostingUnitDetails, delegate (BE.HostingUnit unit) { return unit.Owner.HostKey == _host.HostKey; });
 
+            hostingUnitDiary.BlackoutDates.Clear();
+
             // show fit message
             errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Green);
             errorMessageDetailsHostingUnit.Text = "Hosting unit successfully removed";
+            errorMessageDetailsHostingUnit.FontSize = 25;
             errorMessageDetailsHostingUnit.Fade();
         }
 
@@ -553,6 +567,7 @@ namespace PLWPF
             {
                 newOrderErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
                 newOrderErrorMessage.Text = "hosting unit or guest request not selected!";
+                newOrderErrorMessage.FontSize = 25;
                 newOrderErrorMessage.Fade();
                 return;
             }
@@ -570,21 +585,19 @@ namespace PLWPF
             try
             {
                 _bl.CreateOrder(order);
-                ///ggggggggg
-                _bl.GetMatchGuestRequestAndHostingUnit(order, out guestRequest,out unit);
-                if (!_bl.IsDateArmor(unit, guestRequest.EntryDate, guestRequest.ReleaseDate ))
-                    throw new ArgumentException("Date already taken");
             }
             catch (ArgumentException exp)
             {
                 newOrderErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
                 newOrderErrorMessage.Text = exp.Message;
+                newOrderErrorMessage.FontSize = 25;
                 newOrderErrorMessage.Fade();
                 return;
             }
 
             newOrderErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
             newOrderErrorMessage.Text = "Order create successfully";
+            newOrderErrorMessage.FontSize = 25;
             newOrderErrorMessage.Fade();
 
             //maybe TODO: more things...?
@@ -606,12 +619,14 @@ namespace PLWPF
             {
                 OrderListErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
                 OrderListErrorMessage.Text = exp.Message;
+                OrderListErrorMessage.FontSize = 25;
                 OrderListErrorMessage.Fade();
                 return;
             }
 
             OrderListErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
             OrderListErrorMessage.Text = "Email Sent Successfully!";
+            OrderListErrorMessage.FontSize = 25;
             OrderListErrorMessage.Fade();
 
             //TODO: send real email
@@ -621,7 +636,6 @@ namespace PLWPF
         private void Approved_OrderList_Button_Click(object sender, RoutedEventArgs e)
         {
             BE.Order order = ordersDataGrid.SelectedItem as BE.Order;
-         ///1111
             try
             {
                 _bl.ApprovedOrder(order);
@@ -630,12 +644,14 @@ namespace PLWPF
             {
                 OrderListErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
                 OrderListErrorMessage.Text = exp.Message;
+                OrderListErrorMessage.FontSize = 25;
                 OrderListErrorMessage.Fade();
                 return;
             }
 
             OrderListErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
             OrderListErrorMessage.Text = "Order Approved Successfully!";
+            OrderListErrorMessage.FontSize = 25;
             OrderListErrorMessage.Fade();
 
 
@@ -662,6 +678,7 @@ namespace PLWPF
                 // show fit message,
                 errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
                 errorMessageDetailsHostingUnit.Text = "please choose a hosting unit first";
+                errorMessageDetailsHostingUnit.FontSize = 25;
                 errorMessageDetailsHostingUnit.Fade();
                 return; // and finish evet
 
@@ -680,6 +697,7 @@ namespace PLWPF
             {
                 errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
                 errorMessageDetailsHostingUnit.Text = "please choose a hosting unit first";
+                errorMessageDetailsHostingUnit.FontSize = 25;
                 errorMessageDetailsHostingUnit.Fade();
                 return;
             }
@@ -700,62 +718,35 @@ namespace PLWPF
             _hostingUnit = hostingUnitlst.First();
             SetHostingUnitDetailsDataContext();
 
-            List<CalendarDateRange> dates = DiaryToRangeOfDatetime(_hostingUnit.Diary);
-            for (int i = 0; i < dates.Count(); i++)
-                hostingUnitDiary.BlackoutDates.Add(dates[i]);
+            hostingUnitDiary.BlackoutDates.Clear();
+            for (int i = 0; i < _hostingUnit.DatesRange.Count; i++)
+                hostingUnitDiary.BlackoutDates.Add(_hostingUnit.DatesRange[i]);
         }
 
-        public static List<CalendarDateRange> DiaryToRangeOfDatetime(bool[,] Diary)
+
+        public List<BE.BankBranch> GetAllBanksByKeywords(string[] keywords)
         {
-            List<CalendarDateRange> blackoutDates = new List<CalendarDateRange>();
-            //curr Date is in index of Diary[1,0];
-            //for to get previews month
-            int j = 0;
-
-            for (int i = 0; i < BE.Configuration._month; i++)
-                if (Diary[0, i])
-                {
-                    //finding numbers of occupied days in row
-                    j = i;
-                    while (Diary[0, j] && j < BE.Configuration._month) j++;
-                    //only one day occupied un row
-                    blackoutDates.Add(i == (j - 1)
-                        ? new CalendarDateRange(DateTime.Today.AddDays(i - BE.Configuration._month))
-                        : new CalendarDateRange(DateTime.Today.AddDays(i - BE.Configuration._month), DateTime.Today.AddDays(j - BE.Configuration._month - 1)));
-                    i = j;
-                }
-
-            for (int k = 1; k < BE.Configuration._month; k++)
-                for (int i = 0; i < BE.Configuration._days; i++)
-                    if (k < BE.Configuration._month && Diary[k, i])
-                    {
-                        //finding numbers of occupied days in row
-                        j = i;
-                        while (k < BE.Configuration._month && Diary[k, j])
-                        {
-                            j++;
-                            //check for next month
-                            if (j > BE.Configuration._days - 1)
-                            {
-                                if (k == BE.Configuration._month - 1) break;
-                                j = 0;
-                                k++;
-                            }
-                        }
-
-                        //only one day occupied un row
-                        blackoutDates.Add(i == (j - 1)
-                            ? new CalendarDateRange(DateTime.Today.AddMonths(k - 1).AddDays(i))
-                            : new CalendarDateRange(DateTime.Today.AddMonths(k - 1).AddDays(i), DateTime.Today.AddMonths(k - 1).AddDays(j - 1)));
-                        i = j;
-                    }
-
-            return blackoutDates;
+            IEnumerable<BE.BankBranch> lst = from branch in _bl.GetAllBanks()
+                                      where keywords.ToList().Exists(str => branch.Contains(str))
+                                      select branch;
+            return lst.ToList();
         }
 
-        private void BanksComboBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void BanksComboBox_TextChanged(object sender, TextChangedEventArgs e) => ShowRelevantBanks(banksComboBox);
+
+        private void DetailsBanksComboBox_TextChanged(object sender, TextChangedEventArgs e) => ShowRelevantBanks(banksComboBox);
+
+        private void ShowRelevantBanks(ComboBox banksComboBox_)
         {
-            string bankString = (e.OriginalSource as TextBox).Text;
+            List<BE.BankBranch> results = GetAllBanksByKeywords(banksComboBox_.Text.Split(' '));
+            List<string> banksAsDetailsString = (from bank in results
+                                                 select bank.AsString()).Distinct().ToList();
+
+            if (banksAsDetailsString.Capacity > 100)
+                banksComboBox_.ItemsSource = banksAsDetailsString.Take(100).ToList();
+            else
+                banksComboBox_.ItemsSource = banksAsDetailsString;
+            banksComboBox_.IsDropDownOpen = true;
         }
     }
 }

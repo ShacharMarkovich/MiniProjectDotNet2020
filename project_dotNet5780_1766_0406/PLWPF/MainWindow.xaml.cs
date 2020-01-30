@@ -39,7 +39,7 @@ namespace PLWPF
         {
             throw new NotImplementedException("func StatusComboBox_SelectionChanged Not implemented");
         }
-        
+
         private void AddGuestRequestButton_Click(object sender, RoutedEventArgs e)
         {
             new AddGuestRequestWin().ShowDialog();
@@ -55,6 +55,12 @@ namespace PLWPF
         private void Window_Closed(object sender, EventArgs e)
         {
             _bl.UpdateConfig();
+        }
+
+        private void HostAreaButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (!_bl.IsBanksLoad())
+                MessageBox.Show("can't tauch this");
         }
     }
 }

@@ -6,9 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Threading;
+using System.Windows.Controls;
 
 namespace DAL
 {
+
     internal class Xml_DAL : IDal
     {
         private ConfigurationXml _configXml;
@@ -82,13 +84,32 @@ namespace DAL
         public void UpdateHost(BE.Host host) => _hostXml.UpdateHost(host.clone());
 
 
-        public void AddHostingUnit(BE.HostingUnit newHostingUnit) => _hostingUnitXml.AddHostingUnit(newHostingUnit.clone());
-
-        public void UpdateHostingUnit(BE.HostingUnit hostingUnit) => _hostingUnitXml.UpdateHostingUnit(hostingUnit.clone());
+        public void AddHostingUnit(BE.HostingUnit newHostingUnit)
+        {
+            List<BE.HostingUnit> list = _hostingUnitXml.LoadListFromXML();
+            list.Add(newHostingUnit);
+            _hostingUnitXml.SaveListToXML(list);
+        }
+        public void UpdateHostingUnit(BE.HostingUnit hostingUnit)
+        {
+            List<BE.HostingUnit> list = _hostingUnitXml.LoadListFromXML();
+            list.ForEach(delegate(BE.HostingUnit unit)
+            {
+                if (unit.HostingUnitKey == hostingUnit.HostingUnitKey)
+                {
+                    unit.HostingUnitName = hostingUnit.HostingUnitName;
+                    unit.DatesRange = hostingUnit.DatesRange;
+                }
+            });
+            _hostingUnitXml.SaveListToXML(list);
+        }
 
         public void DeleteHostingUnit(BE.HostingUnit hostingUnit)
         {
-            if (!_hostingUnitXml.DeleteHostingUnit(hostingUnit.clone()))
+            List<BE.HostingUnit> list = _hostingUnitXml.LoadListFromXML();
+            int count = list.RemoveAll(unit => unit.HostingUnitKey == hostingUnit.HostingUnitKey);
+            _hostingUnitXml.SaveListToXML(list);
+            if (count == 0)
                 throw new ArgumentException("delete hosting unit from Data Source didn't succeed!");
         }
 
@@ -106,15 +127,17 @@ namespace DAL
             list.ForEach(delegate (BE.Order order)
             {
                 if (order.OrderKey == order2Update.OrderKey)
+                {
                     order.Status = newStat;
-                if (newStat == BE.Enums.Status.MailSent)
-                    order.OrderDate = DateTime.Today;
+                    if (newStat == BE.Enums.Status.MailSent)
+                        order.OrderDate = DateTime.Today;
+                }
             });
             _orderXml.SaveListToXML(list);
         }
 
 
-        public List<BE.HostingUnit> GetAllHostingUnits() => _hostingUnitXml.GetAllHostingUnit();
+        public List<BE.HostingUnit> GetAllHostingUnits() => _hostingUnitXml.LoadListFromXML();
 
         public List<BE.Host> GetAllHosts() => _hostXml.GetAllHost();
 

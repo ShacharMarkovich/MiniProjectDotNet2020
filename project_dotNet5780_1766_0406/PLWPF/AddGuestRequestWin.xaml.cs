@@ -30,9 +30,6 @@ namespace PLWPF
         //data blinding
         private void SetDataContext()
         {
-            guestRequestKeyTextBlock.DataContext = _guestRequest;
-
-            registrationDateDatePicker.DataContext = _guestRequest;
             entryDateDatePicker.DataContext = _guestRequest;
             releaseDateDatePicker.DataContext = _guestRequest;
 
@@ -76,16 +73,28 @@ namespace PLWPF
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            _guestRequest.Area = (BE.Enums.Area)areaComboBox.SelectedIndex;
+            _guestRequest.type = (BE.Enums.UnitType)typeComboBox.SelectedIndex;
             try
             {
-                _guestRequest.Adults = int.Parse(this.adultsTextBox.Text);
-                _guestRequest.Children = int.Parse(this.childrenTextBox.Text);
+                int people= 0;
+                if (int.TryParse(this.adultsTextBox.Text, out people))
+                    _guestRequest.Adults = people;
+                else
+                    throw new ArgumentException("please enter a number in Adults field!");
+
+                if (int.TryParse(this.childrenTextBox.Text, out people))
+                    _guestRequest.Children = people;
+                else
+                    throw new ArgumentException("please enter a number in Adults field!");
+
                 _bl.AddGuestRequest(_guestRequest);
             }
             catch (ArgumentException exp)
             {
                 // show fit comment
                 errorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                errorMessage.FontSize = 25;
                 errorMessage.Text = exp.Message;
                 errorMessage.Fade();
                 return;
@@ -94,6 +103,7 @@ namespace PLWPF
             {
                 // show fit comment
                 errorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                errorMessage.FontSize = 25;
                 errorMessage.Text = exp.Message;
                 errorMessage.Fade();
                 return;
@@ -102,6 +112,7 @@ namespace PLWPF
             // show fit comment
             errorMessage.Foreground = new SolidColorBrush(Colors.Green);
             errorMessage.Text = "Guest Request Add successfully!";
+            errorMessage.FontSize = 25;
             errorMessage.Fade();
 
             // prepare to get more new BE.GuestRequest

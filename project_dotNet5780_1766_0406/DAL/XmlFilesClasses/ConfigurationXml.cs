@@ -44,18 +44,16 @@ namespace DAL
 
             // file isn't exists so we assign values in first time
             BE.Configuration.GuestRequestKey = BE.Configuration._firstKey;
-            BE.Configuration.BankNumber = BE.Configuration._firstKey;
             BE.Configuration.HostKey = BE.Configuration._firstKey;
             BE.Configuration.HostingUnitKey = BE.Configuration._firstKey;
             BE.Configuration.OrderKey = BE.Configuration._firstKey;
 
             XElement GuestRequestKey = new XElement("GuestRequestKey", BE.Configuration.GuestRequestKey);
-            XElement BankNumber = new XElement("BankNumber", BE.Configuration.BankNumber);
             XElement HostKey = new XElement("HostKey", BE.Configuration.HostKey);
             XElement HostingUnitKey = new XElement("HostingUnitKey", BE.Configuration.HostingUnitKey);
             XElement OrderKey = new XElement("OrderKey", BE.Configuration.OrderKey);
 
-            _configurationRoot.Add(GuestRequestKey, BankNumber, HostingUnitKey, HostKey, OrderKey);
+            _configurationRoot.Add(GuestRequestKey, HostingUnitKey, HostKey, OrderKey);
             UpdateConfig();
             _configurationRoot.Save(_configurationPath);
         }
@@ -78,15 +76,13 @@ namespace DAL
 
             // assign keys' value:
             BE.Configuration.GuestRequestKey = double.Parse(conf.Where(xElem => xElem.Name == "GuestRequestKey")
-                                                .FirstOrDefault().Value);
-            BE.Configuration.BankNumber = double.Parse(conf.Where(xElem => xElem.Name == "BankNumber")
-                                                .FirstOrDefault().Value);
+                                                .FirstOrDefault().Value) + 1;
             BE.Configuration.HostKey = double.Parse(conf.Where(xElem => xElem.Name == "HostKey")
-                                                .FirstOrDefault().Value);
+                                                .FirstOrDefault().Value) + 1;
             BE.Configuration.HostingUnitKey = double.Parse(conf.Where(xElem => xElem.Name == "HostingUnitKey")
-                                                .FirstOrDefault().Value);
+                                                .FirstOrDefault().Value) + 1;
             BE.Configuration.OrderKey = double.Parse(conf.Where(xElem => xElem.Name == "OrderKey")
-                                                .FirstOrDefault().Value);
+                                                .FirstOrDefault().Value) + 1;
         }
         
         /// <summary>
@@ -95,7 +91,6 @@ namespace DAL
         public void UpdateConfig()
         {
             _configurationRoot.SetElementValue("GuestRequestKey", BE.Configuration.GuestRequestKey);
-            _configurationRoot.SetElementValue("BankNumber", BE.Configuration.BankNumber);
             _configurationRoot.SetElementValue("HostKey", BE.Configuration.HostKey);
             _configurationRoot.SetElementValue("HostingUnitKey", BE.Configuration.HostingUnitKey);
             _configurationRoot.SetElementValue("OrderKey", BE.Configuration.OrderKey);

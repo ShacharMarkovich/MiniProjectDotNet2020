@@ -211,7 +211,7 @@ namespace BL
 
         List<string> GetAllBanksAsDetailsString();
         
-        List<BE.BankBranch> GetAllBanksToName(string bankName);
+        List<BE.BankBranch> GetAllBanksByName(string bankName);
 
         List<IGrouping<string, IGrouping<string, BE.BankBranch>>> GetAllBankBranchGroupByBankAndCity();
 

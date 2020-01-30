@@ -3,12 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PLWPF"
+        xmlns:local="clr-namespace:PLWPF" Icon="Backgrounds/ico3.ico"
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.AddHostWin"
-        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="Trivago - host Section" Height="700" Width="850" Loaded="Window_Loaded"
-        ResizeMode="NoResize">
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
+        Title="Trivago - host Section" Height="700" Width="850" Loaded="Window_Loaded">
 
     <Window.Resources>
         <CollectionViewSource x:Key="hostViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Host}, CreateList=True}"/>
@@ -29,60 +28,61 @@
             <GradientStop Color="YellowGreen" Offset="0.8"/>
             <GradientStop Color="ForestGreen" Offset="1"/>
         </LinearGradientBrush>
-
-
-
+        <LinearGradientBrush x:Key="BackgroundBrush2" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF00E8FF" Offset="0"/>
+            <GradientStop Color="Black" Offset="1"/>
+        </LinearGradientBrush>
     </Window.Resources>
 
     <Grid DataContext="{StaticResource hostingUnitViewSource}" Background ="{StaticResource BackgroundBrush}">
-        <TabControl>
+        <TabControl >
+            <TabControl.Background>
+                <ImageBrush ImageSource="Backgrounds/3.jpg"/>
+            </TabControl.Background>
             <TabItem x:Name="SignupTab" Header ="Create new host" Height="22" VerticalAlignment="Bottom">
                 <StackPanel>
-                    <TextBlock x:Name="SignUpErrorMessage" Text="" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+                    <TextBlock x:Name="SignUpErrorMessage" Text="" Foreground="Red" VerticalAlignment="Center" HorizontalAlignment="Center"  />
                     <Grid DataContext="{StaticResource hostViewSource}" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Center" Height="400" Width="345">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Label Content="Host Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" Height="31"/>
-                        <TextBlock x:Name="hostKeyTextBlock" Grid.Column="1" HorizontalAlignment="Left"  Height="31" Margin="3" Grid.Row="0" Text="{Binding Path=HostKey}" VerticalAlignment="Center"/>
-                        <Label Content="Private Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" Height="31" VerticalAlignment="Center"/>
-                        <TextBox x:Name="privateNameTextBox" Grid.Column="1" Height="30" Margin="0,4,-74,4" Grid.Row="1" Text="{Binding Path=PrivateName, Mode=TwoWay, UpdateSourceTrigger=LostFocus, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="201"/>
-                        <Label Content="Family Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center" Height="31"/>
-                        <TextBox x:Name="familyNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3,3,-73,3" Grid.Row="2" Text="{Binding Path=FamilyName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="198"/>
-                        <Label Content="Email:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-                        <TextBox x:Name="emailTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3,3,-72,3" Grid.Row="3" Text="{Binding Path=Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="198"/>
-                        <Label Content="Phone Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
-                        <TextBox x:Name="phoneNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3,3,-71,3" Grid.Row="4" Text="{Binding Path=PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="198"/>
+                        <Label Content="Private Name:" Opacity="0.8" Background="AliceBlue" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" Height="31" VerticalAlignment="Center"/>
+                        <TextBox x:Name="privateNameTextBox" Grid.Column="1" Height="35" Margin="0,4,-74,4" Grid.Row="0" Text="{Binding Path=PrivateName, Mode=TwoWay, UpdateSourceTrigger=LostFocus, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="201"/>
+                        <Label Content="Family Name:" Opacity="0.8" Background="AliceBlue" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center" Height="31"/>
+                        <TextBox x:Name="familyNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="35" Margin="3,3,-73,3" Grid.Row="1" Text="{Binding Path=FamilyName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="198"/>
+                        <Label Content="Email:" Opacity="0.8" Background="AliceBlue" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+                        <TextBox x:Name="emailTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="35" Margin="3,3,-72,3" Grid.Row="2" Text="{Binding Path=Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="198"/>
+                        <Label Content="Phone Number:" Opacity="0.8" Background="AliceBlue" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+                        <TextBox x:Name="phoneNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="35" Margin="3,3,-71,3" Grid.Row="3" Text="{Binding Path=PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="198"/>
 
-                        <Label Content="Balance:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="balanceTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="5" Text="{Binding Path=Balance, Mode=TwoWay}" VerticalAlignment="Center"/>
-                        <Label Content="Bank Account Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
-                        <TextBox x:Name="bankAccountNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3,3,-70,3" Grid.Row="6" Text="{Binding Path=BankAccountNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="198"/>
-                        <Label Content="Select Your Bank:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
-                        <ComboBox x:Name="banksComboBox" IsEditable="false" Grid.Column="1" Grid.Row="7" VerticalAlignment="Center" Background="{StaticResource ButtonsBrush}" Margin="9,5,-69,5" TextBoxBase.TextChanged="BanksComboBox_TextChanged"/>
-                        <Label Content="Collection Clearance:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>
-                        <CheckBox x:Name="collectionClearanceCheckBox" Content="" Grid.Column="1" HorizontalAlignment="Left" IsChecked="{Binding Path=CollectionClearance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>
+                        <Label Content="Bank Account Number:" Opacity="0.8" Background="AliceBlue" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+                        <TextBox x:Name="bankAccountNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="35" Margin="3,3,-70,3" Grid.Row="4" Text="{Binding Path=BankAccountNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="198"/>
+                        <Label Content="Select Your Bank:" Grid.Column="0" Opacity="0.8" Background="AliceBlue" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
+                        <ComboBox x:Name="banksComboBox" IsEditable="true" Grid.Column="1" Grid.Row="5" VerticalAlignment="Top" Background="{StaticResource ButtonsBrush}" Margin="9,12,-69,0" TextBoxBase.TextChanged="BanksComboBox_TextChanged" Height="35"/>
+                        <Label Content="Collection Clearance:" Opacity="0.8" Background="AliceBlue" Grid.Column="0" Margin="3,17,15,16" Grid.Row="6" VerticalAlignment="Center"/>
+                        <CheckBox x:Name="collectionClearanceCheckBox" Content="" Opacity="0.8" Background="AliceBlue" Grid.Column="1" HorizontalAlignment="Left" IsChecked="{Binding Path=CollectionClearance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
                     </Grid>
-                    <Button Content="Add Host" Background ="{StaticResource ButtonsBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="AddHostButton_Click" Margin="0,10,0,0"/>
+                    <Button Content="Add Host" Background ="{StaticResource ButtonsBrush}" Click="AddHostButton_Click" Margin="0,10,0,0" Height="40" Width="100" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="Sign In"  Margin="0" >
+            <TabItem Header="Sign In"  Margin="0">
                 <TabControl Name="SignInTabControl">
-                    <TabItem Header="login"  Margin="0" >
+                    <TabItem Header="login"  Margin="0">
                         <StackPanel>
+                            <StackPanel.Background>
+                                <ImageBrush ImageSource="Backgrounds/2.jpg"/>
+                            </StackPanel.Background>
                             <TextBlock x:Name="loginErrorMessage" Text="" 
                                        Foreground="Red" FontFamily="Agency FB" FontSize="18" Grid.Row="0" 
                                        RenderTransformOrigin="1.207,-2.333" TextDecorations="{x:Null}" TextAlignment="Center"  />
@@ -94,13 +94,15 @@
                     </TabItem>
                     <TabItem x:Name="AddHostingUnitTab" Header="Add hosting unit" IsEnabled="False">
                         <Grid>
+                            <Grid.Background>
+                                <ImageBrush ImageSource="Backgrounds/6.jpg"/>
+                            </Grid.Background>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="55*"/>
-                                <RowDefinition Height="416*"/>
-                                <RowDefinition Height="135*"/>
+                                <RowDefinition Height="3*"/>
+                                <RowDefinition Height="16*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock x:Name="AddHostingUnitErrorMessage" Grid.Row="0" Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <Grid DataContext="{StaticResource hostingUnitViewSource}" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Height="350" Margin="0" Width="400" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+                            <TextBlock x:Name="AddHostingUnitErrorMessage" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Margin="205,26,179,30" Width="440" TextAlignment="Center"/>
+                            <Grid DataContext="{StaticResource hostingUnitViewSource}" Grid.Row="1" HorizontalAlignment="Center" Margin="212,88,212,184" Width="400" ScrollViewer.HorizontalScrollBarVisibility="Visible">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
@@ -111,36 +113,26 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <Label Content="Area:" Grid.Row="0" Grid.Column="0" />
-                                <ComboBox x:Name="areaComboBox" ItemsSource="{Binding Path=Area}" Grid.Column="1" Grid.Row="0" Background ="{StaticResource ButtonsBrush}"/>
-                                <Label Content="Hosting Unit Key:" Grid.Column="0" Grid.Row="1" />
-                                <TextBlock x:Name="hostKeyTextBlcoe" Grid.Column="1" Grid.Row="6" Text="{Binding Path=HostKey}"/>
-                                <TextBlock x:Name="hostingUnitKeyTextBlock" Grid.Column="1" Grid.Row="1" Text="{Binding Path = HostingUnitKey}" />
-                                <Label Content="Hosting Unit Name:" Grid.Column="0" Grid.Row="2" />
-                                <TextBox x:Name="hostingUnitNameTextBox" Grid.Column="1" Grid.Row="2" Text="{Binding Path=HostingUnitName, Mode=TwoWay, UpdateSourceTrigger=LostFocus, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
-                                <Label Content="type:" Grid.Column="0" Grid.Row="3"/>
-                                <ComboBox x:Name="typeComboBox" Grid.Column="1" Grid.Row="3" ItemsSource="{Binding Path=type}" Background ="{StaticResource ButtonsBrush}"/>
-                                <Label Content="Email:" Grid.Column="0" Grid.Row="4"/>
-                                <TextBlock x:Name="emailTextBlock" Grid.Column="1" Grid.Row="4" Text="{Binding Path= Email}" />
-                                <Label Content="Family Name:" Grid.Column="0" Grid.Row="5" />
-                                <TextBlock x:Name="familyNameTextBlock" Grid.Column="1" Grid.Row="5" Text="{Binding Path=FamilyName}" />
-                                <Label Content="Host Key:" Grid.Column="0" Grid.Row="6" />
-                                <TextBlock x:Name="addhostKeyTextBlock" Grid.Column="1" Grid.Row="6" Text="{Binding Path=Owner.HostKey}" />
-                                <Label Content="Phone Number:" Grid.Column="0" Grid.Row="7"/>
-                                <TextBlock x:Name="phoneNumberTextBlock" Grid.Column="1" Grid.Row="7" Text="{Binding Path=PhoneNumber}" />
-                                <Label Content="Private Name:" Grid.Column="0" Grid.Row="8"/>
-                                <TextBlock x:Name="privateNameTextBlock" Grid.Column="1" Grid.Row="8" Text="{Binding Path=PrivateName}" />
+                                <Label Content="Hosting Unit Name:" Background="AliceBlue" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBox x:Name="hostingUnitNameTextBox" Grid.Column="1" Grid.Row="0" Text="{Binding Path=HostingUnitName, Mode=TwoWay, UpdateSourceTrigger=LostFocus, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" Margin="8,4,7,5" Width="185" />
+                                <Label Content="Area:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" Opacity="0.8" />
+                                <ComboBox x:Name="areaComboBox" Grid.Column="1" Grid.Row="1" Background ="{StaticResource ButtonsBrush}" VerticalAlignment="Center" Height="30" Margin="5,0"/>
+                                <Label Content="type:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="AliceBlue" Opacity="0.8" />
+                                <ComboBox x:Name="typeComboBox" Grid.Column="1" Grid.Row="2" Background ="{StaticResource ButtonsBrush}" Margin="5,0" Height="30" VerticalAlignment="Center" Width="190"/>
+                                <Label Content="Private Name:" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Background="AliceBlue" Opacity="0.8" />
+                                <TextBlock x:Name="privateNameTextBlock" Grid.Column="1" Grid.Row="3" Text="{Binding Path=PrivateName}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <Label Content="Family Name:" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Background="AliceBlue" Opacity="0.8" />
+                                <TextBlock x:Name="familyNameTextBlock" Grid.Column="1" Grid.Row="4" Text="{Binding Path=FamilyName}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Grid>
-                            <Button Content="add hosting unit" Click="AddHostingUnitButton_Click" Background ="{StaticResource ButtonsBrush}" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0" Height="32" Width="120" VerticalContentAlignment="Center"/>
+                            <Button Content="add hosting unit" Click="AddHostingUnitButton_Click" Background ="{StaticResource ButtonsBrush}" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="349,345,299,0" Height="47" Width="176" VerticalContentAlignment="Center"/>
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UpdateTab" Header="My Details" IsEnabled="False">
                         <Grid>
+                            <Grid.Background>
+                                <ImageBrush ImageSource="Backgrounds/8.jpg"/>
+                            </Grid.Background>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
@@ -165,34 +157,30 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <Label Content="Host Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,-2,0,26" Grid.Row="0" VerticalAlignment="Center" Height="32" Grid.RowSpan="2" Width="61"/>
-                                <TextBlock x:Name="detailsHostKeyTextBlock" Grid.Column="1" HorizontalAlignment="Center" Margin="0,5" Grid.Row="0" Text="{Binding Path=HostKey}" Height="32" Width="192"/>
-                                <Label Content="Private Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="1" VerticalAlignment="Center" Height="31" Width="85"/>
-                                <TextBox x:Name="detailsPrivateNameTextBox" Grid.Column="1" Margin="0,5" Grid.Row="1" Text="{Binding Path=PrivateName, Mode=TwoWay, UpdateSourceTrigger=LostFocus, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Width="200" HorizontalAlignment="Center" />
-                                <Label Content="Family Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,4,0,3" Grid.Row="2" VerticalAlignment="Center" Height="31" Width="83"/>
-                                <TextBox x:Name="detailsFamilyNameTextBox" Grid.Column="1" HorizontalAlignment="Center" Margin="0,5" Grid.Row="2" Text="{Binding Path=FamilyName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" Width="197" />
-                                <Label Content="Email:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="3" VerticalAlignment="Center" Height="31" Width="43"/>
-                                <TextBox x:Name="detailsEmailTextBox" Grid.Column="1" HorizontalAlignment="Center" Margin="0,5" Grid.Row="3" Text="{Binding Path=Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" Width="195" />
-                                <Label Content="Phone Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,3,0,4" Grid.Row="4" VerticalAlignment="Center" Height="31" Width="93"/>
-                                <TextBox x:Name="detailsPhoneNumberTextBox" Grid.Column="1" HorizontalAlignment="Center" Margin="0,5" Grid.Row="4" Text="{Binding Path=PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" Width="195" />
-
-                                <Label Content="Balance:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="5" VerticalAlignment="Center" Height="31" Width="55"/>
-                                <TextBlock x:Name="detailsBalanceTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3,27,0,27" Grid.Row="4" Text="{Binding Path=Balance, Mode=TwoWay}" VerticalAlignment="Center" Height="32" Grid.RowSpan="3" Width="7"/>
-                                <Label Content="Bank Account Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,4,0,3" Grid.Row="6" VerticalAlignment="Center" Height="31" Width="132"/>
-                                <TextBox x:Name="detailsBankAccountNumberTextBox" Grid.Column="1" HorizontalAlignment="Center" Height="31" Margin="4" Grid.Row="6" Text="{Binding Path=BankAccountNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" Width="197"/>
-                                <Label Content="Select Your Bank:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="7" VerticalAlignment="Center" Height="31" Width="104"/>
-                                <ComboBox x:Name="detailsBanksComboBox" Grid.Column="1" Margin="6,5,4,4" Grid.Row="7" Background="{StaticResource ButtonsBrush}" Height="31.3" HorizontalAlignment="Center" Width="195" MinHeight="31"/>
-                                <Label Content="Collection Clearance:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,3,0,4" Grid.Row="12" VerticalAlignment="Center" Height="31" Width="121"/>
-                                <CheckBox x:Name="detailsCollectionClearanceCheckBox" Content="" Grid.Column="1" HorizontalAlignment="Left" IsChecked="{Binding Path=CollectionClearance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Margin="23,14,0,11" Grid.Row="8" VerticalAlignment="Center" Height="14" Width="17"/>
+                                <Label Content="Private Name:" Grid.Column="0" Opacity="0.8" Background="AliceBlue" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="0" VerticalAlignment="Center" Height="31" Width="85"/>
+                                <TextBox x:Name="detailsPrivateNameTextBox" Grid.Column="1" Margin="0,5" Grid.Row="0" Text="{Binding Path=PrivateName, Mode=TwoWay, UpdateSourceTrigger=LostFocus, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Width="200" HorizontalAlignment="Center" />
+                                <Label Content="Family Name:" Opacity="0.8" Background="AliceBlue" Grid.Column="0" HorizontalAlignment="Left" Margin="3,4,0,3" Grid.Row="1" VerticalAlignment="Center" Height="31" Width="83"/>
+                                <TextBox x:Name="detailsFamilyNameTextBox" Grid.Column="1" HorizontalAlignment="Center" Margin="0,5" Grid.Row="1" Text="{Binding Path=FamilyName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" Width="197" />
+                                <Label Content="Email:" Grid.Column="0" Opacity="0.8" Background="AliceBlue" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="2" VerticalAlignment="Center" Height="31" Width="43"/>
+                                <TextBox x:Name="detailsEmailTextBox" Grid.Column="1" HorizontalAlignment="Center" Margin="0,5" Grid.Row="2" Text="{Binding Path=Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" Width="195" />
+                                <Label Content="Phone Number:" Grid.Column="0" HorizontalAlignment="Left" Opacity="0.8" Background="AliceBlue" Margin="3,3,0,4" Grid.Row="3" VerticalAlignment="Center" Height="31" Width="93"/>
+                                <TextBox x:Name="detailsPhoneNumberTextBox" Grid.Column="1" HorizontalAlignment="Center" Margin="0,5" Grid.Row="3" Text="{Binding Path=PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" Width="195" />
+                                <Label Content="Balance:" Grid.Column="0" Opacity="0.8" Background="AliceBlue" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="4" VerticalAlignment="Center" Height="31" Width="55"/>
+                                <TextBlock x:Name="detailsBalanceTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3,27,0,27" Grid.Row="4" Text="{Binding Path=Balance, Mode=TwoWay}" VerticalAlignment="Center" Height="32" Width="7"/>
+                                <Label Content="Bank Account Number:" Grid.Column="0" Opacity="0.8" Background="AliceBlue" HorizontalAlignment="Left" Margin="3,4,0,3" Grid.Row="5" VerticalAlignment="Center" Height="31" Width="132"/>
+                                <TextBox x:Name="detailsBankAccountNumberTextBox" Grid.Column="1" HorizontalAlignment="Center" Height="31" Margin="4" Grid.Row="5" Text="{Binding Path=BankAccountNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" Width="197"/>
+                                <Label Content="Select Your Bank:" Grid.Column="0" Opacity="0.8" Background="AliceBlue" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="6" VerticalAlignment="Center" Height="31" Width="104"/>
+                                <ComboBox x:Name="detailsBanksComboBox" TextBoxBase.TextChanged="DetailsBanksComboBox_TextChanged" IsEditable="true" Grid.Column="1" Margin="6,5,4,4" Grid.Row="6" Background="{StaticResource ButtonsBrush}" Height="31.3" HorizontalAlignment="Center" Width="195" MinHeight="31"/>
+                                <Label Content="Collection Clearance:" Opacity="0.8" Background="AliceBlue" Grid.Column="0" HorizontalAlignment="Left" Margin="3,3,0,4" Grid.Row="7" VerticalAlignment="Center" Height="31" Width="121"/>
+                                <CheckBox x:Name="detailsCollectionClearanceCheckBox" Content="" Grid.Column="1" HorizontalAlignment="Left" IsChecked="{Binding Path=CollectionClearance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Margin="23,14,0,11" Grid.Row="7" VerticalAlignment="Center" Height="14" Width="17"/>
                             </Grid>
-                            <Button  Grid.Column="0" Grid.Row="2" Content="Update Changes" Click="UpdateHostButton_Click" Background ="{StaticResource ButtonsBrush}" Margin="124,5,111,-10" Height="31"/>
+                            <Button  Grid.Column="0" Grid.Row="2" Content="Update Changes" Click="UpdateHostButton_Click" Background ="{StaticResource ButtonsBrush}" Margin="115,23,111,8" Height="31"/>
 
                             <TextBlock x:Name="errorMessageDetailsHostingUnit" Grid.Column="1" Grid.Row="0" Text="" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2" >
-                                <Button Content="Update Changes" Background ="{StaticResource ButtonsBrush}" Width="162" Height="31" Click="UpdateHostingUnitButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30,0,0,0"/>
-                                <Button Content="Delete Hosting Unit" Click="DeleteHostingUnitButton_Click" Background ="{StaticResource ButtonsBrush}" Width="162" Height="31" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30,14,0,14"/>
+                            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,15,0" >
+                                <Button Content="Update Changes" Background ="{StaticResource ButtonsBrush}" Width="174" Height="31" Click="UpdateHostingUnitButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30,15,0,15"/>
+                                <Button Content="Delete Hosting Unit" Click="DeleteHostingUnitButton_Click" Background ="{StaticResource ButtonsBrush}" Width="171" Height="32" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30,16,15,16"/>
                             </StackPanel>
                             <Grid Grid.Column="1" Grid.Row="1">
                                 <Grid.RowDefinitions>
@@ -204,7 +192,7 @@
                                     <TextBlock  Visibility="Hidden" Text="TextBlock"/>
                                     <TextBlock  Text="Choose hosting Unit:" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     <ComboBox Visibility="Hidden" Width="20"/>
-                                    <ComboBox x:Name="hostingUnitDetails" Background ="{StaticResource ButtonsBrush}" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" SelectionChanged="HostingUnitDetails_SelectionChanged" Margin="0,12,0,13"/>
+                                    <ComboBox x:Name="hostingUnitDetails" Background ="{StaticResource ButtonsBrush}" Width="200" SelectionChanged="HostingUnitDetails_SelectionChanged" Margin="0,5" Height="29" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </StackPanel>
                                 <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="148" Margin="83,45,83,49" Width="246">
                                     <Grid.ColumnDefinitions>
@@ -212,19 +200,16 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Label Content="Hosting Unit Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-                                    <TextBlock x:Name="hostingUnitKeyTextBlockDetails" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" Text="{Binding HostingUnitKey}" VerticalAlignment="Center" Height="31"/>
-                                    <Label Content="Hosting Unit Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-                                    <TextBox x:Name="hostingUnitNameTextBoxDetails" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="1" Text="{Binding HostingUnitName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                                    <Label Content="Area:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-                                    <TextBlock x:Name="areaTextBoxDetails" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="2" Text="{Binding Area, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                                    <Label Content="type:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-                                    <TextBlock x:Name="typeTextBoxDetails" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="3" Text="{Binding type, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                                    <Label Content="Hosting Unit Name:" Opacity="0.8" Background="AliceBlue" Grid.Column="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center"/>
+                                    <TextBox x:Name="hostingUnitNameTextBoxDetails" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Text="{Binding HostingUnitName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                                    <Label Content="Area:" Grid.Column="0" Opacity="0.8" Background="AliceBlue" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="areaTextBoxDetails" Opacity="0.8" Background="AliceBlue" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="1" Text="{Binding Area, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                                    <Label Content="type:" Grid.Column="0" Opacity="0.8" Background="AliceBlue" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="typeTextBoxDetails" Opacity="0.8" Background="AliceBlue" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="3" Grid.Row="2" Text="{Binding type, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
                                 </Grid>
                                 <Calendar x:Name="hostingUnitDiary" Grid.Row="2"/>
                             </Grid>
@@ -235,6 +220,9 @@
                         <TabControl Name="OrerTubControl" RenderTransformOrigin="0.5,0.5" SelectedIndex="{Binding Mode=OneWay}" >
                             <TabItem x:Name="ListOfOrdersTub" Header="Create New Order"  Margin="0" >
                                 <Grid>
+                                    <Grid.Background>
+                                        <ImageBrush ImageSource="Backgrounds/11.jpg"/>
+                                    </Grid.Background>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="64*"/>
                                         <ColumnDefinition Width="5*"/>
@@ -249,9 +237,9 @@
 
                                     <TextBlock x:Name="newOrderErrorMessage" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Margin="72,3,210,3" Width="406" FontSize="18" TextAlignment="Center" Grid.Column="2" />
                                     <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3">
-                                        <TextBlock Text="     Select Hosting Unit: " VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" TextAlignment="Center" />
+                                        <TextBlock Text="Select Hosting Unit: " Opacity="0.8" Background="AliceBlue" VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" TextAlignment="Center" Margin="50,0,0,0" />
                                         <TextBlock Text="Select Guest Request" Visibility="Hidden"/>
-                                        <DataGrid x:Name="hostingUnitDataGrid" IsReadOnly="True" Grid.Row="1" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="Auto" ItemsSource="{Binding}" Margin="10" RowDetailsVisibilityMode="VisibleWhenSelected" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <DataGrid x:Name="hostingUnitDataGrid" IsReadOnly="True" Grid.Row="1" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="Auto" ItemsSource="{Binding}" Margin="10,58" RowDetailsVisibilityMode="VisibleWhenSelected" Width="461" HorizontalAlignment="Center" VerticalAlignment="Center">
                                             <DataGrid.Columns>
                                                 <DataGridTemplateColumn x:Name="hostingUnitNameColumn" Header="Hosting Unit Name" Width="SizeToHeader">
                                                     <DataGridTemplateColumn.CellTemplate>
@@ -278,9 +266,9 @@
                                         </DataGrid>
                                     </StackPanel>
                                     <StackPanel  Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="3">
-                                        <TextBlock Text="     Select Guest Request: " VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" TextAlignment="Center" />
+                                        <TextBlock Text="Select Guest Request: " Opacity="0.8" Background="AliceBlue" Height="30" TextAlignment="Center" Margin="25,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                         <TextBlock Text="Select Guest Request: " Visibility="Hidden"/>
-                                        <DataGrid x:Name="guestRequestDataGrid" IsReadOnly="True" Grid.Row="2" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="Auto" ItemsSource="{Binding Source={StaticResource guestRequestViewSource}}" Margin="10" RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <DataGrid x:Name="guestRequestDataGrid" IsReadOnly="True" Grid.Row="2" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="Auto" ItemsSource="{Binding Source={StaticResource guestRequestViewSource}}" Margin="10,65" RowDetailsVisibilityMode="VisibleWhenSelected" Width="511" VerticalAlignment="Center" HorizontalAlignment="Center">
                                             <DataGrid.Columns>
                                                 <DataGridTemplateColumn x:Name="emailsColumn" Header="Email" IsReadOnly="True" Width="100">
                                                     <DataGridTemplateColumn.CellTemplate>
@@ -321,11 +309,14 @@
                                         </DataGrid>
                                     </StackPanel>
 
-                                    <Button Content="Create Order" Click="CreateOrderButton_Click" Background ="{StaticResource ButtonsBrush}" Grid.Row="3" Height="31" Margin="232,29,370,28" Width="86" Grid.Column="2"/>
+                                    <Button Content="Create Order" Click="CreateOrderButton_Click" Background ="{StaticResource ButtonsBrush}" Grid.Row="3" Margin="279,15,283,27" Grid.Column="2"/>
                                 </Grid>
                             </TabItem>
                             <TabItem x:Name="ListOfclientsTub" Header="Handle Orders" >
                                 <Grid>
+                                    <Grid.Background>
+                                        <ImageBrush ImageSource="Backgrounds/10.jpg"/>
+                                    </Grid.Background>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="91*"/>
                                         <RowDefinition Height="260*"/>
@@ -369,8 +360,8 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <Button Background ="{StaticResource ButtonsBrush}" Grid.Column="0" Content="Send Email"   Click="SendEmail_OrderList_Button_Click" HorizontalAlignment="Center" VerticalAlignment="Top" Height="31" Margin="0,50,0,0" />
-                                        <Button Background ="{StaticResource ButtonsBrush}" Grid.Column="1" Content="Approved Buy" Click="Approved_OrderList_Button_Click" HorizontalAlignment="Center" VerticalAlignment="Top" Height="31" Margin="0,50,0,0" />
+                                        <Button Background ="{StaticResource ButtonsBrush}" Grid.Column="0" Content="Send Email"   Click="SendEmail_OrderList_Button_Click" HorizontalAlignment="Center" VerticalAlignment="Top" Height="42" Margin="171,39,147,0" Width="89" />
+                                        <Button Background ="{StaticResource ButtonsBrush}" Grid.Column="1" Content="Approved Buy" Click="Approved_OrderList_Button_Click" HorizontalAlignment="Center" VerticalAlignment="Top" Height="42" Margin="123,47,176,0" Width="108" />
                                     </Grid>
                                 </Grid>
                             </TabItem>

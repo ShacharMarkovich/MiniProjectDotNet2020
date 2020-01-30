@@ -19,12 +19,12 @@ namespace DAL
             WebClient wc = new WebClient();
             try
             {
-                wc.DownloadFile(_xmlServerPath1, _xmlLocalPath);
+                wc.DownloadFile(_xmlServerPath2, _xmlLocalPath);
 
             }
             catch (Exception)
             {
-                wc.DownloadFile(_xmlServerPath2, _xmlLocalPath);
+                wc.DownloadFile(_xmlServerPath1, _xmlLocalPath);
             }
             finally
             {

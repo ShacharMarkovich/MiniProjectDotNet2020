@@ -4,14 +4,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace PLWPF
 {
     static class HelperClass
     {
+        public static bool Contains(this BE.BankBranch branch, string word)
+        {
+            if (branch.BankNumber.ToString().Contains(word))
+                return true;
+            if (branch.BankName.Contains(word))
+                return true;
+            if (branch.BranchAddress.Contains(word))
+                return true;
+            if (branch.BranchCity.Contains(word))
+                return true;
+            if (branch.BranchNumber.ToString().Contains(word))
+                return true;
+
+            return false;
+        }
+
+        public static string AsString(this BE.BankBranch bank)
+        {
+            return $"{bank.BankNumber} {bank.BranchNumber} {bank.BankName} {bank.BranchCity} {bank.BranchAddress}";
+        }
         public static void Fade(this TextBlock txtBlock)
         {
+            txtBlock.Background = Brushes.AliceBlue;
             txtBlock.Opacity = 1;
             DoubleAnimation hold = new DoubleAnimation()
             {

@@ -70,7 +70,7 @@ namespace DAL
             _hostsRoot.Save(_hostsPath);
         }
 
-        public static XElement CreateHostXElem(BE.Host host, string name)
+        private static XElement CreateHostXElem(BE.Host host, string name)
         {
             XElement HostKey = new XElement("HostKey", host.HostKey);
             XElement PrivateName = new XElement("PrivateName", host.PrivateName);
@@ -86,7 +86,7 @@ namespace DAL
                 Email, BankBranchDetails, BankAccountNumber, Balance, CollectionClearance);
         }
 
-        public static BE.Host XElement2Host(XElement host)
+        private static BE.Host XElement2Host(XElement host)
         {
             return new BE.Host()
             {
@@ -110,7 +110,7 @@ namespace DAL
             };
         }
 
-        public static XElement CreateBankXElem(BE.BankBranch bankBranchDetails)
+        private static XElement CreateBankXElem(BE.BankBranch bankBranchDetails)
         {
             XElement BankNumber = new XElement("BankNumber", bankBranchDetails.BankNumber);
             XElement BankName = new XElement("BankName", bankBranchDetails.BankName);
