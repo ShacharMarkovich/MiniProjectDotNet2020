@@ -20,7 +20,6 @@ namespace DAL
             try
             {
                 wc.DownloadFile(_xmlServerPath2, _xmlLocalPath);
-
             }
             catch (Exception)
             {
@@ -36,7 +35,6 @@ namespace DAL
         {
             DownloadBankBranch2Xml();
 
-            //this work also white xmlServerPath
             XElement xml = XElement.Load(_xmlLocalPath);
 
             foreach (var item in xml.Elements())

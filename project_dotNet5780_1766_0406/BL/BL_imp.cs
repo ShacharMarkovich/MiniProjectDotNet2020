@@ -74,6 +74,19 @@ namespace BL
                 _dal.UpdateGuestRequest(gRequest.clone(), newStat);
             else
                 throw new ArgumentOutOfRangeException("can't change close Guest Request!");
+
+            // if client chose to close the request...
+            if (newStat == Enums.Status.CloseByClient)
+            {
+                // ... we find the match open orders... 
+                List<BE.Order> orders = AccordingTo(delegate (BE.Order order)
+                {
+                    return order.GuestRequestKey == gRequest.GuestRequestKey && !IsOrderClose(order);
+                });
+
+                foreach (BE.Order order  in orders) // ... and close them too
+                    UpdateOrder(order, Enums.Status.CloseByClient);
+            }
         }
 
         public void UpdateConfig() => _dal.UpdateConfig();
@@ -196,7 +209,7 @@ namespace BL
             if (order == null)
                 throw new ArgumentException("please select an order first!");
 
-            if (IsOrderClose(order.clone()))
+            if (IsOrderClose(order))
                 throw new ArgumentException("can't change close order!");
             
             _dal.UpdateOrder(order.clone(), newStat);

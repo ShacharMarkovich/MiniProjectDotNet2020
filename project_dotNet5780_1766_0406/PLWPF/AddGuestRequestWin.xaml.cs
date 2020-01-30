@@ -27,9 +27,13 @@ namespace PLWPF
         public BL.IBL _bl = BL.FactoryBL.Instance;
         public BE.GuestRequest _guestRequest;
 
+        /// <summary>
+        /// c'tor
+        /// </summary>
         public AddGuestRequestWin()
         {
             InitializeComponent();
+
             _guestRequest = new BE.GuestRequest
             {
                 GuestRequestKey = ++BE.Configuration.GuestRequestKey,
@@ -39,76 +43,17 @@ namespace PLWPF
                 Stat = BE.Enums.Status.NotYetApproved
             };
 
+            //set data contexts:
             SetDataContext();
             SetGuestRequestComboBox();
 
-            // Default
             this.areaComboBox.ItemsSource = Enum.GetValues(typeof(BE.Enums.Area));
             this.typeComboBox.ItemsSource = Enum.GetValues(typeof(BE.Enums.UnitType));
             areaComboBox.SelectedIndex = 0;
             typeComboBox.SelectedIndex = 0;
 
-            clearButton.Click += delegate (object sender, RoutedEventArgs e)
-            {
-                _guestRequest = new BE.GuestRequest
-                {
-                    GuestRequestKey = ++BE.Configuration.GuestRequestKey,
-                    RegistrationDate = DateTime.Now,
-                    EntryDate = DateTime.Now,
-                    ReleaseDate = DateTime.Now,
-                    Stat = BE.Enums.Status.NotYetApproved
-                };
-                SetDataContext();
-                SetGuestRequestComboBox();
-                areaComboBox.SelectedIndex = -1;
-                typeComboBox.SelectedIndex = -1;
-            };
-
+            clearButton.Click += ClearButton_Click;
             closeButton.Click += CloseButtonClick;
-        }
-
-        private void CloseButtonClick(object sender, RoutedEventArgs e)
-        {
-            if (guestRequestComboBox.SelectedIndex == -1)
-            {
-                errorMessage.Foreground = new SolidColorBrush(Colors.Red);
-                errorMessage.FontSize = 25;
-                errorMessage.Text = "Selecet GuestRequest first";
-                errorMessage.Fade();
-                return;
-            }
-            try
-            {
-                _bl.UpdateGuestRequest(_guestRequest, BE.Enums.Status.CloseByClient);
-            }
-            catch (ArgumentException exp)
-            {
-                // show fit comment
-                errorMessage.Foreground = Brushes.Red;
-                errorMessage.FontSize = 25;
-                errorMessage.Text = exp.Message;
-                errorMessage.Fade();
-                return;
-            }
-
-            // show fit comment
-            errorMessage.Foreground = Brushes.Red;
-            errorMessage.FontSize = 25;
-            errorMessage.Text = "Guest Request Closed.";
-            errorMessage.Fade();
-
-            _guestRequest = new BE.GuestRequest
-            {
-                GuestRequestKey = ++BE.Configuration.GuestRequestKey,
-                RegistrationDate = DateTime.Now,
-                EntryDate = DateTime.Now,
-                ReleaseDate = DateTime.Now,
-                Stat = BE.Enums.Status.NotYetApproved
-            };
-            SetDataContext();
-            SetGuestRequestComboBox();
-            areaComboBox.SelectedIndex = -1;
-            typeComboBox.SelectedIndex = -1;
         }
 
         /// <summary>
@@ -137,17 +82,31 @@ namespace PLWPF
 
         }
 
+        /// <summary>
+        /// Connects _guestRequestComboBox to data in data source,
+        /// </summary>
         private void SetGuestRequestComboBox()
         {
+            // get GuestRequests to string
             List<BE.GuestRequest> guestRequestlst = _bl.AccordingTo(gR => !_bl.IsGuestRequestClose(gR));
             List<string> hostsNames = (from gR in guestRequestlst
                                        select $"({gR.GuestRequestKey}){gR.PrivateName} {gR.FamilyName}").ToList();
-            guestRequestComboBox.ItemsSource = hostsNames;
+
+            // we change the selected index,
+            // but we don't want the event to start,
+            // so we rmove it and add it :)
             guestRequestComboBox.SelectionChanged -= GuestRequestComboBox_SelectionChanged;
+            guestRequestComboBox.ItemsSource = hostsNames;
             guestRequestComboBox.SelectedIndex = -1;
             guestRequestComboBox.SelectionChanged += GuestRequestComboBox_SelectionChanged;
         }
 
+        #region Buttons Click events
+
+        /// <summary>
+        /// Add GuestRequest event.
+        /// check if legal and add to data source
+        /// </summary>
         private void AddGuestRequestButton_Click(object sender, RoutedEventArgs e)
         {
             _guestRequest.Area = (BE.Enums.Area)areaComboBox.SelectedIndex;
@@ -205,6 +164,10 @@ namespace PLWPF
             SetGuestRequestComboBox();
         }
 
+        /// <summary>
+        /// update GuestRequest event.
+        /// check if the new properties are legal and update in data source
+        /// </summary>
         private void UpdateGuestRequestButton_Click(object sender, RoutedEventArgs e)
         {
             if (guestRequestComboBox.SelectedIndex == -1)
@@ -271,6 +234,78 @@ namespace PLWPF
             SetGuestRequestComboBox();
         }
 
+        /// <summary>
+        /// close GuestRequest event.
+        /// close exists GuestRequest.
+        /// if there are open orders - close them too
+        /// </summary>
+        private void CloseButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (guestRequestComboBox.SelectedIndex == -1)
+            {
+                errorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                errorMessage.FontSize = 25;
+                errorMessage.Text = "Selecet GuestRequest first";
+                errorMessage.Fade();
+                return;
+            }
+            try
+            {
+                _bl.UpdateGuestRequest(_guestRequest, BE.Enums.Status.CloseByClient);
+            }
+            catch (ArgumentException exp)
+            {
+                // show fit comment
+                errorMessage.Foreground = Brushes.Red;
+                errorMessage.FontSize = 25;
+                errorMessage.Text = exp.Message;
+                errorMessage.Fade();
+                return;
+            }
+
+            // show fit comment
+            errorMessage.Foreground = Brushes.Green;
+            errorMessage.FontSize = 25;
+            errorMessage.Text = "Guest Request Closed.";
+            errorMessage.Fade();
+
+            _guestRequest = new BE.GuestRequest
+            {
+                GuestRequestKey = ++BE.Configuration.GuestRequestKey,
+                RegistrationDate = DateTime.Now,
+                EntryDate = DateTime.Now,
+                ReleaseDate = DateTime.Now,
+                Stat = BE.Enums.Status.NotYetApproved
+            };
+            SetDataContext();
+            SetGuestRequestComboBox();
+            areaComboBox.SelectedIndex = -1;
+            typeComboBox.SelectedIndex = -1;
+        }
+
+        /// <summary>
+        /// clear scrren
+        /// </summary>
+        public void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            _guestRequest = new BE.GuestRequest
+            {
+                GuestRequestKey = ++BE.Configuration.GuestRequestKey,
+                RegistrationDate = DateTime.Now,
+                EntryDate = DateTime.Now,
+                ReleaseDate = DateTime.Now,
+                Stat = BE.Enums.Status.NotYetApproved
+            };
+            SetDataContext();
+            SetGuestRequestComboBox();
+            areaComboBox.SelectedIndex = -1;
+            typeComboBox.SelectedIndex = -1;
+        }
+        #endregion 
+
+        /// <summary>
+        /// load the chose GuestRequest to screen
+        /// </summary>
         private void GuestRequestComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // get the selected guestRequestkey

@@ -68,14 +68,13 @@ namespace DAL
         public void UpdateGuestRequest(BE.GuestRequest gRequest, BE.Enums.Status newStat)
         {
             List<BE.GuestRequest> list = _guestRequestXml.LoadListFromXML();
-            list.ForEach(delegate (BE.GuestRequest gReq)
-            {
-                if (gReq.GuestRequestKey == gRequest.GuestRequestKey)
+            for (int i = 0; i < list.Count; ++i)
+                if (list[i].GuestRequestKey == gRequest.GuestRequestKey)
                 {
-                    gReq = gRequest.clone();
-                    gRequest.Stat = newStat;
+                    list[i] = gRequest.clone();
+                    list[i].Stat = newStat;
                 }
-            });
+
             _guestRequestXml.SaveListToXML(list);
         }
 

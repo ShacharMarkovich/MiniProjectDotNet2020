@@ -26,6 +26,14 @@ namespace PLWPF
         {
             InitializeComponent();
             _bl = BL.FactoryBL.Instance;
+
+
+            loadingBanks.FontFamily = new FontFamily("Agency FB");
+            loadingBanks.Opacity = 0.8;
+            loadingBanks.Background = Brushes.AliceBlue;
+            loadingBanks.Foreground = Brushes.Red;
+            loadingBanks.FontSize = 18;
+            loadingBanks.Visibility = Visibility.Hidden;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -35,32 +43,22 @@ namespace PLWPF
             // orderViewSource.Source = [generic data source]
         }
 
-        private void StatusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            throw new NotImplementedException("func StatusComboBox_SelectionChanged Not implemented");
-        }
+        private void AddGuestRequestButton_Click(object sender, RoutedEventArgs e) => new AddGuestRequestWin().ShowDialog();
 
-        private void AddGuestRequestButton_Click(object sender, RoutedEventArgs e)
-        {
-            new AddGuestRequestWin().ShowDialog();
-        }
-        private void AddHostButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (!_bl.IsBanksLoad())
-                _bl.Join();
+        private void AddHostButton_Click(object sender, RoutedEventArgs e) => new AddHostWin().ShowDialog();
 
-            new AddHostWin().ShowDialog();
-        }
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            _bl.UpdateConfig();
-        }
+        private void Window_Closed(object sender, EventArgs e) => _bl.UpdateConfig();
 
         private void HostAreaButton_MouseEnter(object sender, MouseEventArgs e)
         {
             if (!_bl.IsBanksLoad())
-                MessageBox.Show("can't tauch this");
+            {
+                loadingBanks.Visibility = Visibility.Visible;
+                hostAreaButton.Click -= AddHostButton_Click;
+                loadingBanks.Fade();
+            }
+            else
+                hostAreaButton.Click += AddHostButton_Click;
         }
     }
 }
