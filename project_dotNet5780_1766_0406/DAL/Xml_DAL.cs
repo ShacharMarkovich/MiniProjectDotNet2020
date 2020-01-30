@@ -71,7 +71,10 @@ namespace DAL
             list.ForEach(delegate (BE.GuestRequest gReq)
             {
                 if (gReq.GuestRequestKey == gRequest.GuestRequestKey)
-                    gReq.Stat = newStat;
+                {
+                    gReq = gRequest.clone();
+                    gRequest.Stat = newStat;
+                }
             });
             _guestRequestXml.SaveListToXML(list);
         }

@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <ArrayOfGuestRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <GuestRequest>
-    <GuestRequestKey>10000001</GuestRequestKey>
+    <GuestRequestKey>10000099</GuestRequestKey>
     <PrivateName>s</PrivateName>
     <FamilyName>s</FamilyName>
-    <Email>234shachar@gmail.com</Email>
-    <Stat>Approved</Stat>
-    <RegistrationDate>2020-01-30T03:24:45.0793762+02:00</RegistrationDate>
-    <EntryDate>2020-01-30T03:24:45.0793762+02:00</EntryDate>
-    <ReleaseDate>2020-02-06T00:00:00</ReleaseDate>
-    <Area>North</Area>
+    <Email>s@s.s</Email>
+    <Stat>NotYetApproved</Stat>
+    <RegistrationDate>2020-01-30T14:23:57.9303354+02:00</RegistrationDate>
+    <EntryDate>2020-01-30T14:23:57.9303354+02:00</EntryDate>
+    <ReleaseDate>2020-02-01T00:00:00</ReleaseDate>
+    <Area>Jerusalem</Area>
     <type>Hotel</type>
-    <Adults>1</Adults>
-    <Children>0</Children>
+    <Adults>20</Adults>
+    <Children>20</Children>
     <Pool>false</Pool>
     <Jecuzzi>false</Jecuzzi>
     <Garden>false</Garden>

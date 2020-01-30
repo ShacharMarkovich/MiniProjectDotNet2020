@@ -37,9 +37,11 @@
             <RowDefinition Height="45*"/>
             <RowDefinition Height="383*"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="errorMessage" Text=""
-                   Foreground="Red" FontFamily="Agency FB" FontSize="18" Grid.Row="0" 
-                   RenderTransformOrigin="1.207,-2.333" Margin="38,5" TextDecorations="{x:Null}" TextAlignment="Center"  />
+        <Grid Grid.Row="0" Grid.ColumnSpan="4" >
+            <TextBlock Opacity="0.8" Background="AliceBlue"  Text="Choose Guest Request" FontFamily="Agency FB" FontSize="18" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Height="34" Margin="0,8" />
+            <ComboBox x:Name="guestRequestComboBox" Background="{StaticResource ButtonsBrush}" FontFamily="Agency FB" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="145,0,0,0" Width="220" Height="35" SelectionChanged="GuestRequestComboBox_SelectionChanged" />
+            <TextBlock x:Name="errorMessage" Text="" Foreground="Red" FontFamily="Agency FB" FontSize="18" Width="204" HorizontalAlignment="Right" VerticalAlignment="Center" Height="34" Margin="0,8" />
+        </Grid>
         <Grid x:Name="grid1" DataContext="{StaticResource guestRequestViewSource}" Margin="0" Grid.Row="1" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -82,8 +84,14 @@
             <CheckBox x:Name="poolCheckBox" FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="5" Margin="8,22,0,16" IsChecked="{Binding Path=Pool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Height="14" Width="13" Grid.Column="3" />
             <Label FontFamily="Agency FB" Opacity="0.8" Background="AliceBlue" FontSize="18" VerticalAlignment="Center" Grid.Row="6" Margin="3,11,0,12" HorizontalAlignment="Left" Grid.Column="0" Content="Children Attractions:" Height="30" Width="127"/>
             <CheckBox x:Name="childrenAttractionsCheckBox" FontFamily="Agency FB" FontSize="18" VerticalAlignment="Center" Grid.Row="6" Margin="8,19,0,20" IsChecked="{Binding Path=ChildrenAttractions, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Height="14" Width="13"/>
-            <Button Grid.Row="6" Content="Add Guest Request" Margin="63,9,102,10" Background ="{StaticResource ButtonsBrush}"
-            FontFamily="Agency FB" FontSize="15" FontWeight="Bold" Click="Button_Click" VerticalAlignment="Center" HorizontalAlignment="Center" Width="182" Height="34" Grid.Column="2" Grid.ColumnSpan="2" />
+
+            <Button Grid.Row="5" Content="Update Guest Request" Margin="0" Background ="{StaticResource ButtonsBrush}" FontFamily="Agency FB" FontSize="15" FontWeight="Bold" Click="UpdateGuestRequestButton_Click" VerticalAlignment="Center" HorizontalAlignment="Center" Width="140" Height="34" Grid.Column="3" />
+            <Button Grid.Row="4" Content="Add Guest Request" Margin="0" Background ="{StaticResource BackgroundBrush2}"
+                FontFamily="Agency FB" FontSize="15" FontWeight="Bold" Click="AddGuestRequestButton_Click" VerticalAlignment="Center" HorizontalAlignment="Center" Width="140" Height="34" Grid.Column="3" />
+            <Button x:Name="clearButton" Grid.Row="6" Content="Clear" Margin="0" Background ="{StaticResource ButtonsBrush}"
+                FontFamily="Agency FB" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Width="95" Height="34" Grid.Column="2" />
+            <Button x:Name="closeButton" Grid.Row="6" Content="Close Request" Margin="0" Background ="{StaticResource ButtonsBrush}"
+                FontFamily="Agency FB" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Width="140" Height="34" Grid.Column="3" />
         </Grid>
     </Grid>
 </Window>

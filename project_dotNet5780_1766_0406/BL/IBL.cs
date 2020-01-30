@@ -21,6 +21,8 @@ namespace BL
         /// <param name="gRequest">exists BE.GuestRequest to update </param>
         /// <param name="newStat">new BE.Enums.Status</param>
         void UpdateGuestRequest(BE.GuestRequest gRequest, BE.Enums.Status newStat);
+
+        void UpdateGuestRequest(BE.GuestRequest gRequest);
         #endregion
 
         #region HostingUnit functions signature

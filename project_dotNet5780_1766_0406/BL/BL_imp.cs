@@ -37,7 +37,12 @@ namespace BL
             List<GuestRequest> units = AccordingTo(delegate (BE.GuestRequest unit) { return unit.GuestRequestKey == gRequest.GuestRequestKey; });
             if (units.Count() != 0)
                 throw new ArgumentException("GuestRequestKey already exists");
+            CheckGuestRequest(gRequest);
+            _dal.AddGuestRequest(gRequest.clone());
+        }
 
+        private void CheckGuestRequest(GuestRequest gRequest)
+        {
             CheckDates(gRequest.EntryDate, gRequest.ReleaseDate);
 
             if (gRequest.PrivateName == null || gRequest.FamilyName == null)
@@ -58,13 +63,13 @@ namespace BL
 
             if ((gRequest.Adults == 0 && gRequest.Children == 0) || (gRequest.Adults == 0 && gRequest.Children != 0))
                 throw new ArgumentException("Must have at least one adult");
-
-
-            _dal.AddGuestRequest(gRequest.clone());
         }
+
+        public void UpdateGuestRequest(BE.GuestRequest gRequest) => UpdateGuestRequest(gRequest, gRequest.Stat);
 
         public void UpdateGuestRequest(BE.GuestRequest gRequest, BE.Enums.Status newStat)
         {
+            CheckGuestRequest(gRequest);
             if (!IsGuestRequestClose(gRequest))
                 _dal.UpdateGuestRequest(gRequest.clone(), newStat);
             else
