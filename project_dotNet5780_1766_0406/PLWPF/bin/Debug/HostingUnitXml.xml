@@ -280,4 +280,33 @@
       </CalendarDateRange>
     </DatesRange>
   </HostingUnit>
+  <HostingUnit>
+    <HostingUnitKey>10000199</HostingUnitKey>
+    <Owner>
+      <HostKey>10000157</HostKey>
+      <PrivateName>shh</PrivateName>
+      <FamilyName>maa</FamilyName>
+      <PhoneNumber>2</PhoneNumber>
+      <Email>234shachar@gmail.com</Email>
+      <BankBranchDetails>
+        <BankNumber>13</BankNumber>
+        <BankName>בנק אגוד לישראל בע"מ</BankName>
+        <BranchNumber>63</BranchNumber>
+        <BranchAddress>אחוזת בית 6-8</BranchAddress>
+        <BranchCity>תל אביב -יפו</BranchCity>
+      </BankBranchDetails>
+      <BankAccountNumber>20</BankAccountNumber>
+      <Balance>970</Balance>
+      <CollectionClearance>true</CollectionClearance>
+    </Owner>
+    <Area>Jerusalem</Area>
+    <type>Hotel</type>
+    <HostingUnitName>s</HostingUnitName>
+    <DatesRange>
+      <CalendarDateRange>
+        <End>2020-02-12T00:00:00</End>
+        <Start>2020-02-07T00:00:00</Start>
+      </CalendarDateRange>
+    </DatesRange>
+  </HostingUnit>
 </ArrayOfHostingUnit>

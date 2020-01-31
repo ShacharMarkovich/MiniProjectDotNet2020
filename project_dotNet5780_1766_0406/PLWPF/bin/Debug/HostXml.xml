@@ -14,7 +14,7 @@
       <BranchCity>אשדוד</BranchCity>
     </BankBranchDetails>
     <BankAccountNumber>20</BankAccountNumber>
-    <Balance>100</Balance>
+    <Balance>14100</Balance>
     <CollectionClearance>True</CollectionClearance>
   </Host>
   <Host>
@@ -31,7 +31,7 @@
       <BranchCity>רחובות</BranchCity>
     </BankBranchDetails>
     <BankAccountNumber>20</BankAccountNumber>
-    <Balance>270</Balance>
+    <Balance>1270</Balance>
     <CollectionClearance>True</CollectionClearance>
   </Host>
   <Host>
@@ -48,7 +48,7 @@
       <BranchCity>תל אביב -יפו</BranchCity>
     </BankBranchDetails>
     <BankAccountNumber>20</BankAccountNumber>
-    <Balance>970</Balance>
+    <Balance>920</Balance>
     <CollectionClearance>True</CollectionClearance>
   </Host>
 </Hosts>

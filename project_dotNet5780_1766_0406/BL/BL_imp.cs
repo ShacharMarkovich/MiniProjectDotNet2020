@@ -446,7 +446,6 @@ namespace BL
                 throw new ArgumentException("host not has a CollectionClearance!");
         }
 
-        //////////////////////////////////////////////////////////
 
         public List<BE.HostingUnit> ListOptionsFree(DateTime entryDate, int daysNumber)
         {
@@ -575,56 +574,6 @@ namespace BL
             return hostingUnits.ToList();
         }
 
-        public List<IGrouping<string, BE.BankBranch>> GetAllBranchesGroupByBank()
-        {
-            return (from atm in _dal.GetAllBranches()
-                    group atm by atm.BankName).ToList();
-        }
-
-        public List<IGrouping<string, BE.BankBranch>> GetAllBranchesGroupByCity()
-        {
-            return (from atm in _dal.GetAllBranches()
-                    group atm by atm.BranchCity).ToList();
-        }
-
-        public List<string> GetAllBankNames()
-        {
-            return (from atm in _dal.GetAllBranches()
-                    select atm.BankName).ToList();
-        }
-
-        public List<string> GetAllBanksAsDetailsString()
-        {
-            return (from bank in _dal.GetAllBranches()
-                    select $"{bank.BankNumber} {bank.BranchNumber} {bank.BankName} {bank.BranchCity} {bank.BranchAddress}").Distinct().ToList();
-        }
-        
-
-        public List<BE.BankBranch> GetAllBank(string bankName)
-        {
-            return (from atm in _dal.GetAllBranches()
-                    where atm.BankName.CompareTo(bankName) == 0
-                    select atm).ToList();
-        }
-
-        public List<IGrouping<string, IGrouping<string, BE.BankBranch>>> GetAllBranchesGroupByBankAndCity()
-        {
-            List<IGrouping<string, IGrouping<string, BE.BankBranch>>> queryNestedGroups =
-                (from atm in _dal.GetAllBranches()
-                 orderby atm.BankName, atm.BranchCity, atm.BankNumber// optional for sort list
-                 group atm by atm.BankName into g  // group by bank name
-                 from newGroup2 in (from atm2 in g   // foreach bank name grouping now group by city
-                                    group atm2 by atm2.BranchCity)
-                 group newGroup2 by g.Key).ToList();
-
-            return queryNestedGroups;
-        }
-
-
-
-        //////////////////////////////////////////////////////////
-        // our additional functions:
-
         /// <summary>
         /// return true if time in this year
         /// </summary>
@@ -665,28 +614,16 @@ namespace BL
                 throw new ArgumentException("Release Date or Entry Date not valid, date already passed");
         }
 
+        public List<string> GetAllBanksAsDetailsString()
+        {
+            return (from bank in _dal.GetAllBranches()
+                    select $"{bank.BankNumber} {bank.BranchNumber} {bank.BankName} {bank.BranchCity} {bank.BranchAddress}").Distinct().ToList();
+        }
+
         public List<BankBranch> GetAllBanksByName(string bankName) => _dal.GetAllBranches().Where(bank => bank.BankName == bankName).ToList();
 
         public List<BE.BankBranch> GetAllBanks() => _dal.GetAllBranches();
 
-        public List<IGrouping<string, BankBranch>> GetAllBankBranchGroupByBank()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<IGrouping<string, BankBranch>> GetAllBankBranchGroupByCity()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<IGrouping<string, IGrouping<string, BankBranch>>> GetAllBankBranchGroupByBankAndCity()
-        {
-            throw new NotImplementedException();
-        }
-
-
         public bool IsBanksLoad() => _dal.IsEnd();
-
-        public void Join() => _dal.Join();
     }
 }

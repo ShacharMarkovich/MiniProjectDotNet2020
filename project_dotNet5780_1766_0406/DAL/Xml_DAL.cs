@@ -47,7 +47,6 @@ namespace DAL
             _bankThread.Start();
         }
 
-        public void Join() => _bankThread.Join();
 
         public bool IsEnd() => _isEnd;
 

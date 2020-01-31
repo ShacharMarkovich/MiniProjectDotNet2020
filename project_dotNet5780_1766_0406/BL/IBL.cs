@@ -137,7 +137,6 @@ namespace BL
         void SendEmail(BE.Order order);
 
 
-        //////////////////////////////////////////////////////////
         /// <summary>
         /// create list of HostingUnit available from the given date for 'daysNumber' days
         /// </summary>
@@ -203,34 +202,28 @@ namespace BL
         /// </summary>
         List<IGrouping<BE.Enums.Area, BE.HostingUnit>> GroupHostingUnitByArea();
 
-        List<IGrouping<string, BE.BankBranch>> GetAllBankBranchGroupByBank();
-
-        List<IGrouping<string, BE.BankBranch>> GetAllBankBranchGroupByCity();
-
         List<BE.BankBranch> GetAllBanks();
-
-        List<string> GetAllBankNames();
 
         List<string> GetAllBanksAsDetailsString();
         
         List<BE.BankBranch> GetAllBanksByName(string bankName);
-
-        List<IGrouping<string, IGrouping<string, BE.BankBranch>>> GetAllBankBranchGroupByBankAndCity();
-
-
-        //////////////////////////////////////////////////////////
-        // our additional functions:
 
         /// <summary>
         /// return true if time is max 11 months ahead from now
         /// </summary>
         bool InCalendar(DateTime time);
 
+        /// <summary>
+        /// update configurate xml file
+        /// </summary>
         void UpdateConfig();
 
         void GetMatchGuestRequestAndHostingUnit(BE.Order order, out BE.GuestRequest gR, out BE.HostingUnit unit);
 
+        /// <summary>
+        /// check if theard finish to load banks.
+        /// </summary>
+        /// <returns>return true if finish</returns>
         bool IsBanksLoad();
-        void Join();
     }
 }

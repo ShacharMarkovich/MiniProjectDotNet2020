@@ -750,5 +750,19 @@ namespace PLWPF
                 banksComboBox_.ItemsSource = banksAsDetailsString;
             banksComboBox_.IsDropDownOpen = true;
         }
+
+        private void ChargeMoney_Click(object sender, RoutedEventArgs e)
+        {
+            _host.Balance += 1000;
+            _bl.UpdateHost(_host);
+
+            detailsBalanceTextBlock.Text = _host.Balance.ToString();
+
+            errorMessageDetailsHost.Foreground = Brushes.Green;
+            errorMessageDetailsHost.Text = "Charge successfully!";
+            errorMessageDetailsHost.FontSize = 25;
+            errorMessageDetailsHost.Fade();
+
+        }
     }
 }

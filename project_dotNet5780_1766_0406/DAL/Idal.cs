@@ -84,9 +84,15 @@ namespace DAL
         void UpdateHost(BE.Host host);
 
 
+        /// <summary>
+        /// update configurate xml file
+        /// </summary>
         void UpdateConfig();
 
+        /// <summary>
+        /// check if theard finish to load banks.
+        /// </summary>
+        /// <returns>return true if finish</returns>
         bool IsEnd();
-        void Join();
     }
 }

@@ -64,4 +64,12 @@
     <CreateDate>2020-01-31T10:47:28.0777727+02:00</CreateDate>
     <OrderDate>2020-01-31T00:00:00+02:00</OrderDate>
   </Order>
+  <Order>
+    <HostingUnitKey>10000199</HostingUnitKey>
+    <GuestRequestKey>10000194</GuestRequestKey>
+    <OrderKey>10000075</OrderKey>
+    <Status>Approved</Status>
+    <CreateDate>2020-01-31T15:46:11.903834+02:00</CreateDate>
+    <OrderDate>2020-01-31T00:00:00+02:00</OrderDate>
+  </Order>
 </ArrayOfOrder>
