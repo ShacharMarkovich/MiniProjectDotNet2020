@@ -2,10 +2,10 @@
 <Hosts>
   <Host>
     <HostKey>10000001</HostKey>
-    <PrivateName>s</PrivateName>
+    <PrivateName>SHACHAR</PrivateName>
     <FamilyName>s</FamilyName>
     <PhoneNumber>2</PhoneNumber>
-    <Email>s@s.s</Email>
+    <Email>SHIRAYEDVAB134@GMAIL.COM</Email>
     <BankBranchDetails>
       <BankNumber>13</BankNumber>
       <BankName>בנק אגוד לישראל בע"מ</BankName>
@@ -15,6 +15,40 @@
     </BankBranchDetails>
     <BankAccountNumber>20</BankAccountNumber>
     <Balance>100</Balance>
+    <CollectionClearance>True</CollectionClearance>
+  </Host>
+  <Host>
+    <HostKey>10000141</HostKey>
+    <PrivateName>sad</PrivateName>
+    <FamilyName>asd</FamilyName>
+    <PhoneNumber>2</PhoneNumber>
+    <Email>asd@asd.asd</Email>
+    <BankBranchDetails>
+      <BankNumber>13</BankNumber>
+      <BankName>בנק אגוד לישראל בע"מ</BankName>
+      <BranchNumber>93</BranchNumber>
+      <BranchAddress>אחד העם 1</BranchAddress>
+      <BranchCity>רחובות</BranchCity>
+    </BankBranchDetails>
+    <BankAccountNumber>20</BankAccountNumber>
+    <Balance>270</Balance>
+    <CollectionClearance>True</CollectionClearance>
+  </Host>
+  <Host>
+    <HostKey>10000157</HostKey>
+    <PrivateName>shh</PrivateName>
+    <FamilyName>maa</FamilyName>
+    <PhoneNumber>2</PhoneNumber>
+    <Email>234shachar@gmail.com</Email>
+    <BankBranchDetails>
+      <BankNumber>13</BankNumber>
+      <BankName>בנק אגוד לישראל בע"מ</BankName>
+      <BranchNumber>63</BranchNumber>
+      <BranchAddress>אחוזת בית 6-8</BranchAddress>
+      <BranchCity>תל אביב -יפו</BranchCity>
+    </BankBranchDetails>
+    <BankAccountNumber>20</BankAccountNumber>
+    <Balance>970</Balance>
     <CollectionClearance>True</CollectionClearance>
   </Host>
 </Hosts>

@@ -332,52 +332,16 @@ namespace BL
 
         public void TakeFee(BE.Order order)
         {
-            // find matching GuestRequest to given order
-            List<BE.GuestRequest> GuestRequestsList = _dal.GetAllRequests();
-            IEnumerable<BE.GuestRequest> req = from guestRequest in GuestRequestsList
-                                               where guestRequest.GuestRequestKey == order.GuestRequestKey
-                                               select guestRequest;
-            int days = 0;
-            BE.GuestRequest gReq = null;
-            try
-            {
-                gReq = req.First();
-            }
-            // handle exceptions
-            catch (ArgumentNullException exc)
-            {
-                Console.WriteLine(exc.Message);
-            }
-            catch (InvalidOperationException exc)
-            {
-                Console.WriteLine(exc.Message);
-            }
+            BE.HostingUnit unit ;
+            BE.GuestRequest gReq;
+            GetMatchGuestRequestAndHostingUnit(order, out gReq, out unit);
             // get number of vacation days 
+            int days = 0;
             days = (gReq.ReleaseDate - gReq.EntryDate).Days;
 
-
-            // find matching HostingUnit to given order
-            List<BE.HostingUnit> HostingUnitsList = _dal.GetAllHostingUnits();
-            IEnumerable<BE.HostingUnit> units = from hostingUnit in HostingUnitsList
-                                                where hostingUnit.HostingUnitKey == order.HostingUnitKey
-                                                select hostingUnit;
-            BE.HostingUnit unit = null;
-            try
-            {
-                unit = units.First();
-            }
-            // handle exceptions
-            catch (ArgumentNullException exc)
-            {
-                Console.WriteLine(exc.Message);
-            }
-            catch (InvalidOperationException exc)
-            {
-                Console.WriteLine(exc.Message);
-            }
             // take fee
             unit.Owner.Balance -= days * BE.Configuration.Fee;
-            _dal.UpdateHostingUnit(unit); // update DS
+            _dal.UpdateHost(unit.Owner); // update DS
         }
 
         public void UpdateCalendar(BE.HostingUnit hostingUnit, DateTime entryDate, DateTime releaseDate)

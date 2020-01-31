@@ -101,6 +101,7 @@ namespace DAL
                 {
                     unit.HostingUnitName = hostingUnit.HostingUnitName;
                     unit.DatesRange = hostingUnit.DatesRange;
+                    unit.Owner.Balance = hostingUnit.Owner.Balance;
                 }
             });
             _hostingUnitXml.SaveListToXML(list);

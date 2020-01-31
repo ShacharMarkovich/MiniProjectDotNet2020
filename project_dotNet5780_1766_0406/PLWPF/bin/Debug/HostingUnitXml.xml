@@ -77,4 +77,207 @@
     <HostingUnitName>ך</HostingUnitName>
     <DatesRange />
   </HostingUnit>
+  <HostingUnit>
+    <HostingUnitKey>10000092</HostingUnitKey>
+    <Owner>
+      <HostKey>10000001</HostKey>
+      <PrivateName>s</PrivateName>
+      <FamilyName>s</FamilyName>
+      <PhoneNumber>2</PhoneNumber>
+      <Email>s@s.s</Email>
+      <BankBranchDetails>
+        <BankNumber>13</BankNumber>
+        <BankName>בנק אגוד לישראל בע"מ</BankName>
+        <BranchNumber>71</BranchNumber>
+        <BranchAddress>שדרות ירושלים 12</BranchAddress>
+        <BranchCity>אשדוד</BranchCity>
+      </BankBranchDetails>
+      <BankAccountNumber>20</BankAccountNumber>
+      <Balance>100</Balance>
+      <CollectionClearance>true</CollectionClearance>
+    </Owner>
+    <Area>North</Area>
+    <type>Zimmer</type>
+    <HostingUnitName>SHIRALOVE</HostingUnitName>
+    <DatesRange>
+      <CalendarDateRange>
+        <End>2020-02-10T00:00:00</End>
+        <Start>2020-02-05T00:00:00</Start>
+      </CalendarDateRange>
+    </DatesRange>
+  </HostingUnit>
+  <HostingUnit>
+    <HostingUnitKey>10000173</HostingUnitKey>
+    <Owner>
+      <HostKey>10000001</HostKey>
+      <PrivateName>SHACHAR</PrivateName>
+      <FamilyName>s</FamilyName>
+      <PhoneNumber>2</PhoneNumber>
+      <Email>SHIRAYEDVAB134@GMAIL.COM</Email>
+      <BankBranchDetails>
+        <BankNumber>13</BankNumber>
+        <BankName>בנק אגוד לישראל בע"מ</BankName>
+        <BranchNumber>71</BranchNumber>
+        <BranchAddress>שדרות ירושלים 12</BranchAddress>
+        <BranchCity>אשדוד</BranchCity>
+      </BankBranchDetails>
+      <BankAccountNumber>20</BankAccountNumber>
+      <Balance>100</Balance>
+      <CollectionClearance>true</CollectionClearance>
+    </Owner>
+    <Area>North</Area>
+    <type>Hotel</type>
+    <HostingUnitName>ח</HostingUnitName>
+    <DatesRange>
+      <CalendarDateRange>
+        <End>2020-02-07T00:00:00</End>
+        <Start>2020-02-03T00:00:00</Start>
+      </CalendarDateRange>
+    </DatesRange>
+  </HostingUnit>
+  <HostingUnit>
+    <HostingUnitKey>10000178</HostingUnitKey>
+    <Owner>
+      <HostKey>10000141</HostKey>
+      <PrivateName>sad</PrivateName>
+      <FamilyName>asd</FamilyName>
+      <PhoneNumber>2</PhoneNumber>
+      <Email>asd@asd.asd</Email>
+      <BankBranchDetails>
+        <BankNumber>13</BankNumber>
+        <BankName>בנק אגוד לישראל בע"מ</BankName>
+        <BranchNumber>93</BranchNumber>
+        <BranchAddress>אחד העם 1</BranchAddress>
+        <BranchCity>רחובות</BranchCity>
+      </BankBranchDetails>
+      <BankAccountNumber>20</BankAccountNumber>
+      <Balance>1000</Balance>
+      <CollectionClearance>true</CollectionClearance>
+    </Owner>
+    <Area>Jerusalem</Area>
+    <type>Zimmer</type>
+    <HostingUnitName>asdasd</HostingUnitName>
+    <DatesRange>
+      <CalendarDateRange>
+        <End>2020-03-05T00:00:00</End>
+        <Start>2020-02-25T00:00:00</Start>
+      </CalendarDateRange>
+    </DatesRange>
+  </HostingUnit>
+  <HostingUnit>
+    <HostingUnitKey>10000174</HostingUnitKey>
+    <Owner>
+      <HostKey>10000001</HostKey>
+      <PrivateName>SHACHAR</PrivateName>
+      <FamilyName>s</FamilyName>
+      <PhoneNumber>2</PhoneNumber>
+      <Email>SHIRAYEDVAB134@GMAIL.COM</Email>
+      <BankBranchDetails>
+        <BankNumber>13</BankNumber>
+        <BankName>בנק אגוד לישראל בע"מ</BankName>
+        <BranchNumber>71</BranchNumber>
+        <BranchAddress>שדרות ירושלים 12</BranchAddress>
+        <BranchCity>אשדוד</BranchCity>
+      </BankBranchDetails>
+      <BankAccountNumber>20</BankAccountNumber>
+      <Balance>60</Balance>
+      <CollectionClearance>true</CollectionClearance>
+    </Owner>
+    <Area>North</Area>
+    <type>Hotel</type>
+    <HostingUnitName>1vgo ntv utj,</HostingUnitName>
+    <DatesRange>
+      <CalendarDateRange>
+        <End>2020-02-07T00:00:00</End>
+        <Start>2020-02-03T00:00:00</Start>
+      </CalendarDateRange>
+    </DatesRange>
+  </HostingUnit>
+  <HostingUnit>
+    <HostingUnitKey>10000181</HostingUnitKey>
+    <Owner>
+      <HostKey>10000141</HostKey>
+      <PrivateName>sad</PrivateName>
+      <FamilyName>asd</FamilyName>
+      <PhoneNumber>2</PhoneNumber>
+      <Email>asd@asd.asd</Email>
+      <BankBranchDetails>
+        <BankNumber>13</BankNumber>
+        <BankName>בנק אגוד לישראל בע"מ</BankName>
+        <BranchNumber>93</BranchNumber>
+        <BranchAddress>אחד העם 1</BranchAddress>
+        <BranchCity>רחובות</BranchCity>
+      </BankBranchDetails>
+      <BankAccountNumber>20</BankAccountNumber>
+      <Balance>1000</Balance>
+      <CollectionClearance>true</CollectionClearance>
+    </Owner>
+    <Area>Jerusalem</Area>
+    <type>Hotel</type>
+    <HostingUnitName>asdasdasdasdasdasd</HostingUnitName>
+    <DatesRange>
+      <CalendarDateRange>
+        <End>2020-02-07T00:00:00</End>
+        <Start>2020-02-03T00:00:00</Start>
+      </CalendarDateRange>
+    </DatesRange>
+  </HostingUnit>
+  <HostingUnit>
+    <HostingUnitKey>10000186</HostingUnitKey>
+    <Owner>
+      <HostKey>10000157</HostKey>
+      <PrivateName>shh</PrivateName>
+      <FamilyName>maa</FamilyName>
+      <PhoneNumber>2</PhoneNumber>
+      <Email>234shachar@gmail.com</Email>
+      <BankBranchDetails>
+        <BankNumber>13</BankNumber>
+        <BankName>בנק אגוד לישראל בע"מ</BankName>
+        <BranchNumber>63</BranchNumber>
+        <BranchAddress>אחוזת בית 6-8</BranchAddress>
+        <BranchCity>תל אביב -יפו</BranchCity>
+      </BankBranchDetails>
+      <BankAccountNumber>20</BankAccountNumber>
+      <Balance>1000</Balance>
+      <CollectionClearance>true</CollectionClearance>
+    </Owner>
+    <Area>Jerusalem</Area>
+    <type>Zimmer</type>
+    <HostingUnitName>ssnacd</HostingUnitName>
+    <DatesRange>
+      <CalendarDateRange>
+        <End>2020-02-08T00:00:00</End>
+        <Start>2020-02-05T00:00:00</Start>
+      </CalendarDateRange>
+    </DatesRange>
+  </HostingUnit>
+  <HostingUnit>
+    <HostingUnitKey>10000192</HostingUnitKey>
+    <Owner>
+      <HostKey>10000141</HostKey>
+      <PrivateName>sad</PrivateName>
+      <FamilyName>asd</FamilyName>
+      <PhoneNumber>2</PhoneNumber>
+      <Email>asd@asd.asd</Email>
+      <BankBranchDetails>
+        <BankNumber>13</BankNumber>
+        <BankName>בנק אגוד לישראל בע"מ</BankName>
+        <BranchNumber>93</BranchNumber>
+        <BranchAddress>אחד העם 1</BranchAddress>
+        <BranchCity>רחובות</BranchCity>
+      </BankBranchDetails>
+      <BankAccountNumber>20</BankAccountNumber>
+      <Balance>1000</Balance>
+      <CollectionClearance>true</CollectionClearance>
+    </Owner>
+    <Area>Jerusalem</Area>
+    <type>Zimmer</type>
+    <HostingUnitName>rtyuilkjhgfdsa</HostingUnitName>
+    <DatesRange>
+      <CalendarDateRange>
+        <End>2020-05-06T00:00:00</End>
+        <Start>2020-02-23T00:00:00</Start>
+      </CalendarDateRange>
+    </DatesRange>
+  </HostingUnit>
 </ArrayOfHostingUnit>

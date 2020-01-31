@@ -69,7 +69,7 @@
                         <TextBox x:Name="bankAccountNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="35" Margin="3,3,-70,3" Grid.Row="4" Text="{Binding Path=BankAccountNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="198"/>
                         <Label Content="Select Your Bank:" Grid.Column="0" Opacity="0.8" Background="AliceBlue" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
                         <ComboBox x:Name="banksComboBox" IsEditable="true" Grid.Column="1" Grid.Row="5" VerticalAlignment="Top" Background="{StaticResource ButtonsBrush}" Margin="9,12,-69,0" TextBoxBase.TextChanged="BanksComboBox_TextChanged" Height="35"/>
-                        <Label Content="Collection Clearance:" Opacity="0.8" Background="AliceBlue" Grid.Column="0" Margin="3,17,15,16" Grid.Row="6" VerticalAlignment="Center"/>
+                        <Label Content="Collection Clearance:" Opacity="0.8" Background="AliceBlue" Grid.Column="0" Margin="0" Grid.Row="6" VerticalAlignment="Center" Height="32"/>
                         <CheckBox x:Name="collectionClearanceCheckBox" Content="" Opacity="0.8" Background="AliceBlue" Grid.Column="1" HorizontalAlignment="Left" IsChecked="{Binding Path=CollectionClearance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
                     </Grid>
                     <Button Content="Add Host" Background ="{StaticResource ButtonsBrush}" Click="AddHostButton_Click" Margin="0,10,0,0" Height="40" Width="100" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -79,18 +79,20 @@
             <TabItem Header="Sign In"  Margin="0">
                 <TabControl Name="SignInTabControl">
                     <TabItem Header="login"  Margin="0">
-                        <StackPanel>
-                            <StackPanel.Background>
-                                <ImageBrush ImageSource="Backgrounds/2.jpg"/>
-                            </StackPanel.Background>
-                            <TextBlock x:Name="loginErrorMessage" Text="" 
+                        <Grid>
+                            <Grid.Background>
+                                <ImageBrush ImageSource="Backgrounds/1.jpg"/>
+                            </Grid.Background>
+                            <TextBlock x:Name="loginErrorMessage"
                                        Foreground="Red" FontFamily="Agency FB" FontSize="18" Grid.Row="0" 
-                                       RenderTransformOrigin="1.207,-2.333" TextDecorations="{x:Null}" TextAlignment="Center"  />
-
-                            <ComboBox x:Name="hostsComboBox" Grid.Column="0" Background ="{StaticResource ButtonsBrush}" ItemsSource="{Binding}" HorizontalAlignment="Center" Width="216" VerticalAlignment="Center" Height="30" Margin="0" FontSize="18"/>
-                            <Button Content="Login"  Background ="{StaticResource ButtonsBrush}" Click="LoginButton_Click" Width="96" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Height="30"  FontSize="18" Margin="0"/>
-                            <Button Content="Logout" Background ="{StaticResource ButtonsBrush}" Click="LogoutButton_Click" Width="96" VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" Margin="0" FontSize="18"/>
-                        </StackPanel>
+                                       RenderTransformOrigin="1.207,-2.333" TextDecorations="{x:Null}" TextAlignment="Center" VerticalAlignment="Top"  />
+                            <TextBlock Text="Choose Host:" Background="AliceBlue" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="192,71,537,497" FontSize="18" FontFamily="Agency FB" Width="95" Height="40"/>
+                            <ComboBox x:Name="hostsComboBox" Grid.Column="0" Background ="{StaticResource ButtonsBrush}" ItemsSource="{Binding}" HorizontalAlignment="Center" Width="246" VerticalAlignment="Top" Height="44" Margin="304,71,274,0" FontSize="18"/>
+                            <StackPanel Orientation="Horizontal" Margin="280,151,129,392">
+                                <Button Content="Login"  Background ="{StaticResource ButtonsBrush}" Click="LoginButton_Click" Width="96" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Height="30"  FontSize="18" Margin="10,0,0,0"/>
+                                <Button Content="Logout" Background ="{StaticResource ButtonsBrush}" Click="LogoutButton_Click" Width="96" HorizontalAlignment="Center" Height="30" Margin="90,0,0,0" FontSize="18" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
                     </TabItem>
                     <TabItem x:Name="AddHostingUnitTab" Header="Add hosting unit" IsEnabled="False">
                         <Grid>
@@ -121,9 +123,9 @@
                                 <Label Content="type:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="AliceBlue" Opacity="0.8" />
                                 <ComboBox x:Name="typeComboBox" Grid.Column="1" Grid.Row="2" Background ="{StaticResource ButtonsBrush}" Margin="5,0" Height="30" VerticalAlignment="Center" Width="190"/>
                                 <Label Content="Private Name:" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Background="AliceBlue" Opacity="0.8" />
-                                <TextBlock x:Name="privateNameTextBlock" Grid.Column="1" Grid.Row="3" Text="{Binding Path=PrivateName}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <TextBlock x:Name="privateNameTextBlock" Background="AliceBlue" Grid.Column="1" Grid.Row="3" Text="{Binding Path=PrivateName}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 <Label Content="Family Name:" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Background="AliceBlue" Opacity="0.8" />
-                                <TextBlock x:Name="familyNameTextBlock" Grid.Column="1" Grid.Row="4" Text="{Binding Path=FamilyName}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <TextBlock x:Name="familyNameTextBlock" Background="AliceBlue" Grid.Column="1" Grid.Row="4" Text="{Binding Path=FamilyName}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Grid>
                             <Button Content="add hosting unit" Click="AddHostingUnitButton_Click" Background ="{StaticResource ButtonsBrush}" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="349,345,299,0" Height="47" Width="176" VerticalContentAlignment="Center"/>
                         </Grid>
@@ -167,7 +169,7 @@
                                 <Label Content="Phone Number:" Grid.Column="0" HorizontalAlignment="Left" Opacity="0.8" Background="AliceBlue" Margin="3,3,0,4" Grid.Row="3" VerticalAlignment="Center" Height="31" Width="93"/>
                                 <TextBox x:Name="detailsPhoneNumberTextBox" Grid.Column="1" HorizontalAlignment="Center" Margin="0,5" Grid.Row="3" Text="{Binding Path=PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" Width="195" />
                                 <Label Content="Balance:" Grid.Column="0" Opacity="0.8" Background="AliceBlue" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="4" VerticalAlignment="Center" Height="31" Width="55"/>
-                                <TextBlock x:Name="detailsBalanceTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3,27,0,27" Grid.Row="4" Text="{Binding Path=Balance, Mode=TwoWay}" VerticalAlignment="Center" Height="32" Width="7"/>
+                                <TextBlock x:Name="detailsBalanceTextBlock" Background="AliceBlue" Grid.Column="1" HorizontalAlignment="Left" Margin="3,6,0,6" Grid.Row="4" Text="{Binding Path=Balance, Mode=TwoWay}" VerticalAlignment="Center" Height="32" Width="112"/>
                                 <Label Content="Bank Account Number:" Grid.Column="0" Opacity="0.8" Background="AliceBlue" HorizontalAlignment="Left" Margin="3,4,0,3" Grid.Row="5" VerticalAlignment="Center" Height="31" Width="132"/>
                                 <TextBox x:Name="detailsBankAccountNumberTextBox" Grid.Column="1" HorizontalAlignment="Center" Height="31" Margin="4" Grid.Row="5" Text="{Binding Path=BankAccountNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus}" Width="197"/>
                                 <Label Content="Select Your Bank:" Grid.Column="0" Opacity="0.8" Background="AliceBlue" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="6" VerticalAlignment="Center" Height="31" Width="104"/>

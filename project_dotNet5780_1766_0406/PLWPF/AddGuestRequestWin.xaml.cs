@@ -113,7 +113,10 @@ namespace PLWPF
             _guestRequest.type = (BE.Enums.UnitType)typeComboBox.SelectedIndex;
             try
             {
-                int people= 0;
+                if (areaComboBox.SelectedIndex == -1 || typeComboBox.SelectedIndex == -1)
+                    throw new ArgumentException("please choose area and type!");
+
+                int people = 0;
                 if (int.TryParse(this.adultsTextBox.Text, out people))
                     _guestRequest.Adults = people;
                 else
@@ -129,8 +132,7 @@ namespace PLWPF
             catch (ArgumentException exp)
             {
                 // show fit comment
-                errorMessage.Foreground = new SolidColorBrush(Colors.Red);
-                errorMessage.FontSize = 25;
+                errorMessage.Foreground = Brushes.Red;
                 errorMessage.Text = exp.Message;
                 errorMessage.Fade();
                 return;
@@ -138,17 +140,15 @@ namespace PLWPF
             catch (Exception exp)
             {
                 // show fit comment
-                errorMessage.Foreground = new SolidColorBrush(Colors.Red);
-                errorMessage.FontSize = 25;
+                errorMessage.Foreground = Brushes.Red;
                 errorMessage.Text = exp.Message;
                 errorMessage.Fade();
                 return;
             }
 
             // show fit comment
-            errorMessage.Foreground = new SolidColorBrush(Colors.Green);
+            errorMessage.Foreground = Brushes.Green;
             errorMessage.Text = "Guest Request Add successfully!";
-            errorMessage.FontSize = 25;
             errorMessage.Fade();
 
             // prepare to get more new BE.GuestRequest
@@ -172,8 +172,7 @@ namespace PLWPF
         {
             if (guestRequestComboBox.SelectedIndex == -1)
             {
-                errorMessage.Foreground = new SolidColorBrush(Colors.Red);
-                errorMessage.FontSize = 25;
+                errorMessage.Foreground = Brushes.Red;
                 errorMessage.Text = "Selecet GuestRequest first";
                 errorMessage.Fade();
                 return;
@@ -182,6 +181,7 @@ namespace PLWPF
             _guestRequest.type = (BE.Enums.UnitType)typeComboBox.SelectedIndex;
             try
             {
+              
                 int people = 0;
                 if (int.TryParse(this.adultsTextBox.Text, out people))
                     _guestRequest.Adults = people;
@@ -191,15 +191,17 @@ namespace PLWPF
                 if (int.TryParse(this.childrenTextBox.Text, out people))
                     _guestRequest.Children = people;
                 else
-                    throw new ArgumentException("please enter a number in Adults field!");
+                    throw new ArgumentException("please enter a NUMBER in Children field!");
+
+                if (areaComboBox.SelectedIndex == -1 || typeComboBox.SelectedIndex == -1)
+                    throw new ArgumentException("please choose area and type!");
 
                 _bl.UpdateGuestRequest(_guestRequest);
             }
             catch (ArgumentException exp)
             {
                 // show fit comment
-                errorMessage.Foreground = new SolidColorBrush(Colors.Red);
-                errorMessage.FontSize = 25;
+                errorMessage.Foreground = Brushes.Red;
                 errorMessage.Text = exp.Message;
                 errorMessage.Fade();
                 return;
@@ -207,17 +209,15 @@ namespace PLWPF
             catch (Exception exp)
             {
                 // show fit comment
-                errorMessage.Foreground = new SolidColorBrush(Colors.Red);
-                errorMessage.FontSize = 25;
+                errorMessage.Foreground = Brushes.Red;
                 errorMessage.Text = exp.Message;
                 errorMessage.Fade();
                 return;
             }
 
             // show fit comment
-            errorMessage.Foreground = new SolidColorBrush(Colors.Green);
+            errorMessage.Foreground = Brushes.Green;
             errorMessage.Text = "Guest Request Update successfully!";
-            errorMessage.FontSize = 24;
             errorMessage.Fade();
 
             // prepare to get more new BE.GuestRequest
@@ -243,8 +243,7 @@ namespace PLWPF
         {
             if (guestRequestComboBox.SelectedIndex == -1)
             {
-                errorMessage.Foreground = new SolidColorBrush(Colors.Red);
-                errorMessage.FontSize = 25;
+                errorMessage.Foreground = Brushes.Red;
                 errorMessage.Text = "Selecet GuestRequest first";
                 errorMessage.Fade();
                 return;
@@ -257,7 +256,6 @@ namespace PLWPF
             {
                 // show fit comment
                 errorMessage.Foreground = Brushes.Red;
-                errorMessage.FontSize = 25;
                 errorMessage.Text = exp.Message;
                 errorMessage.Fade();
                 return;
@@ -265,7 +263,6 @@ namespace PLWPF
 
             // show fit comment
             errorMessage.Foreground = Brushes.Green;
-            errorMessage.FontSize = 25;
             errorMessage.Text = "Guest Request Closed.";
             errorMessage.Fade();
 
@@ -319,9 +316,8 @@ namespace PLWPF
             }
             catch
             {
-                errorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                errorMessage.Foreground = Brushes.Red;
                 errorMessage.Text = "please choose a guest Request first";
-                errorMessage.FontSize = 25;
                 errorMessage.Fade();
                 return;
             }

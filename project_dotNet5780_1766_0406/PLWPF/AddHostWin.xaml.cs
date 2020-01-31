@@ -57,7 +57,7 @@ namespace PLWPF
             _host = new BE.Host()
             {
                 HostKey = ++BE.Configuration.HostKey,
-                Balance = 100,
+                Balance = 1000,
                 // TODO: in part 3, change to real bank
                 BankBranchDetails = new BE.BankBranch()
             };
@@ -225,7 +225,7 @@ namespace PLWPF
             _host = new BE.Host()
             {
                 HostKey = ++BE.Configuration.HostKey,
-                Balance = 100,
+                Balance = 1000,
                 BankBranchDetails = new BE.BankBranch()
             };
             SetSignUpDataContext();
@@ -258,7 +258,7 @@ namespace PLWPF
             if (bankComboBox_.SelectedIndex == -1)
             {
                 // show fit message,
-                errorMessage_.Foreground = new SolidColorBrush(Colors.Red);
+                errorMessage_.Foreground = Brushes.Red;
                 errorMessage_.Text = "please choose a bank";
                 errorMessage_.FontSize = 25;
                 errorMessage_.Fade();
@@ -291,7 +291,7 @@ namespace PLWPF
                 catch (ArgumentException exp)
                 {
                     // show fit comment
-                    SignUpErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                    SignUpErrorMessage.Foreground = Brushes.Red;
                     SignUpErrorMessage.Text = exp.Message;
                     SignUpErrorMessage.FontSize = 25;
                     SignUpErrorMessage.Fade();
@@ -305,7 +305,7 @@ namespace PLWPF
                 banksComboBox.SelectedIndex = -1;
 
                 // show fit comment
-                SignUpErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
+                SignUpErrorMessage.Foreground = Brushes.Green;
                 SignUpErrorMessage.Text = "Host Add successfully!";
                 SignUpErrorMessage.FontSize = 25;
                 SignUpErrorMessage.Fade();
@@ -321,7 +321,7 @@ namespace PLWPF
             // check if any host has been selected
             if (hostsComboBox.SelectedItem == null)
             {
-                loginErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                loginErrorMessage.Foreground = Brushes.Red;
                 loginErrorMessage.Text = "Please Select a Host in order to contine";
                 loginErrorMessage.FontSize = 25;
                 loginErrorMessage.Fade();
@@ -329,7 +329,7 @@ namespace PLWPF
             }
 
             // show fit comment
-            loginErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
+            loginErrorMessage.Foreground = Brushes.Green;
             loginErrorMessage.Text = "Login successfully";
             loginErrorMessage.FontSize = 25;
             loginErrorMessage.Fade();
@@ -403,7 +403,7 @@ namespace PLWPF
             catch (ArgumentException exp)
             {
                 // show fit comment
-                AddHostingUnitErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                AddHostingUnitErrorMessage.Foreground = Brushes.Red;
                 AddHostingUnitErrorMessage.Text = exp.Message;
                 AddHostingUnitErrorMessage.FontSize = 25;
                 AddHostingUnitErrorMessage.Fade();
@@ -412,7 +412,7 @@ namespace PLWPF
             catch (Exception exp)
             {
                 // show fit comment
-                AddHostingUnitErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                AddHostingUnitErrorMessage.Foreground = Brushes.Red;
                 AddHostingUnitErrorMessage.Text = exp.Message;
                 AddHostingUnitErrorMessage.FontSize = 25;
                 AddHostingUnitErrorMessage.Fade();
@@ -420,7 +420,7 @@ namespace PLWPF
             }
 
             // show fit comment
-            AddHostingUnitErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
+            AddHostingUnitErrorMessage.Foreground = Brushes.Green;
             AddHostingUnitErrorMessage.Text = "Add hosting unit successfully!";
             AddHostingUnitErrorMessage.FontSize = 25;
             AddHostingUnitErrorMessage.Fade();
@@ -449,13 +449,13 @@ namespace PLWPF
                 }
                 catch (ArgumentException exp)
                 {
-                    errorMessageDetailsHost.Foreground = new SolidColorBrush(Colors.Red);
+                    errorMessageDetailsHost.Foreground = Brushes.Red;
                     errorMessageDetailsHost.Text = exp.Message;
                     errorMessageDetailsHost.FontSize = 25;
                     errorMessageDetailsHost.Fade();
                     return;
                 }
-                errorMessageDetailsHost.Foreground = new SolidColorBrush(Colors.Green);
+                errorMessageDetailsHost.Foreground = Brushes.Green;
                 errorMessageDetailsHost.Text = "Update successfully";
                 errorMessageDetailsHost.FontSize = 25;
                 errorMessageDetailsHost.Fade();
@@ -481,7 +481,7 @@ namespace PLWPF
             }
             catch (ArgumentNullException exp)
             {
-                errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
+                errorMessageDetailsHostingUnit.Foreground = Brushes.Red;
                 errorMessageDetailsHostingUnit.Text = exp.Message;
                 errorMessageDetailsHostingUnit.FontSize = 25;
                 errorMessageDetailsHostingUnit.Fade();
@@ -489,7 +489,7 @@ namespace PLWPF
             }
             catch (ArgumentException exp)
             {
-                errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
+                errorMessageDetailsHostingUnit.Foreground = Brushes.Red;
                 errorMessageDetailsHostingUnit.Text = exp.Message;
                 errorMessageDetailsHostingUnit.FontSize = 25;
                 errorMessageDetailsHostingUnit.Fade();
@@ -507,7 +507,7 @@ namespace PLWPF
             SetUnitComboBox(hostingUnitDetails, delegate (BE.HostingUnit unit) { return unit.Owner.HostKey == _host.HostKey; });
 
             // show fit message
-            errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Green);
+            errorMessageDetailsHostingUnit.Foreground = Brushes.Green;
             errorMessageDetailsHostingUnit.Text = "Hosting Unit was update successfully";
             errorMessageDetailsHostingUnit.FontSize = 25;
             errorMessageDetailsHostingUnit.Fade();
@@ -529,7 +529,7 @@ namespace PLWPF
             catch (ArgumentException exp)
             {
                 // show fit message
-                errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
+                errorMessageDetailsHostingUnit.Foreground = Brushes.Red;
                 errorMessageDetailsHostingUnit.Text = exp.Message;
                 errorMessageDetailsHostingUnit.FontSize = 25;
                 errorMessageDetailsHostingUnit.Fade();
@@ -549,7 +549,7 @@ namespace PLWPF
             hostingUnitDiary.BlackoutDates.Clear();
 
             // show fit message
-            errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Green);
+            errorMessageDetailsHostingUnit.Foreground = Brushes.Green;
             errorMessageDetailsHostingUnit.Text = "Hosting unit successfully removed";
             errorMessageDetailsHostingUnit.FontSize = 25;
             errorMessageDetailsHostingUnit.Fade();
@@ -565,7 +565,7 @@ namespace PLWPF
             // check if both unit and guestRequest  was selected
             if (unit == null || guestRequest == null)
             {
-                newOrderErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                newOrderErrorMessage.Foreground = Brushes.Red;
                 newOrderErrorMessage.Text = "hosting unit or guest request not selected!";
                 newOrderErrorMessage.FontSize = 25;
                 newOrderErrorMessage.Fade();
@@ -588,14 +588,14 @@ namespace PLWPF
             }
             catch (ArgumentException exp)
             {
-                newOrderErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                newOrderErrorMessage.Foreground = Brushes.Red;
                 newOrderErrorMessage.Text = exp.Message;
                 newOrderErrorMessage.FontSize = 25;
                 newOrderErrorMessage.Fade();
                 return;
             }
 
-            newOrderErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
+            newOrderErrorMessage.Foreground = Brushes.Green;
             newOrderErrorMessage.Text = "Order create successfully";
             newOrderErrorMessage.FontSize = 25;
             newOrderErrorMessage.Fade();
@@ -617,14 +617,14 @@ namespace PLWPF
             }
             catch (ArgumentException exp)
             {
-                OrderListErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                OrderListErrorMessage.Foreground = Brushes.Red;
                 OrderListErrorMessage.Text = exp.Message;
                 OrderListErrorMessage.FontSize = 25;
                 OrderListErrorMessage.Fade();
                 return;
             }
 
-            OrderListErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
+            OrderListErrorMessage.Foreground = Brushes.Green;
             OrderListErrorMessage.Text = "Email Sent Successfully!";
             OrderListErrorMessage.FontSize = 25;
             OrderListErrorMessage.Fade();
@@ -639,22 +639,24 @@ namespace PLWPF
             try
             {
                 _bl.ApprovedOrder(order);
+                _bl.TakeFee(order);
             }
             catch (ArgumentException exp)
             {
-                OrderListErrorMessage.Foreground = new SolidColorBrush(Colors.Red);
+                OrderListErrorMessage.Foreground = Brushes.Red;
                 OrderListErrorMessage.Text = exp.Message;
                 OrderListErrorMessage.FontSize = 25;
                 OrderListErrorMessage.Fade();
                 return;
             }
 
-            OrderListErrorMessage.Foreground = new SolidColorBrush(Colors.Green);
+            OrderListErrorMessage.Foreground = Brushes.Green;
             OrderListErrorMessage.Text = "Order Approved Successfully!";
             OrderListErrorMessage.FontSize = 25;
             OrderListErrorMessage.Fade();
 
-
+            _host = _bl.GetAllHosts().Where(host => host.HostKey == _hostingUnit.Owner.HostKey).First();
+            SetHostDetailsDataContext();
             SetOrdersDataContext();
         }
         #endregion
@@ -676,7 +678,7 @@ namespace PLWPF
             if (hostingUnitDetails.SelectedIndex == -1)
             {
                 // show fit message,
-                errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
+                errorMessageDetailsHostingUnit.Foreground = Brushes.Red;
                 errorMessageDetailsHostingUnit.Text = "please choose a hosting unit first";
                 errorMessageDetailsHostingUnit.FontSize = 25;
                 errorMessageDetailsHostingUnit.Fade();
@@ -695,7 +697,7 @@ namespace PLWPF
             }
             catch
             {
-                errorMessageDetailsHostingUnit.Foreground = new SolidColorBrush(Colors.Red);
+                errorMessageDetailsHostingUnit.Foreground = Brushes.Red;
                 errorMessageDetailsHostingUnit.Text = "please choose a hosting unit first";
                 errorMessageDetailsHostingUnit.FontSize = 25;
                 errorMessageDetailsHostingUnit.Fade();

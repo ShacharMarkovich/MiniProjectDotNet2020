@@ -140,7 +140,7 @@ namespace DAL
             hostElement.Element("FamilyName").Value = existshost.FamilyName;
             hostElement.Element("Email").Value = existshost.Email;
             hostElement.Element("PhoneNumber").Value = existshost.PhoneNumber;
-
+            hostElement.Element("Balance").Value = existshost.Balance.ToString();
             hostElement.Element("BankAccountNumber").Value = existshost.BankAccountNumber.ToString();
             hostElement.Element("BankBranchDetails").Element("BankNumber").Value = existshost.BankBranchDetails.BankNumber.ToString();
             hostElement.Element("BankBranchDetails").Element("BranchNumber").Value = existshost.BankBranchDetails.BranchNumber.ToString();
